@@ -20,11 +20,12 @@ Text Domain: twentyseventeen-child
 
     /*Navigation*/
     .navigation-top {border:none;}
-    .navigation-top .wrap {padding: 0px;}
+    .navigation-top .wrap {padding: 0;}
+    .main-navigation li {border-bottom: 7px solid #2F9B92;}
     .main-navigation li:hover {border-bottom: 7px solid white;}
     .main-navigation a {
         padding: 1.25em 1.25em;
-        margin: 0em 0em;
+        margin: 0 0;
         font-weight: 400;
         font-size: 16px;
         color: white !important;
@@ -33,13 +34,14 @@ Text Domain: twentyseventeen-child
         border-bottom: 7px solid white !important;
         color: white;
     }
+
     /*Sub-Navigation*/
     .main-navigation .sub-menu li:hover {border: none;}
     .main-navigation li:hover .sub-menu {display:block; left:-50px; top:64px}
     .main-navigation ul ul {top:71px; background-color: darkgrey}
     .main-navigation li::before {display:none !important;}
     .main-navigation li::after {display:none !important;}
-
+    .main-navigation .sub-menu .current-menu-item { border-bottom: none !important;}
 
 
     /*Content*/
