@@ -1,0 +1,128 @@
+# Translation of Themes - EmpowerWP in German
+# This file is distributed under the same license as the Themes - EmpowerWP package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2019-03-18 16:39:48+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: de\n"
+"Project-Id-Version: Themes - EmpowerWP\n"
+
+#. Description of the theme
+msgid "EmpowerWP is an incredibly flexible, multipurpose WordPress theme that can help you create an amazing website easier than ever, by drag and drop. It comes with a predesigned home page, 5 header designs and over 30 ready to use content sections that you can easily customize. It also has lots of customization options (video background, slideshow background, header content types, gradient overlays, etc) that will help you create a beautiful, unique website in no time. Empower is responsive so it works on mobile devices out of the box and it is also WooCommerce ready."
+msgstr "EmpowerWP ist ein unglaublich flexibles, Merzwecktheme von WordPress, das dir helfen kann eine wunderbare Webseite so einfach wie noch nie zu kreieren, durch Drag und Drop. Es kommt mit einer vordesignten Homepage, 5 header Designs und über 30 Bereiche, die sofort benutzbar sind und man einfach anpassen kann. Es hat auch viele Anpassungsoptionen (Video Hintergrund, Slideshow Hintergrund, Header Inhaltstypen, Farbverlauf Überdeckungen, etc.), die dir helfen werden eine wunderschöne, einzigartige Webseite schnell zu kreieren. EmpowerWP ist empfänglich, also funktioniert es auch auf mobilen Geräten und es ist auch bereit mit WooCommerce zu arbeiten."
+
+#. Theme Name of the theme
+msgid "EmpowerWP"
+msgstr "EmpowerWP"
+
+#: template-parts/blog-meta.php:13
+msgid "in"
+msgstr "in"
+
+#: template-parts/content-none.php:12
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "Es sieht so aus, als ob wir nicht das finden konnten, wonach du gesucht hast. Möglicherweise hilft eine Suche."
+
+#: template-parts/content-none.php:9
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Es gibt keine passenden Suchergebnisse. Bitte versuche es mit anderen Suchbegriffen."
+
+#: template-parts/content-none.php:7
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "Bereit, deinen ersten Beitrag zu veröffentlichen? <a href=\"%1$s\">Starte hier</a>."
+
+#: template-parts/content-none.php:4
+msgid "Nothing Found"
+msgstr "Es konnte nichts gefunden werden."
+
+#: template-parts/content-single.php:38
+msgid "Previous post:"
+msgstr "Vorheriger Beitrag:"
+
+#: template-parts/content-single.php:37
+msgid "Previous:"
+msgstr "Vorherige:"
+
+#: template-parts/content-single.php:34
+msgid "Next post:"
+msgstr "Nächster Beitrag:"
+
+#: template-parts/content-single.php:33
+msgid "Next:"
+msgstr "Weiter:"
+
+#: template-parts/content-single.php:20
+msgid "Page"
+msgstr "Seite"
+
+#: template-parts/content-single.php:16 template-parts/content-page.php:6
+msgid "Pages:"
+msgstr "Seiten:"
+
+#: template-parts/content-post-meta.php:10
+#: template-parts/content-post-single-header.php:12
+#: template-parts/blog-meta.php:14
+msgid "on"
+msgstr "on"
+
+#: template-parts/content-post-meta.php:8
+#: template-parts/content-post-single-header.php:11
+#: template-parts/blog-meta.php:12
+msgid "by"
+msgstr "von"
+
+#: inc/admin.php:49
+msgid "To enable all the theme features, please install the companion plugin"
+msgstr "Um alle Theme-Funktionen zu aktivieren installiere bitte das Companion Plugin"
+
+#: inc/blog-options.php:9
+msgid "Show author bio in sidebar"
+msgstr "Autor-Biogr. in Seitenleiste anzeigen"
+
+#: functions.php:166
+msgid "Y"
+msgstr "Y"
+
+#: functions.php:161
+msgid "Built using WordPress and the %s"
+msgstr "Erstellt mit WordPress und dem %s"
+
+#: functions.php:146
+msgid "Mesmerize Companion plugin adds drag and drop functionality and many other features to the EmpowerWP theme."
+msgstr "Mesmerize Companion Plugin fügt Drag-and-Drop-Funktionalität und viele andere Funktionen zum EmpowerWP Theme hinzu."
+
+#: functions.php:142
+msgid "Thank you for choosing EmpowerWP!"
+msgstr "Danke, dass du EmpowerWP gewählt hast!"
+
+#: functions.php:138
+msgid "EmpowerWP PRO"
+msgstr "EmpowerWP PRO"
+
+#: functions.php:133
+msgid "EmpowerWP Demos"
+msgstr "EmpowerWP Demos"
+
+#: functions.php:128
+msgid "EmpowerWP Info"
+msgstr "EmpowerWP Info"
+
+#: sidebar.php:27
+msgid "About the author"
+msgstr "Über den Autor"
+
+#: sidebar.php:20
+msgid "Author bio info example. This area will appear only if the user Biographical Info is filled"
+msgstr "Autor-Biogr.-Info-Beispiel. Dieser Bereich wird nur erscheinen, falls die Biografie-Information des Benutzers ausgefüllt ist."
+
+#. Author URI of the theme
+msgid "https://extendthemes.com/"
+msgstr "https://extendthemes.com/"
+
+#. Author of the theme
+msgid "Extend Themes"
+msgstr "Extend Themes"

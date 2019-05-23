@@ -1,0 +1,43 @@
+/*
+Theme Name: Twenty Seventeen Child
+Description: Twenty Seventeen Child Theme
+Author: Daniel Hauk
+Template: twentyseventeen
+Version: 1.0.0
+Text Domain: twentyseventeen-child
+*/ 
+
+
+
+
+.navigation-top {background: #2F9B92;}
+
+/*--------------------------------------------------------------
+2.0 Media Queries
+--------------------------------------------------------------*/
+
+@media screen and (min-width: 48em) {
+
+    /*Navigation*/
+    .navigation-top {border-top:1px solid black; border-bottom: 1px solid black; padding: 2px}
+    .navigation-top .wrap {padding: 0px;}
+    .main-navigation li:hover {border-top: 5px solid white;}
+    .main-navigation a {
+        padding: 1.25em 1.25em;
+        margin: 0em 0em;
+        font-weight: 400;
+        font-size: 16px;
+        color: white !important;
+    }
+    .main-navigation .current-menu-item {
+        border-top: 5px solid white;
+        color: white;
+    }
+
+    /*Content*/
+    .site-content .wrap {max-width: 1600px }
+    .page-header {padding-bottom: 2em;}
+    .widget-area {max-width: 300px; float: right; width:36%;}
+    .content-area {float:left; width: 58%;}
+
+}

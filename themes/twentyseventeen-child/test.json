@@ -1,0 +1,279 @@
+{
+  "url": "http://werkswelt.de/?id=hohf",
+  "description": "Cafeteria im Keller des Geb\u00e4udes der Fakult\u00e4t Informatik",
+  "title": "Cafeteria \"Come IN\" Hohfederstra\u00dfe N\u00fcrnberg",
+  "meals": [
+    {
+      "category": "Essen 1",
+      "date_f": "20.05.",
+      "title": "Gnocchi mit K\u00e4se-Gem\u00fcseso\u00dfe ",
+      "prices": [
+        "2,29 \u20ac",
+        "3,30 \u20ac",
+        "4,58 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-20",
+      "types": [
+        "V"
+      ]
+    },
+    {
+      "category": "Essen 2",
+      "date_f": "20.05.",
+      "title": "Wildragout mit Cranberries und Pilzen ",
+      "prices": [
+        "2,65 \u20ac",
+        "3,65 \u20ac",
+        "5,30 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-20",
+      "types": [
+        "W"
+      ]
+    },
+    {
+      "category": "Essen 1",
+      "date_f": "21.05.",
+      "title": "Rindergeschnetzeltes mit Gem\u00fcsestreifen Reis",
+      "prices": [
+        "2,47 \u20ac",
+        "3,47 \u20ac",
+        "4,94 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-21",
+      "types": [
+        "R"
+      ]
+    },
+    {
+      "category": "Essen 2",
+      "date_f": "21.05.",
+      "title": "Spinat-Basilikum-Gnocchi mit Spargel und Kirschtomaten ",
+      "prices": [
+        "3,57 \u20ac",
+        "4,57 \u20ac",
+        "7,14 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-21",
+      "types": [
+        "veg"
+      ]
+    },
+    {
+      "category": "Essen 1",
+      "date_f": "22.05.",
+      "title": "K\u00fcrbiskernschnitzel vom H\u00e4hnchen mit Zitrone mit Linsensalat ",
+      "prices": [
+        "3,33 \u20ac",
+        "4,33 \u20ac",
+        "6,66 \u20ac"
+      ],
+      "is_today": true,
+      "date": "2019-05-22",
+      "types": [
+        "G"
+      ]
+    },
+    {
+      "category": "Essen 2",
+      "date_f": "22.05.",
+      "title": "S\u00fc\u00dfkartoffel-Spinat Eintopf mit Vollkornbaguette ",
+      "prices": [
+        "2,57 \u20ac",
+        "3,57 \u20ac",
+        "5,14 \u20ac"
+      ],
+      "is_today": true,
+      "date": "2019-05-22",
+      "types": []
+    },
+    {
+      "category": "Essen 1",
+      "date_f": "23.05.",
+      "title": "Spaghetti mit Soja-Bolognese ",
+      "prices": [
+        "1,89 \u20ac",
+        "3,30 \u20ac",
+        "3,78 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-23",
+      "types": [
+        "veg"
+      ]
+    },
+    {
+      "category": "Essen 2",
+      "date_f": "23.05.",
+      "title": "Sp\u00e4tzlepfanne mit Putenbruststreifen ",
+      "prices": [
+        "2,14 \u20ac",
+        "3,30 \u20ac",
+        "4,28 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-23",
+      "types": [
+        "G"
+      ]
+    },
+    {
+      "category": "Essen 1",
+      "date_f": "24.05.",
+      "title": "Pasta Tricolore mit buntem Gem\u00fcse ",
+      "prices": [
+        "1,75 \u20ac",
+        "3,30 \u20ac",
+        "3,50 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-24",
+      "types": [
+        "V"
+      ]
+    },
+    {
+      "category": "Essen 2",
+      "date_f": "24.05.",
+      "title": "MSC - Alaska-Seelachsfilet gebacken mit Zitrone , Kr\u00e4uter - Dip und Kartoffeln",
+      "prices": [
+        "2,92 \u20ac",
+        "3,92 \u20ac",
+        "5,84 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-24",
+      "types": [
+        "F",
+        "MSC"
+      ]
+    },
+    {
+      "category": "Essen 1",
+      "date_f": "27.05.",
+      "title": "H\u00e4hnchen Nuggets mit Cocktailso\u00dfe ",
+      "prices": [
+        "2,38 \u20ac",
+        "3,38 \u20ac",
+        "4,76 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-27",
+      "types": [
+        "G"
+      ]
+    },
+    {
+      "category": "Essen 2",
+      "date_f": "27.05.",
+      "title": "Kartoffelgulasch mit Paprika und Peperoncini ",
+      "prices": [
+        "1,85 \u20ac",
+        "3,30 \u20ac",
+        "3,70 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-27",
+      "types": [
+        "veg"
+      ]
+    },
+    {
+      "category": "Essen 1",
+      "date_f": "28.05.",
+      "title": "MSC - Hoki-Filet \"M\u00fcllerin Art\" mit Mandelschmelz ",
+      "prices": [
+        "2,45 \u20ac",
+        "3,45 \u20ac",
+        "4,90 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-28",
+      "types": [
+        "F",
+        "MSC"
+      ]
+    },
+    {
+      "category": "Essen 2",
+      "date_f": "28.05.",
+      "title": "Zwiebel-K\u00e4se-R\u00f6sti mit Quark-Gurken-Dip ",
+      "prices": [
+        "1,82 \u20ac",
+        "2,82 \u20ac",
+        "3,64 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-28",
+      "types": [
+        "V"
+      ]
+    },
+    {
+      "category": "Essen 1",
+      "date_f": "29.05.",
+      "title": "H\u00fctten Cordon Bleu vom Schwein mit Zitrone ",
+      "prices": [
+        "2,47 \u20ac",
+        "3,47 \u20ac",
+        "4,94 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-29",
+      "types": [
+        "S"
+      ]
+    },
+    {
+      "category": "Essen 2",
+      "date_f": "29.05.",
+      "title": "K\u00e4sesp\u00e4tzle mit R\u00f6stzwiebeln ",
+      "prices": [
+        "2,16 \u20ac",
+        "3,30 \u20ac",
+        "4,32 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-29",
+      "types": [
+        "V"
+      ]
+    },
+    {
+      "category": "Essen 1",
+      "date_f": "31.05.",
+      "title": "MSC - Alaska-Seelachsfilet gebacken mit Zitrone und Remouladenso\u00dfe ",
+      "prices": [
+        "2,32 \u20ac",
+        "3,32 \u20ac",
+        "4,64 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-31",
+      "types": [
+        "F",
+        "MSC"
+      ]
+    },
+    {
+      "category": "Essen 2",
+      "date_f": "31.05.",
+      "title": "Sojaragout mit Mungobohnen und Kokosso\u00dfe,Reis / Jambalaya ",
+      "prices": [
+        "1,85 \u20ac",
+        "3,30 \u20ac",
+        "3,70 \u20ac"
+      ],
+      "is_today": false,
+      "date": "2019-05-31",
+      "types": [
+        "veg"
+      ]
+    }
+  ],
+  "address": "Hohfederstra\u00dfe 40, 90489 N\u00fcrnberg"
+}
