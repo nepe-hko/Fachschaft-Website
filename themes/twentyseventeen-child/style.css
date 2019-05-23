@@ -19,9 +19,9 @@ Text Domain: twentyseventeen-child
 @media screen and (min-width: 48em) {
 
     /*Navigation*/
-    .navigation-top {border-top:1px solid black; border-bottom: 1px solid black; padding: 2px}
+    .navigation-top {border:none;}
     .navigation-top .wrap {padding: 0px;}
-    .main-navigation li:hover {border-top: 5px solid white;}
+    .main-navigation li:hover {border-bottom: 7px solid white;}
     .main-navigation a {
         padding: 1.25em 1.25em;
         margin: 0em 0em;
@@ -30,9 +30,17 @@ Text Domain: twentyseventeen-child
         color: white !important;
     }
     .main-navigation .current-menu-item {
-        border-top: 5px solid white;
+        border-bottom: 7px solid white !important;
         color: white;
     }
+    /*Sub-Navigation*/
+    .main-navigation .sub-menu li:hover {border: none;}
+    .main-navigation li:hover .sub-menu {display:block; left:-50px; top:64px}
+    .main-navigation ul ul {top:71px; background-color: darkgrey}
+    .main-navigation li::before {display:none !important;}
+    .main-navigation li::after {display:none !important;}
+
+
 
     /*Content*/
     .site-content .wrap {max-width: 1600px }
