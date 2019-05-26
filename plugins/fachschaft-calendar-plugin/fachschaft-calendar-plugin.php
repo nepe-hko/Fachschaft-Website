@@ -203,7 +203,7 @@ class Calendar{
 
   }
 
-  public function markeDay($event_day, $event_month, $event_year){
+  public function markeDay($event_days, $event_months, $event_years){
 
     $output = '<table class="calendar">';
     $output .='<caption>'.$this->date_info['month'].' '.$this->year.'</caption>';
@@ -220,18 +220,22 @@ class Calendar{
       $output .= '<td colspan="' .$this->day_of_week .'"></td>';
     }
     $current_day = 1;
+    $counter =0;
 
     while ($current_day <= $this->num_days) {
       if ($this->day_of_week == 7) {
         $this->day_of_week = 0;
         $output .= '</tr><tr>';
       }
-      if ($current_day == $event_day) {
+
+      if ($current_day == $event_days[$counter]) {
         $output .= '<td class="day event" style="background: #f970f7;">' .$current_day .'</td>';
+        $counter++;
       }
       else {
         $output .= '<td class="day">' .$current_day .'</td>';
       }
+
 
       $current_day++;
       $this->day_of_week++;
@@ -251,21 +255,38 @@ class Calendar{
 }
 
 function printCalendar(){
-  $calendar = new Calendar(5,2019);
-  // $calendar->markeDay(12,5,2019);
-  //split date
-  $parts = explode('.', $date);
-  $day = $parts[0];
-  $month = $parts[1];
-  $year = $parts[2];
 
-  $calendar->markeDay($day,$month,$year);
+  // $calendar->markeDay(12,5,2019);
+  //get Event dates from db -> meta_value of _calendar_event_value_key
+
+  $days =array();
+  $months =array();
+  $years =array();
+  //test Data
+
+  $events = array('1.5.2019', '21.5.2019', '6.6.2019', '31.5.2019', '11.5.2019');
+  function date_sort($a, $b) {
+      return strtotime($a) - strtotime($b);
+  }
+  usort($events, "date_sort");
+
+  //// TODO: get post meta
+  // array_push($events,get_post_meta(get_the_ID(),'_calendar_event_value_key'));
+
+
+  //split date
+  foreach ($events as $date) {
+    $parts = explode('.', $date);
+    array_push($days, $parts[0]);
+    array_push($months, $parts[1]);
+    array_push($years, $parts[2]);
+  }
+  $months_with_events = array_unique($months);
+  $years_with_events = array_unique($years);
+
+  $calendar = new Calendar(5,2019);
+
+  return $calendar->markeDay($days,$months,$years);
 }
 
-
 add_shortcode('calendar', 'printCalendar');
-
-
-
-
-//
