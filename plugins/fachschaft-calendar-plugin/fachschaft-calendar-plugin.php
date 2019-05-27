@@ -21,8 +21,7 @@ if(!defined('ABSPATH'))
   die;
 }
 
-class CalendarPlugin
-{
+class CalendarPlugin{
     protected static $_instance = null; // Singleton instance
     public static function get_instance() {
       if (null === self::$_instance) {
@@ -67,7 +66,7 @@ class CalendarPlugin
     	);
     	register_post_type( 'calendar_post_type', $public_pt_args );
     }
-}
+  }
 
 if(class_exists('CalendarPlugin'))
 {
@@ -112,7 +111,7 @@ function calendar_event_callback($post){
   // echo "Test Date Picker: </br><div><p>Date: <input type='text' id='datepicker'></p> </div>";
   echo '<label for="calendar_event_field">Datum: </lable>';
   echo "<input type='text' id='datepicker' name='calendar_event_field' value='". esc_attr($value) ."' size='25'/>";
-?>
+  ?>
         <script>
           jQuery(document).ready(function() {
               jQuery( "#datepicker" ).datepicker({ dateFormat: 'dd.mm.yy' }).val();
@@ -264,13 +263,28 @@ function printCalendar(){
   $years =array();
   //test Data
 
-  $events = array('1.5.2019', '21.5.2019', '6.6.2019', '31.5.2019', '11.5.2019');
+  // $events = array('1.5.2019', '21.5.2019', '6.6.2019', '31.5.2019', '11.5.2019');
+  $events = array();
+  // $events = get_post_custom_values('_calendar_event_value_key');
+  // $events = get_post_meta(get_the_ID(,'_calendar_event_value_key');
+  // var_dump($events);
+  global $wpdb;
+  $from_db = $wpdb->get_results("SELECT meta_value FROM `wp_postmeta` WHERE meta_key = '_calendar_event_value_key';");
+  $events = array();
+  foreach ($from_db as $value) {
+    array_push($events, $value->meta_value);
+  }
+  print_r($events);
+
   function date_sort($a, $b) {
       return strtotime($a) - strtotime($b);
   }
   usort($events, "date_sort");
 
   //// TODO: get post meta
+
+
+
   // array_push($events,get_post_meta(get_the_ID(),'_calendar_event_value_key'));
 
 
