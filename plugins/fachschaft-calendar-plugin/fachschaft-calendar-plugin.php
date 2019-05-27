@@ -65,6 +65,7 @@ class CalendarPlugin{
         'menu_icon' =>  'dashicons-calendar-alt',
     	);
     	register_post_type( 'calendar_post_type', $public_pt_args );
+
     }
   }
 
@@ -80,6 +81,15 @@ register_activation_hook(__FILE__, array($fachschaftCalendarPlugin, 'activate'))
 //deactivation
 register_deactivation_hook(__FILE__, array($fachschaftCalendarPlugin, 'deactivate'));
 
+
+add_action( 'wp_enqueue_scripts', 'fachschaft_calendar_add_stylesheet' );
+
+function fachschaft_calendar_add_stylesheet() {
+    // Respects SSL, Style.css is relative to the current file
+    wp_register_style( 'fachschaft-calendar-plugin-styles-css', plugins_url('/css/fachschaft_calendar_plugin_styles.css', __FILE__));
+    wp_enqueue_style('fachschaft-calendar-plugin-styles-css');
+}
+
 function add_date_picker(){
   //jQuery UI datepicker file
   wp_enqueue_script('jquery-ui-datepicker');
@@ -87,6 +97,8 @@ function add_date_picker(){
   wp_enqueue_script('custom-datepicker', get_stylesheet_directory_uri().'/js/datepicker.js', array('jquery'));
   //jQuery UI theme css file
   wp_enqueue_style('e2b-admin-ui-css','http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');
+  wp_enqueue_style('fachschaft-calendar-plugin-styles-css','/css/fachschaft_calendar_plugin_styles.css');
+
 }
 //frontend: wp_enqueue_scripts
 //backend: admin_enqueue_scripts
@@ -143,6 +155,7 @@ function save_calendar_event_data($post_id){
 
 
 class Calendar{
+
   private $month;
   private $year;
   private $day_of_week;
@@ -204,7 +217,8 @@ class Calendar{
 
   public function markeDay($event_days, $event_months, $event_years){
 
-    $output = '<table class="calendar">';
+    $output = '<div class="fachschaft_calendar_plugin_calendar_table">';
+    $output .= '<table class="calendar">';
     $output .='<caption>'.$this->date_info['month'].' '.$this->year.'</caption>';
     $output .='<tr>';
 
@@ -228,7 +242,7 @@ class Calendar{
       }
 
       if ($current_day == $event_days[$counter]) {
-        $output .= '<td class="day event" style="background: #f970f7;">' .$current_day .'</td>';
+        $output .= '<td class="day event">' .$current_day .'</td>';
         $counter++;
       }
       else {
@@ -247,6 +261,7 @@ class Calendar{
 
     $output .= '</tr>';
     $output .= '</table>';
+    $output .= '</div>';
 
     //print calendar table
     return $output;
@@ -274,18 +289,11 @@ function printCalendar(){
   foreach ($from_db as $value) {
     array_push($events, $value->meta_value);
   }
-  print_r($events);
 
   function date_sort($a, $b) {
       return strtotime($a) - strtotime($b);
   }
   usort($events, "date_sort");
-
-  //// TODO: get post meta
-
-
-
-  // array_push($events,get_post_meta(get_the_ID(),'_calendar_event_value_key'));
 
 
   //split date
@@ -304,3 +312,30 @@ function printCalendar(){
 }
 
 add_shortcode('calendar', 'printCalendar');
+
+function printEvents() {
+  global $wpdb;
+  $query = $wpdb->get_results("SELECT post_id,meta_value, post_title, post_content FROM `wp_postmeta` JOIN `wp_posts` ON wp_postmeta.post_id=wp_posts.ID WHERE meta_key = '_calendar_event_value_key' ORDER BY meta_value;");
+  $event_dates = array();
+  $event_title = array();
+  $event_content = array();
+  foreach ($query as $value) {
+    array_push($event_dates, $value->meta_value);
+    array_push($event_title, $value->post_title);
+    array_push($event_content, $value->post_content);
+  }
+
+  //generate $output
+  $output = '<div class="fachschaft_calendar_plugin_event_list">';
+  for ($i=0; $i < sizeof($event_dates); $i++) {
+    $output .= '<h1>'.$event_title[$i] .'</h1>';
+    $output .= '<h2>'.' am '.$event_dates[$i].'</h2>';
+
+    $output .= '<text>'.$event_content[$i] .'</text>';
+  }
+  $output .= '</div>';
+
+  return $output;
+}
+
+add_shortcode('events', 'printEvents');
