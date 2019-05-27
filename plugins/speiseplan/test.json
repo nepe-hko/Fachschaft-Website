@@ -1,0 +1,151 @@
+{
+    "url": "http://werkswelt.de/?id=hohf",
+    "description": "Cafeteria im Keller des Geb\u00e4udes der Fakult\u00e4t Informatik",
+    "title": "Cafeteria \"Come IN\" Hohfederstra\u00dfe N\u00fcrnberg",
+    "meals": [{
+        "category": "Essen 1",
+        "date_f": "27.05.",
+        "title": "H\u00e4hnchen Nuggets mit Cocktailso\u00dfe ",
+        "prices": ["2,38 \u20ac", "3,38 \u20ac", "4,76 \u20ac"],
+        "is_today": true,
+        "date": "2019-05-27",
+        "types": ["G"]
+    }, {
+        "category": "Essen 2",
+        "date_f": "27.05.",
+        "title": "Kartoffelgulasch mit Paprika und Peperoncini ",
+        "prices": ["1,85 \u20ac", "3,30 \u20ac", "3,70 \u20ac"],
+        "is_today": true,
+        "date": "2019-05-27",
+        "types": ["veg"]
+    }, {
+        "category": "Essen 1",
+        "date_f": "28.05.",
+        "title": "MSC - Hoki-Filet \"M\u00fcllerin Art\" mit Mandelschmelz ",
+        "prices": ["2,45 \u20ac", "3,45 \u20ac", "4,90 \u20ac"],
+        "is_today": false,
+        "date": "2019-05-28",
+        "types": ["F", "MSC"]
+    }, {
+        "category": "Essen 2",
+        "date_f": "28.05.",
+        "title": "Zwiebel-K\u00e4se-R\u00f6sti mit Quark-Gurken-Dip ",
+        "prices": ["1,82 \u20ac", "2,82 \u20ac", "3,64 \u20ac"],
+        "is_today": false,
+        "date": "2019-05-28",
+        "types": ["V"]
+    }, {
+        "category": "Essen 1",
+        "date_f": "29.05.",
+        "title": "H\u00fctten Cordon Bleu vom Schwein mit Zitrone ",
+        "prices": ["2,47 \u20ac", "3,47 \u20ac", "4,94 \u20ac"],
+        "is_today": false,
+        "date": "2019-05-29",
+        "types": ["S"]
+    }, {
+        "category": "Essen 2",
+        "date_f": "29.05.",
+        "title": "K\u00e4sesp\u00e4tzle mit R\u00f6stzwiebeln ",
+        "prices": ["2,16 \u20ac", "3,30 \u20ac", "4,32 \u20ac"],
+        "is_today": false,
+        "date": "2019-05-29",
+        "types": ["V"]
+    }, {
+        "category": "Essen 1",
+        "date_f": "31.05.",
+        "title": "MSC - Alaska-Seelachsfilet gebacken mit Zitrone und Remouladenso\u00dfe ",
+        "prices": ["2,32 \u20ac", "3,32 \u20ac", "4,64 \u20ac"],
+        "is_today": false,
+        "date": "2019-05-31",
+        "types": ["F", "MSC"]
+    }, {
+        "category": "Essen 2",
+        "date_f": "31.05.",
+        "title": "Sojaragout mit Mungobohnen und Kokosso\u00dfe,Reis / Jambalaya ",
+        "prices": ["1,85 \u20ac", "3,30 \u20ac", "3,70 \u20ac"],
+        "is_today": false,
+        "date": "2019-05-31",
+        "types": ["veg"]
+    }, {
+        "category": "Essen 1",
+        "date_f": "03.06.",
+        "title": "H\u00e4hnchenbrustfilet mit Champignon-Tomatensugo ",
+        "prices": ["2,25 \u20ac", "3,25 \u20ac", "4,50 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-03",
+        "types": ["G"]
+    }, {
+        "category": "Essen 2",
+        "date_f": "03.06.",
+        "title": "bunte Gnocchipfanne auf Kokosspinat",
+        "prices": ["2,38 \u20ac", "3,38 \u20ac", "4,76 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-03",
+        "types": []
+    }, {
+        "category": "Essen 1",
+        "date_f": "04.06.",
+        "title": "Schupfnudeln mit Tomaten und Hirtenk\u00e4se ",
+        "prices": ["2,29 \u20ac", "3,30 \u20ac", "4,58 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-04",
+        "types": ["V"]
+    }, {
+        "category": "Essen 2",
+        "date_f": "04.06.",
+        "title": "Puten Cordon Bleu mit Zitrone ",
+        "prices": ["2,38 \u20ac", "3,38 \u20ac", "4,76 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-04",
+        "types": ["G"]
+    }, {
+        "category": "Essen 1",
+        "date_f": "05.06.",
+        "title": "Putengeschnetzeltes mit Erdnu\u00dfso\u00dfe ",
+        "prices": ["2,47 \u20ac", "3,47 \u20ac", "4,94 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-05",
+        "types": ["G"]
+    }, {
+        "category": "Essen 2",
+        "date_f": "05.06.",
+        "title": "Kartoffel-Gem\u00fcseauflauf mit Lauchcremeso\u00dfe ",
+        "prices": ["2,23 \u20ac", "3,30 \u20ac", "4,46 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-05",
+        "types": []
+    }, {
+        "category": "Essen 1",
+        "date_f": "06.06.",
+        "title": "Vollkorn Pilz Bratling mit Chili-Ingwer-So\u00dfe ",
+        "prices": ["2,18 \u20ac", "3,18 \u20ac", "4,36 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-06",
+        "types": ["veg"]
+    }, {
+        "category": "Essen 2",
+        "date_f": "06.06.",
+        "title": "Spaghetti Bolognese ",
+        "prices": ["2,32 \u20ac", "3,32 \u20ac", "4,64 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-06",
+        "types": ["R"]
+    }, {
+        "category": "Essen 1",
+        "date_f": "07.06.",
+        "title": "2 Bremer Fischfrikadellen mit Dillmayonnaise und Kartoffelsalat ",
+        "prices": ["2,82 \u20ac", "3,82 \u20ac", "5,64 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-07",
+        "types": ["F", "MSC"]
+    }, {
+        "category": "Essen 2",
+        "date_f": "07.06.",
+        "title": "Blumenkohlragout \"Indische Art\", scharf mit Basmatireis",
+        "prices": ["2,29 \u20ac", "3,30 \u20ac", "4,58 \u20ac"],
+        "is_today": false,
+        "date": "2019-06-07",
+        "types": ["veg"]
+    }],
+    "address": "Hohfederstra\u00dfe 40, 90489 N\u00fcrnberg"
+}

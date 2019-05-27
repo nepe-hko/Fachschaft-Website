@@ -1,0 +1,15 @@
+.speiseplanWidget {border: 1px solid #eee;}
+.speiseplanWidget td { padding-right: 10px !important; padding-left: 10px !important}
+.speiseplanWidget .title { border-right:1px solid #eee; font-weight: 600;}
+.speiseplanWidget .price { white-space: nowrap}
+
+
+.speiseplan .date td {
+    background-color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.speiseplan .price { white-space: nowrap;}
+
+.speiseplan .whitespace {height: 1px; background-color: #eee}
