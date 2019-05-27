@@ -20,28 +20,27 @@ Text Domain: twentyseventeen-child
 
     /*Navigation*/
     .navigation-top {border:none;}
-    .navigation-top .wrap {padding: 0;}
-    .main-navigation li {border-bottom: 7px solid #2F9B92;}
-    .main-navigation li:hover {border-bottom: 7px solid white;}
-    .main-navigation a {
-        padding: 1.25em 1.25em;
-        margin: 0 0;
-        font-weight: 400;
-        font-size: 16px;
-        color: white !important;
-    }
-    .main-navigation .current-menu-item {
-        border-bottom: 7px solid white !important;
-        color: white;
-    }
+    .navigation-top .wrap {padding: 0 0 0 80px; float:left;}
+
+    .navigation-top .logo {float:right; margin-right: 20px;}
+    .navigation-top .logo img { height:50px; display: none;}
+
+    .menu > .menu-item {padding: 1.25em 1.25em; margin: 0 0;}
+    .menu > .menu-item > a {padding: 0; margin: 0; font-weight: 400; font-size: 16px; color: black}
+    .menu > .menu-item:last-child {border-bottom: 7px solid #2F9B92;}
+    .menu > .current-menu-item,.menu-item:hover,.menu-item:last-child:hover {border-bottom: 7px solid white !important} /*Weißer Balken unten*/
+    .menu > li.menu-item-has-children:hover {border-bottom: none;}
+
 
     /*Sub-Navigation*/
-    .main-navigation .sub-menu li:hover {border: none;}
-    .main-navigation li:hover .sub-menu {display:block; left:-50px; top:64px}
-    .main-navigation ul ul {top:71px; background-color: darkgrey}
-    .main-navigation li::before {display:none !important;}
+    .main-navigation li:hover .sub-menu {display:block;} /*Position of Submenu*/
+    .main-navigation li::before {display:none !important;} /*Pfeil deaktivieren*/
     .main-navigation li::after {display:none !important;}
-    .main-navigation .sub-menu .current-menu-item { border-bottom: none !important;}
+    .sub-menu  {border:1px solid #666; background-color: darkgrey; left:50%; top:64px}
+    .sub-menu a {background-color: #767676}
+    .sub-menu li:hover {border: none;}
+
+    .sub-menu .sub-menu .current-menu-item { border-bottom: none !important;}
 
 
     /*Content*/
