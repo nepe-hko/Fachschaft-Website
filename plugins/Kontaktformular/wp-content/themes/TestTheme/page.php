@@ -1,0 +1,1 @@
+<!--Seite für statische Inhalte-->

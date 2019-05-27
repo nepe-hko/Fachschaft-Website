@@ -1,0 +1,1 @@
+<!--Template für die Suche im Wordpress-System-->
