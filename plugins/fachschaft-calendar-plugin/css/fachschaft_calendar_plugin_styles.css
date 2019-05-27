@@ -4,3 +4,8 @@
 .fachschaft_calendar_plugin_calendar_table .event {
    background: magenta;
  }
+
+.fachschaft_calendar_plugin_widget .event {
+  cursor: pointer;
+  background: rgb(138, 233, 147);
+}
