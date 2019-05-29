@@ -12,10 +12,8 @@ class SpeiseplanPlugin extends WP_Widget
 
     private static $instance;
 
-    public static function getInstance()
-    {
-        if (self::$instance === null) 
-        {
+    public static function getInstance(){
+        if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
@@ -30,7 +28,7 @@ class SpeiseplanPlugin extends WP_Widget
 
     public function toFrontend() 
     {
-        wp_enqueue_style('menu', plugins_url( 'css/menu.css', __FILE__ ));
+        
         $json = $this->fetchFromApi("complete");
 
         $html = "<table class=\"speiseplan\">";
@@ -50,13 +48,12 @@ class SpeiseplanPlugin extends WP_Widget
             );
             $date = $meal->date;
             $timestamp = strtotime($date);
-            $dayofWeek = date("D",$timestamp);
-            $dayofWeek = strtr($dayofWeek, $translate);
+            $dayofWeek = strtr(date("D",$timestamp), $translate);
             $day = date("d", $timestamp);
             $month = date("m", $timestamp);
 
             if($date !== $lastDate) {
-                $html .= "<tr class=\"date\"><td colspan=\"2\">$dayofWeek, $day.$month</td></tr><tr><td class=\"whitespace\" colspan=\"2\"></td></tr>";
+                $html .= "<tr class=\"date\"><td colspan=\"2\">$dayofWeek&nbsp;&nbsp;-&nbsp;&nbsp; $day.$month</td></tr><tr class=\"whitespace\"><td colspan=\"2\"></td></tr>";
             }
             $html .= "<tr><td class=\"title\">" . $meal->title . "</td>";
             $html .= "<td class=\"price\">" . $meal->prices[0] . "</td></tr>";
@@ -139,7 +136,8 @@ class SpeiseplanPlugin extends WP_Widget
     }
 
     # update widget
-    public function update( $new_instance, $old_instance ) {
+    public function update( $new_instance, $old_instance )
+    {
         $instance = array();
         $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
         return $instance;
