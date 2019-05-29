@@ -8,7 +8,31 @@ jQuery(document).ready(function($){
             return false;                 // blockiert Action-Methode
         }
         else
-		{	
+		{
+
+            var input_name = $('input:eq(0)').val(),
+                input_mail = $('input:eq(1)').val(),
+                input_subject = $('input:eq(2)').val(),
+                input_message = $('textarea').val();
+
+            $.post('send.php', {name: input_name, email: input_mail, subject: input_subject, message: input_message}, function(data)
+            {
+                $('#answer').text('Danke für deine Nachricht');
+
+            });
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            /*	
             var that = $(this),                               // that: beinhaltet alle Daten aus aktuellen Objekt wo man sich gerade befindet, also form
             url = that.attr('action'),
             method = that.attr('method'),
@@ -31,12 +55,11 @@ jQuery(document).ready(function($){
                         $('#answer').html(response);
                     }
 				});
-				return false; 
+				return false; */
 				 
         }           
 	 });
-	 return false;
+	// return false;
 });
-
 
 

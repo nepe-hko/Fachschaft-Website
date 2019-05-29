@@ -11,8 +11,10 @@
         $headers = 'From: ' . $mailFrom;
         $body = "Du hast eine Nachricht von " . $name . " erhalten" . "\n\n" . $message;
 
+
+
      /*   wp_mail($mailTo, $subject, $body, $headers);  */
-        echo "Vielen Dank für deine Nachricht!"; 
+     //   echo "Vielen Dank für deine Nachricht!"; 
     }
     
 ?>

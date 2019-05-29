@@ -9,6 +9,9 @@ function kf_add_scripts()
     //JS hinzufügen
     wp_enqueue_script('kf-main-script', plugins_url(). '/Kontaktformular/js/main.js');
     
+ 
+    
 }
-add_action('wp_enqueue_scripts','kf_add_scripts');
+add_action('wp_enqueue_scripts','kf_add_scripts'); //frontend
+add_action('admin_enqueue_scripts', 'kf_add_scripts'); //backend
 ?>
