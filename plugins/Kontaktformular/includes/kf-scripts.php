@@ -8,9 +8,6 @@ function kf_add_scripts()
     wp_enqueue_script('js-snippet');
     //JS hinzufügen
     wp_enqueue_script('kf-main-script', plugins_url(). '/Kontaktformular/js/main.js');
-    // CSS 
-    //   wp_enqueue_style('kf-main-style', '/wp-content/plugins/Kontaktformular/css/style.css');
-
 }
 add_action('wp_enqueue_scripts','kf_add_scripts');
 ?>

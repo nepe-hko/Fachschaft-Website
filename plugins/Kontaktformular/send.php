@@ -6,13 +6,14 @@
         $mailFrom = $_POST['mail'];
         $subject = $_POST['subject'];
         $message = $_POST['message'];
-
+       
         $mailTo = "Vero@localhost";
         $headers = 'From: ' . $mailFrom;
         $body = "Du hast eine Nachricht von " . $name . " erhalten" . "\n\n" . $message;
 
-     /*   wp_mail($mailTo, $subject, $body, $headers);  */
+        
+        mail($mailTo, $subject, $body, $headers);  
         echo "Vielen Dank für deine Nachricht!"; 
     }
-    
+
 ?>

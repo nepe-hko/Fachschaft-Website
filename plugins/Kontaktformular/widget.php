@@ -1,8 +1,5 @@
 <?php
-
-// Start-Video Widget erstellen: https://www.youtube.com/watch?v=y_giwr7kvsY
-
-
+/*
 class symbol_widget extends WP_Widget {
 
 	function symbol_widget() {
@@ -12,11 +9,11 @@ class symbol_widget extends WP_Widget {
 
 	function widget( $args, $instance ) {
         // Widget output
-     /*   echo '<p id="brief" style="font-size: 100%; 
+        echo '<p id="brief" style="font-size: 100%; 
                             vertical-align: top; 
                             text-align: right;
                             margin: 2px 2px;"
-              >&#9993; Eine Nachricht an uns!</p>';*/
+              >&#9993; Eine Nachricht an uns!</p>';
 
               ?>
               <form id="formId" action="send.php" method="POST" class="ajax">  
@@ -51,5 +48,5 @@ function kontaktformular_symbol_widget() {
 add_action( 'widgets_init', 'kontaktformular_symbol_widget' );
 
 
-
+*/
 ?>
