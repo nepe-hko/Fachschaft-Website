@@ -242,13 +242,18 @@ class Calendar{
       }
 
       if ($current_day == $event_days[$counter]) {
-        $output .= '<td class="day event">' .$current_day .'</td>';
+        if ($current_day < 10) {
+          $output .= '<td class="day event" id="0' .$current_day .$event_months[$counter] .$event_years[$counter].'">' .$current_day .'</td>';
+        }
+        else {
+          $output .= '<td class="day event" id="' .$current_day .$event_months[$counter] .$event_years[$counter].'">' .$current_day .'</td>';
+        }
+
         $counter++;
       }
       else {
         $output .= '<td class="day">' .$current_day .'</td>';
       }
-
 
       $current_day++;
       $this->day_of_week++;
@@ -262,7 +267,18 @@ class Calendar{
     $output .= '</tr>';
     $output .= '</table>';
     $output .= '</div>';
-
+    //remove
+    $output .= '</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>';
+    ?>
+    <script>
+        jQuery(document).ready(function() {
+        jQuery(".event").click(function(event) {
+          var url  = window.location.href;
+          jQuery('#' + event.target.id + '_scrollPos').get(0).scrollIntoView();
+        });
+      });
+    </script>
+    <?php
     //print calendar table
     return $output;
 }
@@ -276,26 +292,25 @@ function printCalendar(){
   $days =array();
   $months =array();
   $years =array();
-  //test Data
+  $events =array();
 
-  // $events = array('1.5.2019', '21.5.2019', '6.6.2019', '31.5.2019', '11.5.2019');
-  $events = array();
-  // $events = get_post_custom_values('_calendar_event_value_key');
-  // $events = get_post_meta(get_the_ID(,'_calendar_event_value_key');
-  // var_dump($events);
-  global $wpdb;
-  $from_db = $wpdb->get_results("SELECT meta_value FROM `wp_postmeta` WHERE meta_key = '_calendar_event_value_key' ORDER BY meta_value;");
-
-
-  $events = array();
-  foreach ($from_db as $value) {
-    array_push($events, $value->meta_value);
+  $all_post_ids = get_posts(array(
+    'fields'          => 'ids',
+    'posts_per_page'  => -1,
+    'post_type' => 'calendar_post_type'
+  ));
+  $event_dates = array();
+  $post_ids = array_unique($all_post_ids);
+  foreach ($post_ids as $value) {
+    array_push($event_dates,get_post_meta($value,'_calendar_event_value_key'));
   }
-
-  // function date_sort($a, $b) {
-  //     return strtotime($a) - strtotime($b);
-  // }
-  // usort($events, "date_sort");
+  for ($i=0; $i < sizeof($event_dates); $i++) {
+    array_push($events, $event_dates[$i][0]);
+  }
+  function date_sort($a, $b) {
+      return strtotime($a) - strtotime($b);
+  }
+  usort($events, "date_sort");
 
 
   //split date
@@ -321,19 +336,28 @@ function printEvents() {
   $event_dates = array();
   $event_title = array();
   $event_content = array();
+  $event_dates_cleaned = array();
   foreach ($query as $value) {
     array_push($event_dates, $value->meta_value);
     array_push($event_title, $value->post_title);
     array_push($event_content, $value->post_content);
+    $string= $value->meta_value;
+    $res = str_replace(".", "", $string);
+    array_push($event_dates_cleaned, $res);
   }
 
   //generate $output
   $output = '<div class="fachschaft_calendar_plugin_event_list">';
   for ($i=0; $i < sizeof($event_dates); $i++) {
+
+    $output .= '<div id="' .$event_dates_cleaned[$i].'_scrollPos">';
     $output .= '<h1>'.$event_title[$i] .'</h1>';
     $output .= '<h2>'.' am '.$event_dates[$i].'</h2>';
 
     $output .= '<text>'.$event_content[$i] .'</text>';
+    $output .= '</div>';
+    //remove
+    $output .= '</br></br></br></br></br></br></br></br>';
   }
   $output .= '</div>';
 
