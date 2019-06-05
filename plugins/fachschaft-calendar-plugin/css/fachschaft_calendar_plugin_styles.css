@@ -1,5 +1,5 @@
 .fachschaft_calendar_plugin_event_list h2,  .fachschaft_calendar_plugin_event_list h3{
-  padding-top: 0;
+  padding-top: 10px;
 }
 .fachschaft_calendar_plugin_event_list h3 {
   color: rgb(128, 39, 82);
@@ -25,4 +25,18 @@
 }
 .event {
   cursor: pointer;
+}
+.fachschaft_calendar_plugin_event_list h2 {
+  width: 100%;
+}
+.fachschaft_calendar_plugin_event_list h2 i {
+  float: right;
+}
+
+.fachschaft_calendar_plugin_event_list .fas:before{
+  font-size: 40px;
+  color: #828282;
+  float: right;
+  padding-right: 20px;
+  padding-top: 10px;
 }

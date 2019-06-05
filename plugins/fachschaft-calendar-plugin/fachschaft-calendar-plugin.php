@@ -91,6 +91,10 @@ function fachschaft_calendar_add_stylesheet() {
     // Respects SSL, Style.css is relative to the current file
     wp_register_style( 'fachschaft-calendar-plugin-styles-css', plugins_url('/css/fachschaft_calendar_plugin_styles.css', __FILE__));
     wp_enqueue_style('fachschaft-calendar-plugin-styles-css');
+    //fontawesome.min.css
+    wp_register_style( 'font-awesome-css', plugins_url('/css/fontawesome.min.css', __FILE__));
+    wp_enqueue_style('font-awesome-css');
+
 }
 
 function add_date_picker(){
@@ -299,7 +303,7 @@ add_shortcode('calendar', 'printCalendar');
 function printEvents() {
   setlocale(LC_TIME, "de_DE");
   global $wpdb;
-  $query = $wpdb->get_results("SELECT post_id,meta_value, post_title, post_content, wp_terms.name as category FROM `wp_postmeta` JOIN `wp_posts` ON wp_postmeta.post_id=wp_posts.ID
+  $query = $wpdb->get_results("SELECT post_id,meta_value, post_title, post_content, wp_terms.name as category, term_id FROM `wp_postmeta` JOIN `wp_posts` ON wp_postmeta.post_id=wp_posts.ID
     JOIN `wp_term_relationships` ON wp_postmeta.post_id=wp_term_relationships.object_id
     JOIN `wp_terms` ON wp_term_relationships.term_taxonomy_id = wp_terms.term_id
     WHERE meta_key = '_calendar_event_value_key' ORDER BY meta_value;");
@@ -307,7 +311,7 @@ function printEvents() {
   foreach ($query as $value) {
     $string= $value->meta_value;
     $res = str_replace(".", "", $string);
-    array_push($events, array(strtotime($value->meta_value),$value->meta_value, $value->post_title,$value->post_content,$res, $value->post_id, $value->category));
+    array_push($events, array(strtotime($value->meta_value),$value->meta_value, $value->post_title,$value->post_content,$res, $value->post_id, $value->category,$value->term_id));
   }
 
 
@@ -340,12 +344,21 @@ function printEvents() {
         $output .= '<h1>'.$month_name.'</h1>';
       }
       $output .= '<div id="' .$events[$i][4].'_scrollPos">';
-      $output .= '<h2>'.$events[$i][2] .'</h2>';
+      $output .= '<h2>'.$events[$i][2];
+      //icon for Category
+      if ($events[$i][7] == 4) {
+        $output .= '<i class="fas fa-comments"></i></h2>';
+
+      }
+      elseif ($events[$i][7] == 3) {
+          $output .= '<i class="fas fa-dice"></i></h2>';
+      }
+      else {
+          $output .= '<i class="fas fa-calendar-alt"></i></h2>';
+      }
       $output .= '<h3>'.' am '.$events[$i][1].'</h3>';
 
-
-
-      // print_r($category_names[0][0]);
+      //category
       $output .= '<text>'.$events[$i][6] .'</br> </br></text>';
 
       $output .= '<text>'.$events[$i][3] .'</text>';
