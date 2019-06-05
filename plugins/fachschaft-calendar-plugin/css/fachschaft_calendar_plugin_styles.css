@@ -1,6 +1,19 @@
-.fachschaft_calendar_plugin_event_list h2 {
+.fachschaft_calendar_plugin_event_list h2,  .fachschaft_calendar_plugin_event_list h3{
   padding-top: 0;
 }
+.fachschaft_calendar_plugin_event_list h3 {
+  color: rgb(128, 39, 82);
+}
+.fachschaft_calendar_plugin_event_list h1 {
+  font-weight: bolder;
+}
+.fachschaft_calendar_plugin_event_list div {
+  padding: 10px;
+  border-style: solid;
+  border-width: thin;
+  border-color: rgb(102, 102, 102);
+}
+
 .fachschaft_calendar_plugin_calendar_table .event {
    background: magenta;
    cursor: pointer;

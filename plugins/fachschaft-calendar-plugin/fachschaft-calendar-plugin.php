@@ -61,12 +61,15 @@ class CalendarPlugin{
     		'has_archive' => true,
     		'rewrite' => true,
     		'query_var' => true,
+        'taxonomies' => array('category'),
         'supports' => array( 'title', 'editor', 'thumbnail'),
         'menu_icon' =>  'dashicons-calendar-alt',
     	);
     	register_post_type( 'calendar_post_type', $public_pt_args );
 
+
     }
+
   }
 
 if(class_exists('CalendarPlugin'))
@@ -96,8 +99,7 @@ function add_date_picker(){
   //custom datepicker js
   wp_enqueue_script('custom-datepicker', get_stylesheet_directory_uri().'/js/datepicker.js', array('jquery'));
   //jQuery UI theme css file
-  wp_enqueue_style('e2b-admin-ui-css','http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');
-  wp_enqueue_style('fachschaft-calendar-plugin-styles-css','/css/fachschaft_calendar_plugin_styles.css');
+  wp_enqueue_style('e2b-admin-ui-css','http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');;
 
 }
 //frontend: wp_enqueue_scripts
@@ -173,53 +175,26 @@ class Calendar{
       $this->day_of_week = $this->date_info['wday']-1;
     }
 
-  public function show(){
-    $output = '<table class="calendar">';
-    $output .='<caption>'.$this->date_info['month'].' '.$this->year.'</caption>';
-    $output .='<tr>';
 
-    // Display dayes of the week header
-    foreach ($this->days_of_week as $day) {
-      $output .= '<th class="header">' .$day . '</th>';
+  public function markeDay($events){
+
+    $event_days = array();
+    $event_months = array();
+    $event_years = array();
+
+    foreach ($events as $date) {
+      $parts = explode('.', $date[0]);
+      array_push($event_days, $parts[0]);
+      array_push($event_months, $parts[1]);
+      array_push($event_years, $parts[2]);
     }
-
-    $output .= '</tr><tr>';
-
-    if ($this->day_of_week >0) {
-      $output .= '<td colspan="' .$this->day_of_week .'"></td>';
-    }
-    $current_day = 1;
-
-    while ($current_day <= $this->num_days) {
-      if ($this->day_of_week == 7) {
-        $this->day_of_week = 0;
-        $output .= '</tr><tr>';
-      }
-
-      $output .= '<td class="day">' .$current_day .'</td>';
-
-      $current_day++;
-      $this->day_of_week++;
-    }
-
-    if ($this->day_of_week != 7) {
-      $remaining_days = 7 - $this->day_of_week;
-      $output .= '<td colspan="' .$remaining_days .'"></td>';
-    }
-
-    $output .= '</tr>';
-    $output .= '</table>';
-
-    //print calendar table
-    echo $output;
-
-  }
-
-  public function markeDay($event_days, $event_months, $event_years){
+    $time = current_time( 'mysql' );
+    list( $current_year, $current_month, $current_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $time );
 
     $output = '<div class="fachschaft_calendar_plugin_calendar_table">';
     $output .= '<table class="calendar">';
-    $output .='<caption>'.$this->date_info['month'].' '.$this->year.'</caption>';
+    $current_month_name = date_i18n( 'F', false, false);
+    $output .='<caption>'.$current_month_name.' '.$current_year.'</caption>';
     $output .='<tr>';
 
     // Display dayes of the week header
@@ -232,30 +207,30 @@ class Calendar{
     if ($this->day_of_week >0) {
       $output .= '<td colspan="' .$this->day_of_week .'"></td>';
     }
-    $current_day = 1;
+    $current_calendar_day = 1;
     $counter =0;
 
-    while ($current_day <= $this->num_days) {
+    while ($current_calendar_day <= $this->num_days) {
       if ($this->day_of_week == 7) {
         $this->day_of_week = 0;
         $output .= '</tr><tr>';
       }
 
-      if ($current_day == $event_days[$counter]) {
-        if ($current_day < 10) {
-          $output .= '<td class="day event" id="0' .$current_day .$event_months[$counter] .$event_years[$counter].'">' .$current_day .'</td>';
+      if ($current_calendar_day == $event_days[$counter] && $current_month == $event_months[$counter]  && $current_year == $event_years[$counter]) {
+        if ($current_calendar_day < 10) {
+          $output .= '<td class="day event" id="0' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
         }
         else {
-          $output .= '<td class="day event" id="' .$current_day .$event_months[$counter] .$event_years[$counter].'">' .$current_day .'</td>';
+          $output .= '<td class="day event" id="' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
         }
 
         $counter++;
       }
       else {
-        $output .= '<td class="day">' .$current_day .'</td>';
+        $output .= '<td class="day">' .$current_calendar_day .'</td>';
       }
 
-      $current_day++;
+      $current_calendar_day++;
       $this->day_of_week++;
     }
 
@@ -267,14 +242,13 @@ class Calendar{
     $output .= '</tr>';
     $output .= '</table>';
     $output .= '</div>';
-    //remove
-    $output .= '</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>';
+
     ?>
     <script>
         jQuery(document).ready(function() {
         jQuery(".event").click(function(event) {
           var url  = window.location.href;
-          jQuery('#' + event.target.id + '_scrollPos').get(0).scrollIntoView();
+          jQuery(url+'#' + event.target.id + '_scrollPos').get(0).scrollIntoView();
         });
       });
     </script>
@@ -286,12 +260,6 @@ class Calendar{
 
 function printCalendar(){
 
-  // $calendar->markeDay(12,5,2019);
-  //get Event dates from db -> meta_value of _calendar_event_value_key
-
-  $days =array();
-  $months =array();
-  $years =array();
   $events =array();
 
   $all_post_ids = get_posts(array(
@@ -304,60 +272,90 @@ function printCalendar(){
   foreach ($post_ids as $value) {
     array_push($event_dates,get_post_meta($value,'_calendar_event_value_key'));
   }
+
+  //get timestajmp
   for ($i=0; $i < sizeof($event_dates); $i++) {
-    array_push($events, $event_dates[$i][0]);
+    array_push($events, array($event_dates[$i][0], strtotime($event_dates[$i][0])));
   }
-  function date_sort($a, $b) {
-      return strtotime($a) - strtotime($b);
+  foreach ($events as $key => $node) {
+   $eventsort[$key]    = $node[1];
   }
-  usort($events, "date_sort");
+  //sort date events
+  array_multisort($eventsort, SORT_ASC, $events);
+
+  //get current date
+  $time = current_time( 'mysql' );
+  list( $today_year, $today_month, $today_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $time );
+  // echo $today_month;
+
+  $calendar = new Calendar($today_month,$today_year);
 
 
-  //split date
-  foreach ($events as $date) {
-    $parts = explode('.', $date);
-    array_push($days, $parts[0]);
-    array_push($months, $parts[1]);
-    array_push($years, $parts[2]);
-  }
-  $months_with_events = array_unique($months);
-  $years_with_events = array_unique($years);
-
-  $calendar = new Calendar(5,2019);
-
-  return $calendar->markeDay($days,$months,$years);
+  return $calendar->markeDay($events);
 }
 
 add_shortcode('calendar', 'printCalendar');
 
 function printEvents() {
+  setlocale(LC_TIME, "de_DE");
   global $wpdb;
-  $query = $wpdb->get_results("SELECT post_id,meta_value, post_title, post_content FROM `wp_postmeta` JOIN `wp_posts` ON wp_postmeta.post_id=wp_posts.ID WHERE meta_key = '_calendar_event_value_key' ORDER BY meta_value;");
-  $event_dates = array();
-  $event_title = array();
-  $event_content = array();
-  $event_dates_cleaned = array();
+  $query = $wpdb->get_results("SELECT post_id,meta_value, post_title, post_content, wp_terms.name as category FROM `wp_postmeta` JOIN `wp_posts` ON wp_postmeta.post_id=wp_posts.ID
+    JOIN `wp_term_relationships` ON wp_postmeta.post_id=wp_term_relationships.object_id
+    JOIN `wp_terms` ON wp_term_relationships.term_taxonomy_id = wp_terms.term_id
+    WHERE meta_key = '_calendar_event_value_key' ORDER BY meta_value;");
+  $events = array();
   foreach ($query as $value) {
-    array_push($event_dates, $value->meta_value);
-    array_push($event_title, $value->post_title);
-    array_push($event_content, $value->post_content);
     $string= $value->meta_value;
     $res = str_replace(".", "", $string);
-    array_push($event_dates_cleaned, $res);
+    array_push($events, array(strtotime($value->meta_value),$value->meta_value, $value->post_title,$value->post_content,$res, $value->post_id, $value->category));
   }
 
+
+  foreach ($events as $key => $node) {
+   $eventsort[$key]    = $node[0];
+  }
+  //sort date events
+  array_multisort($eventsort, SORT_ASC, $events);
+
+
+  $time = current_time( 'mysql' );
+  list( $today_year, $today_month, $today_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $time );
+
+  //split .$events[$i][1]
+  $event_month = array();
+  for ($i=0; $i <sizeof($events) ; $i++) {
+    $str_arr = explode (".", $events[$i][1]);
+    array_push($event_month, $str_arr[1]);
+  }
   //generate $output
   $output = '<div class="fachschaft_calendar_plugin_event_list">';
-  for ($i=0; $i < sizeof($event_dates); $i++) {
+  $month_name = date_i18n( 'F', false, false);
+  $output .= '<h1>'.$month_name.'</h1>';
+  for ($i=0; $i < sizeof($events); $i++) {
+    if ($events[$i][0] >= $current_timestamp = time()) {
 
-    $output .= '<div id="' .$event_dates_cleaned[$i].'_scrollPos">';
-    $output .= '<h1>'.$event_title[$i] .'</h1>';
-    $output .= '<h2>'.' am '.$event_dates[$i].'</h2>';
+      if ($event_month[$i] != $event_month[$i-1] && $event_month[$i-1] != NULL)  {
+        setlocale(LC_TIME, "de_DE");
+        $month_name = strftime("%B", $events[$i][0]);
+        $output .= '<h1>'.$month_name.'</h1>';
+      }
+      $output .= '<div id="' .$events[$i][4].'_scrollPos">';
+      $output .= '<h2>'.$events[$i][2] .'</h2>';
+      $output .= '<h3>'.' am '.$events[$i][1].'</h3>';
 
-    $output .= '<text>'.$event_content[$i] .'</text>';
-    $output .= '</div>';
-    //remove
-    $output .= '</br></br></br></br></br></br></br></br>';
+
+
+      // print_r($category_names[0][0]);
+      $output .= '<text>'.$events[$i][6] .'</br> </br></text>';
+
+      $output .= '<text>'.$events[$i][3] .'</text>';
+      $output .= '</div>';
+      $output .= '</br></br>';
+
+
+    }
+
+
   }
   $output .= '</div>';
 
@@ -400,6 +398,7 @@ echo $args['before_title'] . $title . $args['after_title'];
 
 // This is where you run the code and display the output
 echo "<div class='fachschaft_calendar_plugin_widget' href='http://localhost/wordpress/veranstaltungen/'>";
+
 ?>
 <script>
   jQuery(document).ready(function() {
@@ -450,7 +449,7 @@ return $instance;
 
     // Calendar Widget background
     $wp_customize->add_setting( 'event_background_color_widget', array(
-      'default'   => '',
+      'default'   => '#2F9B92',
       'transport' => 'refresh',
       'sanitize_callback' => 'sanitize_hex_color',
     ) );
@@ -461,7 +460,7 @@ return $instance;
     ) ) );
     // Calendar background
     $wp_customize->add_setting( 'event_background_color', array(
-      'default'   => '',
+      'default'   => '#2F9B92',
       'transport' => 'refresh',
       'sanitize_callback' => 'sanitize_hex_color',
     ) );
@@ -469,6 +468,17 @@ return $instance;
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'event_background_color', array(
       'section' => 'colors',
       'label'   => esc_html__( 'Hintergrundfarbe Veranstaltung Kalender', 'theme' ),
+    ) ) );
+    // Event List Date color
+    $wp_customize->add_setting( 'event_date_color', array(
+      'default'   => '#2F9B92',
+      'transport' => 'refresh',
+      'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'event_date_color', array(
+      'section' => 'colors',
+      'label'   => esc_html__( 'Datum Schriftfarbe in Veranstaltungsliste', 'theme' ),
     ) ) );
 
   }
@@ -479,8 +489,9 @@ return $instance;
 {
     ?>
          <style type="text/css">
-             .fachschaft_calendar_plugin_calendar_table .event { background: <?php echo get_theme_mod('event_background_color', '#000000'); ?>;}
-             .fachschaft_calendar_plugin_widget .event { background: <?php echo get_theme_mod('event_background_color_widget', '#000000'); ?>;}
+             .fachschaft_calendar_plugin_calendar_table .event { background: <?php echo get_theme_mod('event_background_color', '#2F9B92'); ?>;}
+             .fachschaft_calendar_plugin_widget .event { background: <?php echo get_theme_mod('event_background_color_widget', '#2F9B92'); ?>;}
+             .fachschaft_calendar_plugin_event_list h3 { color: <?php echo get_theme_mod('event_date_color', '#2F9B92'); ?>;}
          </style>
     <?php
 }
