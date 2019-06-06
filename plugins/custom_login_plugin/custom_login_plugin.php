@@ -16,9 +16,10 @@ if( ! defined( 'ABSPATH' ) ) {
 
 class Custom_Login
 {
-    public function __construct(){
+    public function __construct()
+    {
         add_action( 'login_form_login', array( $this, 'redirect_to_custom_login' ) );
-        add_shortcode( 'custom-login-form', array( $this, 'login_form' ) );
+        add_filter( 'authenticate', array( $this, 'maybe_redirect_at_authenticate' ), 101, 3 );
     }
 
     public function redirect_to_custom_login()
@@ -26,11 +27,56 @@ class Custom_Login
         wp_redirect(home_url('login'));
     }
 
-    private function login_form_html() {
+    function maybe_redirect_at_authenticate( $user, $username, $password ) 
+    {
+        if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) 
+        {
+            if ( is_wp_error( $user ) ) 
+            {
+                $error_codes = join( ',', $user->get_error_codes() );
+     
+                $login_url = home_url( 'login' );
+                $login_url = add_query_arg( 'login', $error_codes, $login_url );
+     
+                wp_redirect( $login_url );
+                exit;
+            }
+        }
+        return $user;
+    }
+}
+
+$custom_login_plugin = new Custom_Login();
+
+function login_form_html() 
+{
+    if ( is_user_logged_in() ) 
+    {
+        return '<h1>Sie sind bereits eingeloggt.</h1>';
+    }
+
+    $errors = array();
+    if ( isset( $_REQUEST['login'] ) ) 
+    {
+        $err = explode( ',', $_REQUEST['login'] );
+     
+        foreach ( $err as $err_code ) 
+        {
+            $errors [] = get_error_message($err_code);
+        }
+    }
+
+    foreach($errors as $error)
+    {
+        echo '<div style="text-align:center;">';
+        echo '<h3><strong>ERROR</strong>: ';
+        echo $error . '</h3>';
+        echo '</div>';
+    }
     ?>
-    <div class="login-form-container">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>"" style="margin:30px">
+    <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>" style="margin:30px">
 
         <i class="material-icons" 
             style = "font-size:80px;
@@ -39,7 +85,7 @@ class Custom_Login
                     justify-content: center;
                     vertical-align: middle;">account_circle</i>
 
-            <input type="text" name="log" id="user_login" placeholder=" Username" maxlength="40" 
+            <input type="text" name="log"  placeholder=" Username" maxlength="40" 
                 style = "font-size:20pt;
                         border-radius:10px;
                         width: 80%; 
@@ -52,39 +98,44 @@ class Custom_Login
                     justify-content: center;
                     vertical-align: middle;">lock</i>
 
-            <input type="password" name="pwd" id="user_pass" maxlength="40" placeholder=" Password"  
+            <input type="password" name="pwd" maxlength="40" placeholder=" Password" 
                 style = "font-size:20pt;
                         border-radius:10px;
                         width: 80%; 
                         float:right;" required><br><br>
-
-        <p align="center">
-        <input type="submit" value="Login"
+        
+        <p>
+        <input type="submit" name="sendIt" value="Login" class="btn btn-default"
             style = "width:100%;
                     border-radius:10px;
-                    text-align:center"><br>
-        
+                    text-align:center;"><br>
+
         <label style="margin:-15px;">
             <p  style="float:left;"><input type="checkbox" checked="checked"  name="remember" />Remember me</p>
-            <span style="float: right;" >Forgot <a href="#">password?</a></span>
+            <span style="float: right;" >Forgot <a href="<?php echo wp_lostpassword_url(); ?>">password?</a></span><br>
         </label>
+        </p>
     </form> 
-    </div>
-<?php }
-    
-    public function login_form() 
-    {
-        if ( is_user_logged_in() ) {
-            return __( 'Sie sind bereits eingeloggt.', 'custom-login' );
-        }
-        if ( isset( $_REQUEST['redirect_to'] ) ) 
-        {
-            $attributes['redirect'] = wp_validate_redirect( $_REQUEST['redirect_to']);
-        }
-         
-        return $this->login_form_html();
-    }
+    <?php 
+
+    $username = $_POST['log'];
+    $passwort = $_POST['pwd'];
 }
 
-$custom_login_plugin = new Custom_Login();
+
+function get_error_message($err)
+{
+    switch($err)
+    {
+        case 'invalid_username':
+            return 'Ungültiger Username';
+        case 'incorrect_password':
+            return 'Ungültiges Passwort';
+        default:
+            break;
+    }
+    return 'Unbekannter Error';
+}
+
+add_shortcode( 'custom-login-form', 'login_form_html' );
 
