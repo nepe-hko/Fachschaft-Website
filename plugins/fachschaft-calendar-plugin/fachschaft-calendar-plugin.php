@@ -333,6 +333,7 @@ function printEvents() {
   }
   //generate $output
   $output = '<div class="fachschaft_calendar_plugin_event_list">';
+
   $month_name = date_i18n( 'F', false, false);
   $output .= '<h1>'.$month_name.'</h1>';
   for ($i=0; $i < sizeof($events); $i++) {
@@ -346,12 +347,15 @@ function printEvents() {
       $output .= '<div id="' .$events[$i][4].'_scrollPos">';
       $output .= '<h2>'.$events[$i][2];
       //icon for Category
-      if ($events[$i][7] == 4) {
+      if ($events[$i][7] == 3) {
         $output .= '<i class="fas fa-comments"></i></h2>';
 
       }
-      elseif ($events[$i][7] == 3) {
+      elseif ($events[$i][7] == 4) {
           $output .= '<i class="fas fa-dice"></i></h2>';
+      }
+      elseif ($events[$i][7] == 5) {
+          $output .= '<i class="fas fa-beer"></i></h2>';
       }
       else {
           $output .= '<i class="fas fa-calendar-alt"></i></h2>';
@@ -493,6 +497,17 @@ return $instance;
       'section' => 'colors',
       'label'   => esc_html__( 'Datum Schriftfarbe in Veranstaltungsliste', 'theme' ),
     ) ) );
+    // Event List Icon color
+    $wp_customize->add_setting( 'event_icon_color', array(
+      'default'   => '#2F9B92',
+      'transport' => 'refresh',
+      'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'event_icon_color', array(
+      'section' => 'colors',
+      'label'   => esc_html__( 'Iconfarbe in Veranstaltungsliste', 'theme' ),
+    ) ) );
 
   }
 
@@ -505,6 +520,7 @@ return $instance;
              .fachschaft_calendar_plugin_calendar_table .event { background: <?php echo get_theme_mod('event_background_color', '#2F9B92'); ?>;}
              .fachschaft_calendar_plugin_widget .event { background: <?php echo get_theme_mod('event_background_color_widget', '#2F9B92'); ?>;}
              .fachschaft_calendar_plugin_event_list h3 { color: <?php echo get_theme_mod('event_date_color', '#2F9B92'); ?>;}
+             .fachschaft_calendar_plugin_event_list .fas:before { color: <?php echo get_theme_mod('event_icon_color', '#2F9B92'); ?>;}
          </style>
     <?php
 }
