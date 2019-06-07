@@ -2,8 +2,7 @@
 
 jQuery(document).ready(function ($) {
     $('#brief').click(function () {
-        var einblendenForm = document.getElementById('form_logged_in');
-        einblendenForm.style.display = 'block';
+        $('#form_logged_in').slideDown('slow');
 
     });
     $('form.ajax_logged_in').submit(function () {
