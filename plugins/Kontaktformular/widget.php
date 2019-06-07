@@ -1,33 +1,49 @@
 <?php
-/*
-class symbol_widget extends WP_Widget {
 
-	function symbol_widget() {
-		// Instantiate the parent object
-        parent::__construct( false, 'Kontaktformularsymbol' );
+class symbol_widget extends WP_Widget //Widget wird nur dann angezeigt wenn man angemeldet ist
+{
+	function __construct() {
+                // Instantiate the parent object
+
+        parent::__construct( false, 'Kontaktformularsymbol' );   
+        add_action('admin_post_send_form', array($this, 'sendMail'));
 	}
 
-	function widget( $args, $instance ) {
-        // Widget output
-        echo '<p id="brief" style="font-size: 100%; 
-                            vertical-align: top; 
-                            text-align: right;
-                            margin: 2px 2px;"
-              >&#9993; Eine Nachricht an uns!</p>';
+        function widget( $args, $instance ) // Widget output
+        {
+                if (is_user_logged_in())
+                {
+                        echo '<p id="brief" style="font-size: 100%; vertical-align: top; text-align: left; margin: 2px 2px;"><b>&#9993; Schreibe eine Nachricht an uns!</b></p>';
+                        ?>
+                        <form id='form_logged_in' action="<?php echo esc_url(admin_url('admin-post.php'));?>"
+                        method='POST' class='ajax_logged_in' >  
+                                <input type="text" name="subject_logged_in" id="subject_logged_in" placeholder="Betreff*"/>			
+                                <textarea id="message_logged_in" name="message_logged_in" placeholder="Deine Nachricht...*"></textarea>
+                                <div id="answer_logged_in"></div>
+                                <button type="submit" id="submit_logged_in">Absenden!</button>
+                                <input name='action' type='hidden' value='send_form'/>
+                        </form>                   
+                        <?php           
+                }
+        }
+        function sendMail()
+        {
+                // Name und Email aus worpress-Admin in Variable speichern
+                $user = wp_get_current_user();
 
-              ?>
-              <form id="formId" action="send.php" method="POST" class="ajax">  
-                        <p>Schreibe eine Nachricht an uns!</p>
-                        <input type="text" name="name" id="name" placeholder="Vor- und Nachname">
-                        <input type="email" name="mail" id="mail" placeholder="Deine E-Mail-Adresse" required>
-                        <input type="text" name="subject" id="subject" placeholder="Betreff">			
-                        <textarea id="message" name="message" placeholder="Deine Nachricht..."></textarea>
-                        <div id="answer"></div>
-                        <button type="submit" id="submit">Absenden!</button>	
-                    </form>
-             <?php
-        
-	}
+                if(isset($_POST['subject_logged_in'], $_POST['message_logged_in']))
+                {
+                        $subject = $_POST['subject_logged_in'];
+                        $message = $_POST['message_logged_in'];
+
+                        $mailTo = "Vero@localhost";
+                        $headers = 'From: ' . $user->user_email;
+                        $body = "Du hast eine Nachricht von " . $user->user_login . " erhalten" . "\n\n" . $message;
+
+                        wp_mail($mailTo, $subject, $body, $headers);  
+                        echo "Vielen Dank für deine Nachricht!";
+                }
+        }
 
 	function update( $new_instance, $old_instance ) { 
                 // Save widget options
@@ -44,9 +60,14 @@ class symbol_widget extends WP_Widget {
 function kontaktformular_symbol_widget() {
 	register_widget( 'symbol_widget' );
 }
+
+
+
 //hook in funktion
 add_action( 'widgets_init', 'kontaktformular_symbol_widget' );
 
 
-*/
+
 ?>
+
+
