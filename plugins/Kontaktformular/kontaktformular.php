@@ -29,7 +29,7 @@ if (!class_exists ('kontaktformular'))
 		{
 			add_action('wp_enqueue_scripts', array($this, 'enqueue')); //Frontend
 			add_action('admin_enqueue_scripts', array($this, 'enqueue')); //Backend	
-		//	add_action('admin_post_nopriv_send_formInput', array($this, 'sendMailInput'));
+			add_action('admin_post_nopriv_send_formInput', array($this, 'sendMailInput'));
 
 			add_shortcode('form', array($this, 'formInput'));
 			add_action('admin_post_nopriv_send_formInput', array($this, 'insertToDataBase'));
@@ -53,13 +53,14 @@ if (!class_exists ('kontaktformular'))
 				<?php 	
 			}	 
 		}	
-		// function validationForm()
-		// {
-		// 	if( ! is_email($_POST['mail']) )
-		// 	{
-		// 		echo "Bitte eine gültige E-Mail-Adresse eingeben";
-		// 	}
-		// }
+		function validationForm()
+		{
+			if( ! is_email($_POST['mail']) )
+			{
+				echo "Bitte eine gültige E-Mail-Adresse eingeben";
+			}
+
+		}
 		function insertToDataBase()
 		{
 			global $wpdb;
@@ -131,7 +132,7 @@ if (!class_exists ('kontaktformular'))
 			dbDelta($sql);	// führt query aus um eine Tabelle in DB zu erzeugen
 
 			$db_verion = '1.0';
-			add_action('db_version', $db_verion);
+			add_option('db_version', $db_verion);
 
 
 		}
@@ -146,8 +147,8 @@ if (!class_exists ('kontaktformular'))
 			wp_enqueue_script('kf-main-logged-in-script', plugins_url(). '/kontaktformular/js/logged-in.js');
 			
 			//CSS hinzufügen
-			 wp_register_style('kf-main-style', plugins_url(). '/kontaktformular/css/kf-style.css');
-			 wp_enqueue_style('kf-main-style');
+			wp_register_style('kf-main-style', plugins_url(). '/kontaktformular/css/kf-style.css');
+			wp_enqueue_style('kf-main-style');
 		}
 
 	}
