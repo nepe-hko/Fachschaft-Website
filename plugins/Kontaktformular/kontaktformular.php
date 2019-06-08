@@ -29,84 +29,47 @@ if (!class_exists ('kontaktformular'))
 		{
 			add_action('wp_enqueue_scripts', array($this, 'enqueue')); //Frontend
 			add_action('admin_enqueue_scripts', array($this, 'enqueue')); //Backend	
-			add_action('admin_post_nopriv_send_formInput', array($this, 'sendMailInput'));
+			
+			// mail und datenbank funktion
+			add_action('admin_post_nopriv_do_function', array($this, 'do_function'));
+			
+			//ajax-function
+			add_action('wp_ajax_nopriv_do_function', array($this, 'do_function'));
 
 			add_shortcode('form', array($this, 'formInput'));
-			add_action('admin_post_nopriv_send_formInput', array($this, 'insertToDataBase'));
 
 		}
 		function formInput() // für ausgeloggte User
 		{
 			if (!is_user_logged_in())
 			{
+				$custom_nonce = wp_create_nonce('custom_form_nonce');
 				?>
   					<form id="form_logged_out" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post" class="ajax_logged_out"> 
 						<p>Schreibe eine Nachricht an uns!</p>
 						<input type="text" name="name" id="name" placeholder="Vor- und Nachname *"/>
 						<input type="email" name="mail" id="mail" placeholder="Deine E-Mail-Adresse *" required/>
 						<input type="text" name="subject" id="subject" placeholder="Betreff *"/>		
-						<input type='hidden' name='action' value='send_formInput' />	
+						
+						<input type='hidden' name='action' value='do_function' />	
+						<input type='hidden' name='input_nonce' value='<?php echo $custom_nonce ?>' />			
 						<textarea id="message" name="message" placeholder="Deine Nachricht... *"></textarea>
 						<div id="answer"></div>
 						<button type="submit" id="submit">Absenden!</button>
 					</form>
 				<?php 	
+				
 			}	 
 		}	
-		function validationForm()
-		{
-			if( ! is_email($_POST['mail']) )
-			{
-				echo "Bitte eine gültige E-Mail-Adresse eingeben";
-			}
+		// function validationForm()
+		// {
+		// 	if( ! is_email($_POST['mail']) )
+		// 	{
+		// 		echo "Bitte eine gültige E-Mail-Adresse eingeben";
+		// 	}
 
-		}
-		function insertToDataBase()
-		{
-			global $wpdb;
-
-			$table = $wpdb->prefix . 'contactform'; 
-			$data = array(
-				'contactform_name' => $_POST['name'],
-				'contactform_email_address' => $_POST['mail'],
-				'contactform_subject' => $_POST['subject'],		
-				'contactform_message' => $_POST['message']
-			);
-			$format = array(
-			'%s', // string-Wert
-			'%s',
-			'%s',
-			'%s'
-			);
-
-			$sucessful = $wpdb->insert($table, $data, $format); //function escapes data automatically
-
-			$id = $wpdb->insert_id;
-
-			if($id == false && $sucessful == false)
-			{
-				"Email konnte nicht in Datenbank gespeichert werden";
-			}
-		}
-
-		function sendMailInput()
-		{	
-			if (isset($_POST['name'], $_POST['mail'], $_POST['subject'], $_POST['message']))   
-   	 		{
-        		$name = $_POST['name'];
-        		$mailFrom = $_POST['mail'];
-        		$subject = $_POST['subject'];
-        		$message = $_POST['message'];
-			
-				$mailTo = "Vero@localhost";
-        		$headers = 'From: ' . $mailFrom;
-        		$body = "Du hast eine Nachricht von " . $name . " erhalten" . "\n\n" . $message;
-
-        		wp_mail($mailTo, $subject, $body, $headers);  
-				echo "Vielen Dank für deine Nachricht!";	
-			}
-			
-		}
+		// }
+		
 		public static function createTable()
 		{
 			ob_start();				
@@ -133,22 +96,74 @@ if (!class_exists ('kontaktformular'))
 
 			$db_verion = '1.0';
 			add_option('db_version', $db_verion);
+		}
+		public function do_function()
+		{
+			
+			if( ( isset( $_POST['ajaxform']) && $_POST['ajaxform'] === 'true' ) && (isset( $_POST['input_nonce'] ) && wp_verify_nonce( $_POST['input_nonce'], 'custom_form_nonce' ) ) )
+			{
+				//Mailversand
+				$name = sanitize_text_field($_POST['name']);
+        		$mailFrom = sanitize_text_field($_POST['mail']);
+        		$subject = sanitize_text_field($_POST['subject']);
+        		$message = sanitize_text_field($_POST['message']);
+			
+				$mailTo = "Vero@localhost";
+        		$headers = 'From: ' . $mailFrom;
+        		$body = "Du hast eine Nachricht von " . $name . " erhalten" . "\n\n" . $message;
 
+				wp_mail($mailTo, $subject, $body, $headers);  
+				
+				// Eintrag in Datenbank
+				global $wpdb;
 
+				$table = $wpdb->prefix . 'contactform'; 
+				$data = array(
+					'contactform_name' => $_POST['name'],
+					'contactform_email_address' => $_POST['mail'],
+					'contactform_subject' => $_POST['subject'],		
+					'contactform_message' => $_POST['message']
+				);
+				$format = array(
+					'%s', // string-Wert
+					'%s',
+					'%s',
+				'%s'
+				);
+
+				$sucessful = $wpdb->insert($table, $data, $format); //function escapes data automatically
+
+				$id = $wpdb->insert_id;
+
+				if($id == false && $sucessful == false)
+				{
+					"Email konnte nicht in Datenbank gespeichert werden";
+				}
+				wp_die(); // um sofort funktion zu beenden und ordnungsgemäße Antwort zurück zugeben
+			}
+			else
+			{
+				wp_die('Ungültige nonce');
+			}
 		}
 		function enqueue()
 		{
 			//snippet für javaScript Bibliothek, immer vor der java-datei!
-			wp_register_script('js-snippet', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js');
-			wp_enqueue_script('js-snippet');
+			wp_register_script('js_snippet', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js');
+			wp_enqueue_script('js_snippet');
 			
 			//JS hinzufügen
-			wp_enqueue_script('kf-main-script', plugins_url(). '/kontaktformular/js/main.js');
-			wp_enqueue_script('kf-main-logged-in-script', plugins_url(). '/kontaktformular/js/logged-in.js');
+			wp_register_script('ajax_script', plugins_url(). '/kontaktformular/js/main.js');
+			wp_enqueue_script( 'ajax_script' );
+			wp_localize_script( 'ajax_script', 'kf_ajax_data', array( 
+				'ajaxurl' => admin_url( 'admin-ajax.php' )
+			));
+			//wp_enqueue_script('kf-main-logged-in-script', plugins_url(). '/kontaktformular/js/logged-in.js');
 			
+
 			//CSS hinzufügen
-			wp_register_style('kf-main-style', plugins_url(). '/kontaktformular/css/kf-style.css');
-			wp_enqueue_style('kf-main-style');
+			wp_register_style('kf_main_style', plugins_url(). '/kontaktformular/css/kf-style.css');
+			wp_enqueue_style('kf_main_style');
 		}
 
 	}

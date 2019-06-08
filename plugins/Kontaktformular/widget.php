@@ -11,6 +11,8 @@ class symbol_widget extends WP_Widget //Widget wird nur dann angezeigt wenn man 
         parent::__construct( 'symbol_widget', 'Kontaktformularsymbol', $widget_options );   
                
         add_action('admin_post_send_form', array($this, 'sendMail'));
+        add_action('admin_post_send_form', array($this, 'databaseLogin'));
+
 	}
 
         function widget( $args, $instance ) // Widget output
@@ -40,6 +42,35 @@ class symbol_widget extends WP_Widget //Widget wird nur dann angezeigt wenn man 
                         <?php           
                 }
                 echo $after_widget;
+        }
+        function databaseLogin()
+        {
+                global $wpdb;
+                $user = wp_get_current_user();
+
+
+			$table = $wpdb->prefix . 'contactform'; 
+			$data = array(
+				'contactform_name' => $user->user_login,
+				'contactform_email_address' => $user->user_email,
+				'contactform_subject' => $_POST['subject_logged_in'],		
+				'contactform_message' => $_POST['subject_logged_in']
+			);
+			$format = array(
+			'%s', // string-Wert
+			'%s',
+			'%s',
+			'%s'
+			);
+
+			$sucessful = $wpdb->insert($table, $data, $format); //function escapes data automatically
+
+			$id = $wpdb->insert_id;
+
+			if($id == false && $sucessful == false)
+			{
+				"Email konnte nicht in Datenbank gespeichert werden";
+			}
         }
         function sendMail()
         {
