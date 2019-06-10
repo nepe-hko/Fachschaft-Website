@@ -1,45 +1,25 @@
 jQuery(document).ready(function($){
 
-    $("#submit").click( function(e) {
-        /*                   
-        let data = {};                                       
-
-        $(this).find('[name]').each( function() {
-            let name = $(this).attr('name');
-            data[name] = $(this).val();
-        });
-        */
-        e.preventDefault();
-
-        $.ajax({
-            type : 'post',
-            dataType : 'json',
-            url: jsforwp_globals.ajax_url,
+    $("#submit").click( function(e) { 
+        
+        let container = $('#vbv_container');
+        let title = $('#vbv_title');
+        let content =$('#vbv_content');
+        let response = $('#vbv_response');
+        
+        $.post({
+            url: obj.ajaxurl, // or example_ajax_obj.ajaxurl if using on frontend
             data: {
-                action: 'jsforwp_add_like',
-                _ajax_nonce : jsforwp_globals.nonce
+                'action': 'request',
+                'title' : title.val(),
+                'content' : content.val(),
             },
-            success: function(res) {
-                if('success == res.type') {
-                    alert('okay');
-                } else {
-                    alert('something went wrong');
-                }
+            success: res => {
+                container.hide();
+                response.html(res)
             }
         });
-        return false;
-        /*
-        $.post({
-            url: url,
-            data: data,
-            success: res => {
-                $("form.improvement").hide();
-                $('#res').html(res);
-            },
-            fail: () => $('#res').html("Fehler beim übermitteln der Daten. Versuche es später nocheinmal.")
-        });
-        */
-
+        return false  
 	});
 });
 

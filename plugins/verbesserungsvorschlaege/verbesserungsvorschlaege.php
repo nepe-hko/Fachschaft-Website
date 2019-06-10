@@ -21,45 +21,63 @@ class Verbesserungsvorschlaege
 
 
     private function __construct() {
+
         add_action('init', array($this, 'register_improvement_post_type'));
-        add_action('init', array($this,'add_scripts'));
         add_action('add_meta_boxes', array($this, 'add_custom_meta_box'));
         add_action('save_post', array($this, 'save_from_admin'));
         add_shortcode('verbesserungsvorschlaege', array($this, 'to_frontend'));
-        
+        add_action('wp_enqueue_scripts', array($this, 'enqueue'));
+        add_action( 'wp_ajax_request', array($this, 'request') );
+        add_action( 'wp_ajax_nopriv_request', array($this, 'request') );
     }
 
-    public function add_scripts() {
-        wp_enqueue_style('verbesserungsvorschlaege', plugins_url( 'css/verbesserungsvorschlaege.css', __FILE__ ));
+    public function enqueue() {
 
-        wp_enqueue_script('jQuery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js');
-
+        // enqueue javascript on the frontend.
         wp_enqueue_script(
-            'jsforwp_frontend-js',
-            plugins_url('public/js/send_form.js', __FILE__)
+            'send_form_script',
+            plugins_url() . '/verbesserungsvorschlaege/public/js/send_form.js',
+            array('jquery')
         );
+
+        // add ajax url to script
         wp_localize_script(
-            'jsforwp-frontend-js',
-            'jsforwp_globals',
-            [
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce'     => wp_create_nonce('nonce_name')
-            ]
+            'send_form_script',
+            'obj',
+            array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) )
         );
-        add_action('wp_ajax_jsforwp_add_like', array($this, 'jsforwp_add_like'));
     }
 
-    public function jsforwp_add_like() {
-        check_ajax_referer('nonce_name');
-        $response['custom'] = "Do something custom";
-        $response['success'] = true;
+    public function request() {
+ 
+        // The $_REQUEST contains all the data sent via ajax
+        if ( isset($_REQUEST) ) {
+            //require_once("../../../../wp-load.php");
 
-        $response = json_encode($response);
-        echo $response;
-        die();
+            # get data from frontend
+            // TODO: validate user input
+            $user = wp_get_current_user();
+            $author = $user->ID;
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+                        
+            # create new improvement-post
+            $new_post = array(
+                'post_title' => $title,
+                'post_content' => $content,
+                'post_author' => $author,
+                'post_status' => 'pending',
+                'post_votes' => 0,
+                'post_type' => 'improvement',
+
+            );
+            $post_id = wp_insert_post($new_post);
+            echo $author;
+            echo "vielen Dank. <br>Dein Vorschlag wurde eingereicht und wird nach einer Prüfung veröffentlicht";            
+         
+        }
+       die();
     }
-
-
 
     # register custom post type "improvement"
     public function register_improvement_post_type() {
@@ -96,9 +114,9 @@ class Verbesserungsvorschlaege
     # outputs the meta boxes in backend
     public function print_info_meta_box($post){
 
-        $username = get_post_meta($post->ID,'post_username', true);
-        echo "<label for='username'>Username: </label>";
-        echo "<label id='username' name='username'>" . esc_attr($username) . "</label><br>";  
+        $author = get_post_meta($post->ID,'post_author', true);
+        echo "<label for='author'>Username: </label>";
+        echo "<label id='author' name='author'>" . esc_attr($author) . "</label><br>";  
 
         $verified = get_post_meta($post->ID,'post_verified', true);
         echo "<label for='verified'>Geprüft: </label>";
@@ -118,13 +136,14 @@ class Verbesserungsvorschlaege
     }
 
     public function to_frontend() {
+        $user = wp_get_current_user();
         return '
-            <form class="improvement">
-                <input name="title" type="text"  placeholder="Titel" required></input>
-                <textarea name="content" placeholder="Deine Nachricht..." required></textarea>
+            <form id="vbv_container">
+                <input id="vbv_title" name="title" type="text" placeholder="Titel" required></input>
+                <textarea id="vbv_content" name="content" placeholder="Deine Nachricht..." required></textarea>
                 <button id="submit" type="submit">Vorschlag einreichen!</button>
             </form>
-            <div id="res"></div>
+            <div id="vbv_response"></div>
         ';
         
     }

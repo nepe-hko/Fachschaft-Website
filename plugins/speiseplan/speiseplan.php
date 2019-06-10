@@ -84,7 +84,7 @@ class SpeiseplanPlugin extends WP_Widget
     }
 
 
-    /* WIDGET STUFF */
+    /* WIDGET */
 
     public function loadWidget()
     {
@@ -97,19 +97,24 @@ class SpeiseplanPlugin extends WP_Widget
     {
         $title = apply_filters('widget_title', $instance['title']);
         echo $args['before_widget'];
-        if (!empty($title))
-        {
+        if (!empty($title)) {
             echo $args['before_title'] . $title . $args['after_title'];
         }
 
-        // Speiseplan abrufen und ausgeben
+        # speiseplan abrufen und ausgeben
         $json = $this->fetchFromApi("today");
         $html = "<table class=\"speiseplanWidget\">";
+        $meals = $json->meals;
 
-        foreach ($json->meals as $meal) {
-            $html .= "<tr><td class=\"title\">" . $meal->title . "</td>";
-            $html .= "<td class=\"price\">" . $meal->prices[0] . "</td></tr>";
+        if($meals) {
+            foreach ($json->meals as $meal) {
+                $html .= "<tr><td class=\"title\">" . $meal->title . "</td>";
+                $html .= "<td class=\"price\">" . $meal->prices[0] . "</td></tr>";
+            }
+        } else {
+            $html .= "heute geschlossen";
         }
+
 
         $html .= "</table>";
 
