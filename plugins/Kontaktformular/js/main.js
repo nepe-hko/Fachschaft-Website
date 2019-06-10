@@ -1,26 +1,23 @@
-//Validierung
-
-
 jQuery(document).ready(function ($) {    //logged out
     $('form.ajax_logged_out').submit(function (e) {
-   /*     if ($('#name').val() == '' || $('#mail').val() == '' || $('#subject').val() == '' || $('#message').val() == '') {
-            $('#answer').html('Bitte kalle Felder ausfüllen. Log out alde');
+        if ($('#name').val() == '' || $('#mail').val() == '' || $('#subject').val() == '' || $('#message').val() == '') {
+            $('#answer').html('Bitte alle Felder ausfüllen. Log out');
             e.preventDefault();            // blockiert Action-Methode
         }
         else 
-    //     {*/
+        {
             e.preventDefault();         
             
             var form_data = $('#form_logged_out').serialize();
-            form_data = form_data + '&ajaxform=true&submit=Form+Send';
-
-            
+            var logout_nonce = kf_ajax_data.ajax_nonce;
+            form_data = form_data + '&ajaxform=true&submit=Form+Send&security=' + logout_nonce ;
+    
             $.ajax({
                 url: kf_ajax_data.ajaxurl,
                 type: 'post',
                 data: form_data
             })
-            .done( function ( response ) { //wenn alles geklappt hat
+            .done( function () { //wenn alles geklappt hat
                 $('#answer').text('Nachricht wurde versendet.');
             })
             .fail( function() {
@@ -29,6 +26,7 @@ jQuery(document).ready(function ($) {    //logged out
             .always( function(){
                 e.target.reset();
             });
+        }
     });
 
 });
