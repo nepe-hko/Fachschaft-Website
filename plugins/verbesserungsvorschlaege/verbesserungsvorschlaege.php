@@ -22,14 +22,43 @@ class Verbesserungsvorschlaege
 
     private function __construct() {
         add_action('init', array($this, 'register_improvement_post_type'));
+        add_action('init', array($this,'add_scripts'));
         add_action('add_meta_boxes', array($this, 'add_custom_meta_box'));
         add_action('save_post', array($this, 'save_from_admin'));
         add_shortcode('verbesserungsvorschlaege', array($this, 'to_frontend'));
+        
+    }
+
+    public function add_scripts() {
         wp_enqueue_style('verbesserungsvorschlaege', plugins_url( 'css/verbesserungsvorschlaege.css', __FILE__ ));
 
         wp_enqueue_script('jQuery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js');
-        wp_enqueue_script('send_form', plugins_url('verbesserungsvorschlaege/public/js/send_form.js'));
+
+        wp_enqueue_script(
+            'jsforwp_frontend-js',
+            plugins_url('public/js/send_form.js', __FILE__)
+        );
+        wp_localize_script(
+            'jsforwp-frontend-js',
+            'jsforwp_globals',
+            [
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce'     => wp_create_nonce('nonce_name')
+            ]
+        );
+        add_action('wp_ajax_jsforwp_add_like', array($this, 'jsforwp_add_like'));
     }
+
+    public function jsforwp_add_like() {
+        check_ajax_referer('nonce_name');
+        $response['custom'] = "Do something custom";
+        $response['success'] = true;
+
+        $response = json_encode($response);
+        echo $response;
+        die();
+    }
+
 
 
     # register custom post type "improvement"
@@ -90,7 +119,7 @@ class Verbesserungsvorschlaege
 
     public function to_frontend() {
         return '
-            <form class="improvement" action="'. plugins_url('verbesserungsvorschlaege/includes/send.php') . '">
+            <form class="improvement">
                 <input name="title" type="text"  placeholder="Titel" required></input>
                 <textarea name="content" placeholder="Deine Nachricht..." required></textarea>
                 <button id="submit" type="submit">Vorschlag einreichen!</button>
