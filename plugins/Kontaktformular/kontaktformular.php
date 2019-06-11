@@ -17,6 +17,10 @@ if( !defined( 'ABSPATH'))
 require_once( plugin_dir_path( __FILE__). '/widget.php'); // Damit widet im Backend sichtbar ist
 //__FILE__: startet ab dem Ordner wo die datei in der wir sind(kontaktformular.php) liegt 
 
+require_once( plugin_dir_path( __FILE__). '/kontaktformular-admin.php');
+require_once( plugin_dir_path( __FILE__). '/custom-post-type.php');
+
+
 register_activation_hook( __FILE__, array( 'kontaktformular', 'createTable'));
 //register_deactivation_hook(__FILE__, array('kontaktformular', 'deactivate'));
 
@@ -28,8 +32,8 @@ if( !class_exists( 'kontaktformular'))
 		function __construct()
 		{
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue')); //Frontend
-			add_action( 'admin_enqueue_scripts', array($this, 'enqueue')); //Backend	
-			
+			add_action( 'admin_enqueue_scripts', array($this, 'enqueue')); //Backend
+			 
 			// mail und datenbank funktion
 			add_action( 'admin_post_nopriv_do_function', array( $this, 'do_function'));
 			
@@ -39,6 +43,8 @@ if( !class_exists( 'kontaktformular'))
 			add_shortcode( 'form', array( $this, 'formInput'));
 
 		}
+	
+		
 		public static function createTable()
 		{
 			ob_start();				
