@@ -1,0 +1,652 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Blog Bank\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-06 01:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.2.0; wp-5.1.1"
+
+#: inc/customizer.php:68
+msgid " update pro"
+msgstr ""
+
+#: inc/about/about.php:26
+#, php-format
+msgid ""
+"%1$s is now installed and ready to use. We want to make sure you have the "
+"best experience using the theme and that is why we gathered here all the "
+"necessary information for you. Thanks for using our theme!"
+msgstr ""
+
+#: template-parts/content.php:9
+msgid ", "
+msgstr ""
+
+#: 404.php:16
+msgid "404"
+msgstr ""
+
+#. %s: post title
+#: inc/template-tags.php:67
+#, php-format
+msgid "<span class=\"screen-reader-text\"> on %s</span>"
+msgstr ""
+
+#: inc/about/about.php:265
+msgid ""
+"<strong><span style=\"color:green;\">Limite Time Offer For You:</span>  "
+"<span style=\"color:red\">Blog Bank PRO Now 30% Discount.</span> You will "
+"get pro License with pro features and great support.<strong><span "
+"style=\"color:red;\"> Pro version more powerful more secure and more SEO "
+"friendly. </span>"
+msgstr ""
+
+#: inc/about/about.php:116 inc/about/about.php:136
+msgid "Activate"
+msgstr ""
+
+#: inc/about/class.about.php:824
+msgid "Activating"
+msgstr ""
+
+#: inc/class-wp-bootstrap-navwalker.php:366
+msgid "Add a menu"
+msgstr ""
+
+#: inc/about/about.php:86
+msgid "Add Widgets"
+msgstr ""
+
+#: functions.php:134
+msgid "Add widgets here."
+msgstr ""
+
+#: inc/about/about.php:211
+msgid ""
+"Advance control for each element gives you different way of customization "
+"and maintained you site as you like and makes you feel different."
+msgstr ""
+
+#: inc/about/about.php:210
+msgid "Advance Customizer Options"
+msgstr ""
+
+#: inc/about/about.php:216
+msgid "Advance Pagination"
+msgstr ""
+
+#: inc/about/about.php:113
+msgid "Already activated"
+msgstr ""
+
+#: inc/about/about.php:192
+msgid "Banner Slider Options"
+msgstr ""
+
+#. Name of the theme
+#: inc/about/about.php:155
+msgid "Blog Bank"
+msgstr ""
+
+#: inc/about/about.php:181
+msgid ""
+"Blog Bank comes with a widget-based flexible system which allows you to add "
+"your favorite widgets over the Sidebar as well as on offcanvas too."
+msgstr ""
+
+#: inc/customizer.php:57
+msgid "Blog bank footer options "
+msgstr ""
+
+#: inc/about/about.php:175
+msgid ""
+"Blog Bank gives you extra post slider feature. You can create awesome home "
+"slider in this theme."
+msgstr ""
+
+#: inc/about/about.php:187
+msgid ""
+"Blog Bank gives you extra ways to showcase your header with miltiple layout "
+"option you can change it on the basis of your requirement"
+msgstr ""
+
+#: inc/about/about.php:19 inc/about/about.php:21
+msgid "blog bank Info"
+msgstr ""
+
+#. Description of the theme
+msgid ""
+"Blog Bank is a smart and animated WordPress blog and magazine theme. Blog "
+"bank is a Gutenberg supported wordpress theme. Now you can built your site "
+"using the new Gutenberg editor with Blog bank WordPress theme. Blog Bank is "
+"an awsome WordPress blog and magazine theme. Blog Bank WordPress theme "
+"support custom header, feature image, feature post section, color changing "
+"options, custom background, footer widget, font Awesome icons. So you create "
+"your WordPress website with the Blog Bank theme."
+msgstr ""
+
+#: inc/about/about.php:156
+msgid "Blog Bank Pro"
+msgstr ""
+
+#: inc/about/about.php:229
+msgid ""
+"Blog Bank supports 6 popular fonts. So you can select your text and heading "
+"fonts differently."
+msgstr ""
+
+#: inc/customizer.php:32
+msgid "Blog bank theme general settings "
+msgstr ""
+
+#: inc/about/about.php:169
+msgid ""
+"blog-bank makes room for your readers to enjoy your articles on the go, no "
+"matter the device their using. We shaped everything to look amazing to your "
+"audience."
+msgstr ""
+
+#: inc/about/about.php:205
+msgid ""
+"blog-bank PRO verison has multiple home layout so you can show your blog "
+"with awesome masonry grid layout with all devices supporte."
+msgstr ""
+
+#: inc/about/about.php:163
+msgid ""
+"blog-bank's design helps you stand out from the crowd and create an "
+"experience that your readers will love and talk about. With a flexible home "
+"page you have the chance to easily showcase appealing content with ease."
+msgstr ""
+
+#: inc/about/about.php:193
+msgid ""
+"blog-bank's PRO version comes with more Slider options to display and filter "
+"posts. For instance, you can have far more control on setting the source of "
+"the posts or how they are displayed, everything to push the content to the "
+"right people and promote it by the blink of an eye."
+msgstr ""
+
+#: inc/about/about.php:199
+msgid ""
+"blog-bank's PRO version has more controll available to enable you to place "
+"widgets on Footer or Below the Post at the end of your articles."
+msgstr ""
+
+#: comments.php:66
+msgid "Comments are closed."
+msgstr ""
+
+#. 1: comment count number, 2: title.
+#: comments.php:41
+#, php-format
+msgctxt "comments title"
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/plugin-recomend.php:76
+msgid "Contact Form 7"
+msgstr ""
+
+#: inc/about/about.php:101 inc/about/about.php:104
+msgid "Contact Support"
+msgstr ""
+
+#: template-parts/content-search.php:30 template-parts/content.php:60
+msgid "Continue Reading..."
+msgstr ""
+
+#. %s: Name of current post. Only visible to screen readers
+#: template-parts/content.php:49
+#, php-format
+msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr ""
+
+#: inc/about/about.php:73
+msgid "Customize"
+msgstr ""
+
+#: inc/about/about.php:162
+msgid "Daring Design for Devoted Readers"
+msgstr ""
+
+#: inc/about/about.php:117 inc/about/about.php:137
+msgid "Deactivate"
+msgstr ""
+
+#: inc/about/about.php:78
+msgid "Demo Content"
+msgstr ""
+
+#: inc/about/about.php:80
+#, php-format
+msgid ""
+"Demo content is pro feature. To import sample demo content, %1$s plugin "
+"should be installed and activated. After plugin is activated, visit Import "
+"Demo Data menu under Appearance."
+msgstr ""
+
+#. %s: Name of current post. Only visible to screen readers
+#: inc/template-tags.php:87 template-parts/content-page.php:37
+#, php-format
+msgid "Edit <span class=\"screen-reader-text\">%s</span>"
+msgstr ""
+
+#: inc/customizer.php:82
+msgid "Enter Facebook url for footer social link"
+msgstr ""
+
+#: inc/customizer.php:108
+msgid "Enter instagram url for footer social link"
+msgstr ""
+
+#: inc/customizer.php:121
+msgid "Enter linkedin url for footer social link"
+msgstr ""
+
+#: inc/customizer.php:95
+msgid "Enter twitter url for footer social link"
+msgstr ""
+
+#: footer.php:24
+msgid "Facebook"
+msgstr ""
+
+#: inc/customizer.php:81
+msgid "Facebook url"
+msgstr ""
+
+#: inc/about/about.php:222
+msgid "Flexible Color Scheme"
+msgstr ""
+
+#: inc/about/about.php:198
+msgid "Flexible Home Page Design"
+msgstr ""
+
+#: inc/customizer.php:67
+msgid "Footer copyright text"
+msgstr ""
+
+#: inc/customizer.php:55
+msgid "Footer options"
+msgstr ""
+
+#: inc/about/about.php:33
+msgid "Free Vs Pro"
+msgstr ""
+
+#: inc/plugin-recomend.php:66 inc/about/about.php:140
+msgid "Gallery Box"
+msgstr ""
+
+#: inc/customizer.php:30
+msgid "General settings"
+msgstr ""
+
+#. View link
+#: inc/about/about.php:159
+#, php-format
+msgid "Get %s"
+msgstr ""
+
+#: inc/about/about.php:30
+msgid "Getting Started"
+msgstr ""
+
+#: inc/info/class-customize.php:77
+msgid "Go Pro"
+msgstr ""
+
+#: inc/about/about.php:103
+msgid ""
+"Got theme support question or found bug or got some feedbacks? Best place to "
+"ask your query is the dedicated Support forum for the theme."
+msgstr ""
+
+#: inc/about/about.php:174
+msgid "Home slider"
+msgstr ""
+
+#. Author URI of the theme
+msgid "http://wpthemespace.com"
+msgstr ""
+
+#: footer.php:45
+msgid "https://wordpress.org/"
+msgstr ""
+
+#. URI of the theme
+msgid "https://wpthemespace.com/product/blog-bank/"
+msgstr ""
+
+#: footer.php:32
+msgid "Instagram"
+msgstr ""
+
+#: inc/customizer.php:107
+msgid "Instagram url"
+msgstr ""
+
+#: inc/about/about.php:115 inc/about/about.php:135
+msgid "Install and Activate"
+msgstr ""
+
+#: template-parts/content-none.php:44
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: footer.php:36
+msgid "Linkedin"
+msgstr ""
+
+#: inc/customizer.php:120
+msgid "Linkedin url"
+msgstr ""
+
+#: template-parts/content.php:10
+msgctxt "list item separator"
+msgid ", "
+msgstr ""
+
+#: inc/about/about.php:223
+msgid ""
+"Match your unique style in an easy and smart way by using an intuitive "
+"interface that you can fine-tune it until it fully represents you and "
+"matches your particular blogging needs."
+msgstr ""
+
+#: header.php:36
+msgid "Menu"
+msgstr ""
+
+#: inc/about/about.php:168
+msgid "Mobile-Ready For All Devices"
+msgstr ""
+
+#: inc/about/about.php:186
+msgid "Multiple Header Layout"
+msgstr ""
+
+#: inc/about/about.php:204
+msgid "Multiple home layout"
+msgstr ""
+
+#: inc/about/about.php:217
+msgid ""
+"Multiple Option of pagination via customizer can be obtained on your site "
+"like Infinite scroll, Ajax Button On Click, Number as well as classical "
+"option are available."
+msgstr ""
+
+#: inc/about/about.php:240
+msgid "No Credit Footer Link"
+msgstr ""
+
+#: inc/customizer.php:50
+msgid "No sidebar"
+msgstr ""
+
+#: template-parts/content-none.php:14
+msgid "Nothing Found"
+msgstr ""
+
+#: inc/info/class-customize.php:76
+msgid "Now Available blog-bank Pro"
+msgstr ""
+
+#: inc/about/about.php:80
+msgid "One Click Demo Import"
+msgstr ""
+
+#. 1: title.
+#: comments.php:35
+#, php-format
+msgid "One thought on &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#: 404.php:19
+msgid ""
+"Oops! The page you were looking for was not found. Perhaps searching can "
+"help."
+msgstr ""
+
+#: 404.php:18
+msgid "Page not  found"
+msgstr ""
+
+#: template-parts/content-page.php:24 template-parts/content.php:69
+msgid "Pages:"
+msgstr ""
+
+#: inc/about/about.php:63
+msgid ""
+"Please check our full documentation for detailed information on how to setup "
+"and customize the theme."
+msgstr ""
+
+#: inc/about/about.php:228
+msgid "Popular fonts"
+msgstr ""
+
+#. %s: post author.
+#: inc/template-tags.php:45
+#, php-format
+msgctxt "post author"
+msgid "by %s"
+msgstr ""
+
+#. %s: post date.
+#: inc/template-tags.php:29
+#, php-format
+msgctxt "post date"
+msgid "Posted on %s"
+msgstr ""
+
+#: inc/about/about.php:234
+msgid "Premium Support and Assistance"
+msgstr ""
+
+#: functions.php:47
+msgid "Primary"
+msgstr ""
+
+#. %s: CMS name, i.e. WordPress.
+#: footer.php:47
+#, php-format
+msgid "Proudly powered by %s"
+msgstr ""
+
+#. 1: link to WP admin new post page.
+#: template-parts/content-none.php:24
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: inc/about/about.php:31
+msgid "Recommended Actions"
+msgstr ""
+
+#: inc/customizer.php:49
+msgid "Right sidebar"
+msgstr ""
+
+#. %s: search query.
+#: search.php:28
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: inc/customizer.php:44
+msgid "Select layout site layout style."
+msgstr ""
+
+#: inc/about/about.php:83
+msgid "Set Widgets"
+msgstr ""
+
+#: inc/about/about.php:85
+msgid "Set widgets in your sidebar, Offcanvas as well as footer."
+msgstr ""
+
+#: inc/about/about.php:47
+msgid "Show Quick Video"
+msgstr ""
+
+#: functions.php:132
+msgid "Sidebar"
+msgstr ""
+
+#: inc/customizer.php:43
+msgid "Site layout style"
+msgstr ""
+
+#: header.php:26
+msgid "Skip to content"
+msgstr ""
+
+#: template-parts/content-none.php:37
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: template-parts/content.php:65
+#, php-format
+msgid "Tagged: %1$s"
+msgstr ""
+
+#: inc/about/about.php:39
+msgid "Theme Details"
+msgstr ""
+
+#: inc/about/about.php:61
+msgid "Theme Documentation"
+msgstr ""
+
+#: inc/about/about.php:70
+msgid "Theme Options"
+msgstr ""
+
+#: inc/about/about.php:92
+msgid "Theme Preview"
+msgstr ""
+
+#: inc/about/about.php:112
+msgid ""
+"Theme supports some helpful WordPress plugins to enhance your site. But, "
+"please enable only those plugins which you need in your site. For example, "
+"enable WooCommerce only if you are using e-commerce."
+msgstr ""
+
+#: inc/about/about.php:72
+msgid ""
+"Theme uses Customizer API for theme options. Using the Customizer you can "
+"easily customize different aspects of the theme."
+msgstr ""
+
+#. 1: Theme name, 2: Theme author.
+#: footer.php:52
+#, php-format
+msgid "Theme: %1$s by %2$s"
+msgstr ""
+
+#: inc/about/about.php:141
+msgid ""
+"These recommended plugin need to install and active for better user "
+"experience."
+msgstr ""
+
+#: header.php:36
+msgid "Toggle navigation"
+msgstr ""
+
+#: footer.php:28
+msgid "Twitter"
+msgstr ""
+
+#: inc/customizer.php:94
+msgid "Twitter url"
+msgstr ""
+
+#: inc/about/about.php:146
+msgid "UPGRADE TO PRO"
+msgstr ""
+
+#: inc/about/about.php:32
+msgid "Useful Plugins"
+msgstr ""
+
+#: inc/about/about.php:114
+msgid "Version: "
+msgstr ""
+
+#: inc/about/about.php:43 inc/about/about.php:95
+msgid "View Demo"
+msgstr ""
+
+#: inc/about/about.php:52 inc/about/about.php:64
+msgid "View Documentation"
+msgstr ""
+
+#: inc/about/about.php:235
+msgid ""
+"We offer ongoing customer support to help you get things done in due time. "
+"This way, you save energy and time, and focus on what brings you happiness. "
+"We know our products inside-out and we can lend a hand to help you save "
+"resources of all kinds."
+msgstr ""
+
+#. Main welcome title
+#: inc/about/about.php:23
+#, php-format
+msgid "Welcome to %s! - Version "
+msgstr ""
+
+#: inc/about/about.php:180
+msgid "Widgetized Sidebars To Keep Attention"
+msgstr ""
+
+#. Author of the theme
+msgid "WP Theme Space"
+msgstr ""
+
+#: inc/plugin-recomend.php:71
+msgid "X instafeed"
+msgstr ""
+
+#: inc/customizer.php:68
+msgid "You can change copyright when you update with Blog Bank pro."
+msgstr ""
+
+#: inc/about/about.php:94
+msgid ""
+"You can check out the theme demos for reference to find out what you can "
+"achieve using the theme and how it can be customized. Theme demo only work "
+"in pro theme"
+msgstr ""
+
+#: inc/about/about.php:241
+msgid ""
+"You can easily remove the Theme: blog-bank by blog-bank copyright from the "
+"footer area and make the theme yours from start to finish."
+msgstr ""
+
+#: inc/about/about.php:147
+msgid ""
+"You will get more frequent updates and quicker support with the Pro version."
+msgstr ""

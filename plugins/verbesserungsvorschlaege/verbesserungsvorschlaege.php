@@ -51,28 +51,22 @@ class Verbesserungsvorschlaege
     public function request() {
  
         // The $_REQUEST contains all the data sent via ajax
-        if ( isset($_REQUEST) ) {
-            //require_once("../../../../wp-load.php");
+        if ( isset($_POST['title']) && isset($_POST['content']) ) {
 
             # get data from frontend
-            // TODO: validate user input
-            $user = wp_get_current_user();
-            $author = $user->ID;
-            $title = $_POST['title'];
-            $content = $_POST['content'];
+            $title = sanitize_text_field($_POST['title']);
+            $content = sanitize_textarea_field($_POST['content']);
                         
             # create new improvement-post
             $new_post = array(
                 'post_title' => $title,
                 'post_content' => $content,
-                'post_author' => $author,
                 'post_status' => 'pending',
                 'post_votes' => 0,
                 'post_type' => 'improvement',
 
             );
             $post_id = wp_insert_post($new_post);
-            echo $author;
             echo "vielen Dank. <br>Dein Vorschlag wurde eingereicht und wird nach einer Prüfung veröffentlicht";            
          
         }
@@ -91,7 +85,7 @@ class Verbesserungsvorschlaege
     		'has_archive'           => true,
     		'rewrite'               => true,
     		'query_var'             => true,
-            'supports'              => array( 'title', 'editor', 'thumbnail'),
+            'supports'              => array( 'title', 'editor', 'thumbnail', 'comments'),
             'menu_icon'             =>  'dashicons-lightbulb',
     	);
     	register_post_type( 'improvement', $args );
@@ -136,8 +130,25 @@ class Verbesserungsvorschlaege
     }
 
     public function to_frontend() {
-        $user = wp_get_current_user();
-        return '
+        /*
+
+        $args = array('post_type' => 'improvement', 'posts_per_page' => '3');
+        $query = new WP_Query($args);
+        if ($query->have_posts()) { ?>
+            <h2>Eingereichte Verbesserungsvorschläge</h2><?php
+            while ($query->have_posts()){
+                $query->the_post();?>
+                <h4><?php the_title();?></h1>
+                <?php the_content();?>
+                <h4><?php the_author();?></h4><hr>
+                <?php
+            } 
+        }
+
+        
+
+        echo '
+            <div id="vbv_headline"><h2>Verbesserungsvorschlag einreichen</h2></div>
             <form id="vbv_container">
                 <input id="vbv_title" name="title" type="text" placeholder="Titel" required></input>
                 <textarea id="vbv_content" name="content" placeholder="Deine Nachricht..." required></textarea>
@@ -145,7 +156,7 @@ class Verbesserungsvorschlaege
             </form>
             <div id="vbv_response"></div>
         ';
-        
+        */
     }
 }
 
