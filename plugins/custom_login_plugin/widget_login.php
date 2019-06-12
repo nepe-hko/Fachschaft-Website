@@ -24,39 +24,17 @@ class Widget_Login extends WP_Widget
         }
 ?>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>" style="margin:15px;">
-
-            <i class="material-icons" 
-                style = "font-size:60px;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        vertical-align: middle;">account_circle</i>
-
-                <input type="text" name="log"  placeholder=" Username" maxlength="40" 
-                    style = "font-size:15pt;
-                            border-radius:8px;
-                            width: 75%; 
-                            float:right;" required><br><br>
-
-            <i class="material-icons" 
-                style = "font-size:60px;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        vertical-align: middle;">lock</i>
-
-                <input type="password" name="pwd" maxlength="40" placeholder=" Password" 
-                    style = "font-size:15pt;
-                            border-radius: 8px;
-                            width: 75%; 
-                            float:right;" required><br><br>
-        
+        <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>" id="widget_form">
+        <div id="div">
+            <i id="widget_icon" class="material-icons">account_circle</i>
+            <input id="input_widget" type="text" name="log"  placeholder=" Username" maxlength="40" required><br>
+        </div>
+        <div id="div">
+            <i id="widget_icon" class="material-icons">lock</i>
+            <input id="input_widget" type="password" name="pwd" maxlength="40" placeholder=" Password" required><br>
+        </div>
             <p>
-            <input type="submit" name="sendIt" value="Login" class="btn btn-default"
-                style = "width:100%;
-                        border-radius:10px;
-                        text-align:center;"><br>
+            <input id="submit" type="submit" name="sendIt" value="Login" class="btn btn-default"><br>
            
             <label style="margin:-15px;">
                 <p style="float: left;" ><a href="<?php echo wp_registration_url(); ?>">Sign Up!</a></p>
@@ -114,6 +92,7 @@ class Widget_Login extends WP_Widget
         $instance[ 'title' ] = strip_tags( $new_instance[ 'title' ] );
         return $instance;
     }
+
 
 
 }

@@ -1,0 +1,40 @@
+#login_form{
+    margin:30px;
+}
+
+#login_icon{
+    font-size:80px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+#widget_icon{
+    font-size:60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+#input_widget{
+    font-size:15pt;
+    border-radius:8px;
+    width: 75%; 
+    float:right;
+}
+#submit{
+    width:100%;
+    border-radius:10px;
+    text-align:center;
+}
+#input_login{
+    font-size:20pt;
+    border-radius:10px;
+    width: 80%; 
+    float:right;
+}
+#div{
+    margin-bottom:5px;
+}

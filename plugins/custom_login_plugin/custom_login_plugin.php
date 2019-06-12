@@ -21,11 +21,25 @@ class Custom_Login extends WP_Widget
     public function __construct() 
     {
         add_action( 'login_form_login', array( $this, 'redirect_to_custom_login' ) );
+        add_action('wp_logout',array($this,'redirect_logout'));
+
+        add_action('wp_enqueue_scripts', array($this,'enqueue_style'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_style'));
+
         add_filter( 'authenticate', array( $this, 'maybe_redirect_at_authenticate' ), 101, 3 );
+
         add_shortcode( 'custom-login-form', array($this,'login_form_html') );
+        
     }
 
-      
+    function redirect_logout() 
+    {
+        $login_url  = home_url();
+        wp_redirect($login_url . "?login=false");
+        exit;
+    }
+    
+
     public function redirect_to_custom_login()
     {
         wp_redirect(home_url('login'));
@@ -39,7 +53,7 @@ class Custom_Login extends WP_Widget
             {
                 $error_codes = join( ',', $user->get_error_codes() );
      
-                $login_url = home_url( 'login' );
+                $login_url = home_url('login');
                 $login_url = add_query_arg( 'login', $error_codes, $login_url );
      
                 wp_redirect( $login_url );
@@ -77,39 +91,16 @@ class Custom_Login extends WP_Widget
 ?>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>" style="margin:30px">
-
-            <i class="material-icons" 
-                style = "font-size:80px;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        vertical-align: middle;">account_circle</i>
-
-                <input type="text" name="log"  placeholder=" Username" maxlength="40" 
-                    style = "font-size:20pt;
-                            border-radius:10px;
-                            width: 80%; 
-                            float:right;" required><br><br>
-
-            <i class="material-icons" 
-                style = "font-size:80px;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        vertical-align: middle;">lock</i>
-
-                <input type="password" name="pwd" maxlength="40" placeholder=" Password" 
-                    style = "font-size:20pt;
-                            border-radius:10px;
-                            width: 80%; 
-                            float:right;" required><br><br>
-        
+        <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>" id="login_form">
+        <div>
+            <i id="login_icon" class="material-icons">account_circle</i>
+            <input id="input_login" type="text" name="log"  placeholder=" Username" maxlength="40" required><br><br>
+    
+            <i id="login_icon" class="material-icons" >lock</i>
+            <input id="input_login" type="password" name="pwd" maxlength="40" placeholder=" Password" required><br><br>
+             
             <p>
-            <input type="submit" name="sendIt" value="Login" class="btn btn-default"
-                style = "width:100%;
-                        border-radius:10px;
-                        text-align:center;"><br>
+            <input id="submit" type="submit" name="sendIt" value="Login" class="btn btn-default"><br>
             
             <label style="margin:-15px;">
                 <p style="float: left;" ><a href="<?php echo wp_registration_url(); ?>">Sign Up!</a></p>
@@ -137,6 +128,12 @@ class Custom_Login extends WP_Widget
         }
         return 'Unbekannter Error';
     }
+    function enqueue_style()
+    {
+        wp_register_style('style_login', plugins_url(). '/custom_login_plugin/css/style_login.css');
+        wp_enqueue_style('style_login');
+    }
+
 
 }
 

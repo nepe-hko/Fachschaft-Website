@@ -17,7 +17,11 @@ class Custom_Registration
 {
     public function __construct()
     {
+        add_action('wp_enqueue_scripts', array($this, 'my_enqueue'));
+        add_action('admin_enqueue_scripts', array($this, 'my_enqueue')); 	
+
         add_action( 'login_form_register', array( $this, 'redirect_to_custom_register' ) );
+
         add_shortcode('registration',array( $this, 'registration' ) );
     }
 
@@ -40,9 +44,9 @@ class Custom_Registration
                 $username = sanitize_text_field($_POST['username']);
                 $email = $_POST['email'];
                 $passwort = $_POST['passwort'];
-                //$pass_again =$_POST['pass_again'];
+                $pass_again =$_POST['pass_again'];
 
-                $result = $this->register_user($email, $username, $vorname, $nachname, $passwort);
+                $result = $this->register_user($email, $username, $vorname, $nachname, $passwort, $pass_again);
 
                 if(is_wp_error($result))
                 {
@@ -52,7 +56,7 @@ class Custom_Registration
 
                 else
                 {
-                    $redirect_url = home_url( 'login' );
+                    $redirect_url = home_url( 'registrierung' );
                     $redirect_url = add_query_arg( array(
                         'registered' => $username,
                     ), $redirect_url );
@@ -87,12 +91,10 @@ class Custom_Registration
             }
 
 
-?>
+?>          
         <h3><strong>ACCOUNT ERSTELLEN</strong></h3>
-  
 
-
-        <form action="<?php echo wp_registration_url(); ?>" method="post"> 
+        <form action="<?php echo wp_registration_url(); ?>" method="post" id="test" class="test"> 
 
             <strong>Vorname:</strong>
             <input type="text" name="vorname" required><br>
@@ -107,12 +109,15 @@ class Custom_Registration
             <input type="email" name="email" required><br>
 
             <strong>Passwort</strong>
-            <input type="password" name="passwort" required><br>
+            <input type="password" name="passwort" id="passwort" onkeyup="myFunction()" required>
 
-            <!-- <strong>Passwort bitte nochmal eingeben</strong>
-            <input type="password" name="pass_again" required><br> -->
+            <span id="password-strength"></span>
 
-            <input type="submit" name = "submit" value="Registrieren"><br>
+            <meter max="4" id="password-strength-meter" ></meter>
+            <strong>Passwort bitte nochmal eingeben</strong>
+            <input type="password" name="pass_again" id="pass_again" required><br>
+
+            <input type="submit"  name = "submit" value="Registrieren"  /><br>
         </form>
 <?php
                 $vorname = $_POST['vorname'];
@@ -120,47 +125,20 @@ class Custom_Registration
                 $username = $_POST['username'];
                 $email = $_POST['email'];
                 $passwort = $_POST['passwort'];
-               // $pass_again =$_POST['pass_again'];
+               $pass_again =$_POST['pass_again'];
         }
     }
 
 
-    public function register_user($email, $username, $vorname, $nachname, $passwort)
+    public function register_user($email, $username, $vorname, $nachname, $passwort, $pass_again)
     {
-        // $errors = new WP_Error();
-        // //See if the password is the same length
-	    // if(trim($passwort) != trim($pass_again))
-        // {
-        //     $errors->add('password', $this->get_error_message('pass_length'));
-        //     return $errors;
-        // }
-        // // //Length of password
-        // if(strlen(trim($passwort)) < 5 )
-        // {
-        //     $errors->add('password', $this->get_error_message('short_pass'));
-        //     return $errors;
-        // }
-        // // Maximum Length of 50 for surname and name
-        // if(strlen($vorname) > 50 || strlen($nachname) > 50)
-        // {
-        //     $errors->add('name', 'Zu lange');
-        //     return $errors;
-        // }
-        // // Minimum length of Username
-        // if(strlen($username) > 15)
-        // {    
-        //     $errors->add('username', 'Zu lang');
-        //     return $errors;
-        // }
-
-       
         $userdata = array(
             'first_name' => $vorname,
             'last_name' => $nachname,
             'user_login' => $username,
             'user_email' => $email,
-            'user_pass' => $passwort,);
-            //'user_pass' => $pass_again,
+            'user_pass' => $passwort,
+            'user_pass' => $pass_again,);
         $user_id = wp_insert_user($userdata);
 
         //wp_new_user_notification( $user_id, $password );
@@ -184,6 +162,27 @@ class Custom_Registration
                 break;
         }
         return 'Unbekannter Fehler';
+    }
+    function add_process_ajax()
+    {
+        echo 'Test';
+        die();
+    }
+    function my_enqueue()
+    {
+        wp_register_script('js_snippet', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js');
+        wp_enqueue_script('js_snippet');
+        wp_register_script('js_meter','https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js');
+        wp_enqueue_script('js_meter');
+
+        wp_register_style('style_register', plugins_url(). '/custom_registration_plugin/css/style.css');
+        wp_enqueue_style('style_register');
+
+        wp_enqueue_script('pass_error', plugins_url(). '/custom_registration_plugin/js/pass_error.js');
+
+        wp_localize_script( 'ajax_script', 'reg_ajax_data', array( 
+            'ajaxurl' => admin_url( 'admin-ajax.php' )
+        ));
     }
 }
 $reg = new Custom_Registration();
