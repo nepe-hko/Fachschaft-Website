@@ -27,7 +27,7 @@ jQuery( document ).ready( function( $ )
         if(passwort.value != pass_again.value)
         {
 
-          alert("Passwörter müssen die selbe länge haben");
+          alert("Die Passwörter stimmen nicht überein!");
           return false;
         }
         else

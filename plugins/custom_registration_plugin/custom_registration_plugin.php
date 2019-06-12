@@ -45,8 +45,9 @@ class Custom_Registration
                 $email = $_POST['email'];
                 $passwort = $_POST['passwort'];
                 $pass_again =$_POST['pass_again'];
+                $role = $_POST['role'];
 
-                $result = $this->register_user($email, $username, $vorname, $nachname, $passwort, $pass_again);
+                $result = $this->register_user($email, $username, $vorname, $nachname, $passwort, $pass_again, $role);
 
                 if(is_wp_error($result))
                 {
@@ -56,7 +57,7 @@ class Custom_Registration
 
                 else
                 {
-                    $redirect_url = home_url( 'registrierung' );
+                    $redirect_url = home_url( 'login' );
                     $redirect_url = add_query_arg( array(
                         'registered' => $username,
                     ), $redirect_url );
@@ -117,7 +118,26 @@ class Custom_Registration
             <strong>Passwort bitte nochmal eingeben</strong>
             <input type="password" name="pass_again" id="pass_again" required><br>
 
+            <strong>Rolle</strong>
+            <select name="role" id="role">
+			
+                <option selected='selected' value='subscriber'>Abonnent</option>
+                <option value='contributor'>Mitarbeiter</option>
+                <option value='author'>Autor</option>
+                <option value='editor'>Redakteur</option>
+                <option value='administrator'>Administrator</option>			
+            
+            </select>
+
+            <a href=" " style="vertical-align: top;" title="Hier ist ein grober Überblick über die verschiedenen Benutzerrollen und die jeweils damit verknüpften Berechtigungen:
+
+&bull;Abonnenten können nur Kommentare lesen und abgeben, aber keine eigenen Inhalte erstellen.
+&bull;Mitarbeiter können eigene Beiträge schreiben und bearbeiten, sie jedoch nicht veröffentlichen. Auch dürfen sie keine Dateien hochladen.
+&bull;Autoren können ihre eigenen Beiträge veröffentlichen und verwalten, und auch Dateien hochladen.
+&bull;Redakteure können Beiträge und Seiten veröffentlichen und verwalten, und auch die Beiträge, Seiten, etc. von anderen Benutzern verwalten.
+&bull;Administratoren haben vollen Zugriff auf alle administrativen Funktionen.">&#63;</a><br><br>
             <input type="submit"  name = "submit" value="Registrieren"  /><br>
+
         </form>
 <?php
                 $vorname = $_POST['vorname'];
@@ -125,12 +145,13 @@ class Custom_Registration
                 $username = $_POST['username'];
                 $email = $_POST['email'];
                 $passwort = $_POST['passwort'];
-               $pass_again =$_POST['pass_again'];
+                $pass_again =$_POST['pass_again'];
+                $role = $_POST['role'];
         }
     }
 
 
-    public function register_user($email, $username, $vorname, $nachname, $passwort, $pass_again)
+    public function register_user($email, $username, $vorname, $nachname, $passwort, $pass_again, $role)
     {
         $userdata = array(
             'first_name' => $vorname,
@@ -138,7 +159,8 @@ class Custom_Registration
             'user_login' => $username,
             'user_email' => $email,
             'user_pass' => $passwort,
-            'user_pass' => $pass_again,);
+            'user_pass' => $pass_again,
+            'role' => $role);
         $user_id = wp_insert_user($userdata);
 
         //wp_new_user_notification( $user_id, $password );
