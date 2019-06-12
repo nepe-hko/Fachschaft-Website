@@ -29,13 +29,11 @@ class SpeiseplanPlugin extends WP_Widget
     public function toFrontend() 
     {
         
-        $json = $this->fetchFromApi("complete");
-
+        $meals = $this->getMeals();
         $html = "<table class=\"speiseplan\">";
         $date = "";
         $lastDate = "";
-
-        foreach ($json->meals as $meal) {
+        foreach ($meals->meals as $meal) {
 
             $translate = array(
                 'Mon'       => 'Montag',
@@ -63,22 +61,32 @@ class SpeiseplanPlugin extends WP_Widget
     }
 
 
-    private function fetchFromApi($option)
+    private function getMeals()
     {
-        if($option == "today") {
-            $url = "https://api.fachschaft.in/scrapi/meals/nbg-hohfederstrasse.json?only_today=1";
-        } else {
+        global $wpdb;
+        $date = date("Y-m-d");
+        $tableName = $wpdb->prefix . 'meal';
+        $meals = $wpdb->get_row("SELECT meals FROM `$tableName` WHERE lastUpdate =  '$date';");
+
+        if ($meals) { // meals are in DB
+            return json_decode($meals->meals);
+
+        } else { // meals are not in DB -> fetch from API and store in DB
+        
             $url = "https://api.fachschaft.in/scrapi/meals/nbg-hohfederstrasse.json";
-        }
-        try {
-            $req = curl_init();
-            curl_setopt($req, CURLOPT_URL, $url);
-            curl_setopt($req, CURLOPT_RETURNTRANSFER, 1);
-            $res = curl_exec($req);
-            curl_close($req);
-            return json_decode($res);
-        } catch (Exception $e) {
-            return array();
+            try {
+                $req = curl_init();
+                curl_setopt($req, CURLOPT_URL, $url);
+                curl_setopt($req, CURLOPT_RETURNTRANSFER, 1);
+                $res = curl_exec($req);
+                curl_close($req);
+                $meals = $res;
+            } catch (Exception $e) {
+                return array();
+            }
+            //save to DB
+            $wpdb->insert($tableName, array('meals' => $meals, 'lastUpdate' => $date));
+            return json_decode($meals);
         }
 
     }
@@ -103,12 +111,26 @@ class SpeiseplanPlugin extends WP_Widget
         }
 
         // Speiseplan abrufen und ausgeben
-        $json = $this->fetchFromApi("today");
-        $html = "<table class=\"speiseplanWidget\">";
 
-        foreach ($json->meals as $meal) {
-            $html .= "<tr><td class=\"title\">" . $meal->title . "</td>";
-            $html .= "<td class=\"price\">" . $meal->prices[0] . "</td></tr>";
+        $json = $this->getMeals();
+        
+        $html = "<table class=\"speiseplanWidget\">";
+        $meals = $json->meals;
+        if(!$meals) {
+            $html .= "Nicht erreichbar!";
+        } else {
+            $date = date("Y-m-d");
+            $count = 0;
+            foreach ($meals as $meal) {
+                if($meal->date == $date) {
+                    $count++;
+                    $html .= "<tr><td class=\"title\">" . $meal->title . "</td>";
+                    $html .= "<td class=\"price\">" . $meal->prices[0] . "</td></tr>";
+                }
+            }
+            if($count == 0){
+                $html .= "Cafeteria heute geschlossen!";
+            }
         }
 
         $html .= "</table>";
@@ -143,10 +165,35 @@ class SpeiseplanPlugin extends WP_Widget
         return $instance;
     }
 
+    public function onActivation()
+    {
+        # create DB table
+        global $wpdb;
+        $tableName = $wpdb->prefix . "meal";
+        $charsetCollate = $wpdb->get_charset_collate();
+        $sql = "CREATE TABLE $tableName (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            meals text,
+            lastUpdate text,
+            PRIMARY KEY  (id)
+        ) $charsetCollate;";
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta($sql);
+    }
+
+    public function onDeactivation()
+    {
+        # drop DB table
+        global $wpdb;
+        $meal = $wpdb->prefix . "meal";
+        $wpdb->query("DROP TABLE IF EXISTS $meal");
+    }
+
 }
 
 $speiseplanPlugin = SpeiseplanPlugin::getInstance();
 add_shortcode('speiseplan', array($speiseplanPlugin, 'toFrontend'));
 add_action('widgets_init', array($speiseplanPlugin, 'loadWidget'));
-
+register_activation_hook( __FILE__, array($speiseplanPlugin, 'onActivation'));
+register_deactivation_hook(__FILE__, array($speiseplanPlugin, 'onDeactivation'));
 ?>
