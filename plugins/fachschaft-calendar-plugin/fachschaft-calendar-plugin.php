@@ -4,9 +4,9 @@
 *  @package FachschaftCalendarPlugin
 */
 /*
-Plugin Name: Fachschaft Calendar FachschaftCalendarPlugin
+Plugin Name: Veranstaltungskalender
 Plugin URI:
-Description: This is a Calandar Plugin for our Fachschaft-Website
+Description: Dies ist ein Veranstaltungskalender bestehend aus einer Kalenderübersich und einer Veranstaltungsliste. Um Icons anzeigen zu können, ist die Aktivierung des Font Awesome Plugins nötig.
 Version: 1.0.0
 Author: Lena Kallenbach
 Author URI:
@@ -14,63 +14,15 @@ License: GPLv2 or later
 Text Domain: fachschaft-calendar-plugin
 */
 
-// namespace fachschaftCalendarPlugin;
 
 if(!defined('ABSPATH'))
 {
   die;
 }
 
-class CalendarPlugin{
-    protected static $_instance = null; // Singleton instance
-    public static function get_instance() {
-      if (null === self::$_instance) {
-      self::$_instance = new self;
-      }
-    return self::$_instance;
-    }
-    protected function __clone() {} // Prevent singleton cloning
-    protected function __construct() {
-      //add custom post type calendar
-      add_action('init', array($this, 'calendar_post_type'));
-      //metabox for custom post type
-      add_action('add_meta_boxes', 'calendar_add_meta_box');
-      add_action('save_post','save_calendar_event_data');
-    }
 
-    function activate(){
-      //generate custom post types
-
-      $this->calendar_post_type();
-      //new rewrite rules
-      flush_rewrite_rules();
-    }
-    function deactivate(){
-      flush_rewrite_rules();
-    }
-
-    function calendar_post_type(){
-      //specify custom post type
-      $public_pt_args = array(
-    		'label' => 'Kalender',
-    		'public' => true,
-    		'publicly_queryable' => true,
-    		'exclude_from_search' => false,
-    		'show_ui' => true,
-    		'show_in_menu' => true,
-    		'has_archive' => true,
-    		'rewrite' => true,
-    		'query_var' => true,
-        'taxonomies' => array('category'),
-        'supports' => array( 'title', 'editor', 'thumbnail'),
-        'menu_icon' =>  'dashicons-calendar-alt',
-    	);
-    	register_post_type( 'calendar_post_type', $public_pt_args );
-
-
-    }
-
-  }
+//CalendarPlugin class
+require plugin_dir_path( __FILE__ ) . 'calendar-plugin-fachschaft-calendar-plugin.php';
 
 if(class_exists('CalendarPlugin'))
 {
@@ -101,9 +53,9 @@ function add_date_picker(){
   //jQuery UI datepicker file
   wp_enqueue_script('jquery-ui-datepicker');
   //custom datepicker js
-  wp_enqueue_script('custom-datepicker', get_stylesheet_directory_uri().'/js/datepicker.js', array('jquery'));
+  wp_enqueue_script('custom-datepicker', plugins_url().'/fachschaft-calendar-plugin/js/datepicker.js', array('jquery'));
   //jQuery UI theme css file
-  wp_enqueue_style('e2b-admin-ui-css','http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');;
+  wp_enqueue_style('e2b-admin-ui-css','http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');
 
 }
 //frontend: wp_enqueue_scripts
@@ -125,18 +77,9 @@ function calendar_event_callback($post){
   // collect value
   //treu if single value, else false
   $value = get_post_meta($post->ID,'_calendar_event_value_key', true);
-
-  // echo "Test Date Picker: </br><div><p>Date: <input type='text' id='datepicker'></p> </div>";
   echo '<label for="calendar_event_field">Datum: </lable>';
   echo "<input type='text' id='datepicker' name='calendar_event_field' value='". esc_attr($value) ."' size='25'/>";
-  ?>
-        <script>
-          jQuery(document).ready(function() {
-              jQuery( "#datepicker" ).datepicker({ dateFormat: 'dd.mm.yy' }).val();
-          });
 
-        </script>
-        <?php
 }
 
 function save_calendar_event_data($post_id){
@@ -160,107 +103,8 @@ function save_calendar_event_data($post_id){
 }
 
 
-class Calendar{
-
-  private $month;
-  private $year;
-  private $day_of_week;
-  private $num_days;
-  private $date_info;
-  private $days_of_week;
-
-  public function __construct($month, $year, $days_of_week= array('Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'))
-    {
-      $this->month = $month;
-      $this->year = $year;
-      $this->days_of_week = $days_of_week;
-      $this->num_days = cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
-      $this->date_info = getdate(strtotime('first day of', mktime(0,0,0, $this->month, 1, $this->year)));
-      $this->day_of_week = $this->date_info['wday']-1;
-    }
-
-
-  public function markeDay($events){
-
-    $event_days = array();
-    $event_months = array();
-    $event_years = array();
-
-    foreach ($events as $date) {
-      $parts = explode('.', $date[0]);
-      array_push($event_days, $parts[0]);
-      array_push($event_months, $parts[1]);
-      array_push($event_years, $parts[2]);
-    }
-    $time = current_time( 'mysql' );
-    list( $current_year, $current_month, $current_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $time );
-
-    $output = '<div class="fachschaft_calendar_plugin_calendar_table">';
-    $output .= '<table class="calendar">';
-    $current_month_name = date_i18n( 'F', false, false);
-    $output .='<caption>'.$current_month_name.' '.$current_year.'</caption>';
-    $output .='<tr>';
-
-    // Display dayes of the week header
-    foreach ($this->days_of_week as $day) {
-      $output .= '<th class="header">' .$day . '</th>';
-    }
-
-    $output .= '</tr><tr>';
-
-    if ($this->day_of_week >0) {
-      $output .= '<td colspan="' .$this->day_of_week .'"></td>';
-    }
-    $current_calendar_day = 1;
-    $counter =0;
-
-    while ($current_calendar_day <= $this->num_days) {
-      if ($this->day_of_week == 7) {
-        $this->day_of_week = 0;
-        $output .= '</tr><tr>';
-      }
-
-      if ($current_calendar_day == $event_days[$counter] && $current_month == $event_months[$counter]  && $current_year == $event_years[$counter]) {
-        if ($current_calendar_day < 10) {
-          $output .= '<td class="day event" id="0' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
-        }
-        else {
-          $output .= '<td class="day event" id="' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
-        }
-
-        $counter++;
-      }
-      else {
-        $output .= '<td class="day">' .$current_calendar_day .'</td>';
-      }
-
-      $current_calendar_day++;
-      $this->day_of_week++;
-    }
-
-    if ($this->day_of_week != 7) {
-      $remaining_days = 7 - $this->day_of_week;
-      $output .= '<td colspan="' .$remaining_days .'"></td>';
-    }
-
-    $output .= '</tr>';
-    $output .= '</table>';
-    $output .= '</div>';
-
-    ?>
-    <script>
-        jQuery(document).ready(function() {
-        jQuery(".event").click(function(event) {
-          var url  = window.location.href;
-          jQuery(url+'#' + event.target.id + '_scrollPos').get(0).scrollIntoView();
-        });
-      });
-    </script>
-    <?php
-    //print calendar table
-    return $output;
-}
-}
+//CreateCalendar class
+require plugin_dir_path( __FILE__ ) . 'create-calendar-fachschaft-calendar-plugin.php';
 
 function printCalendar(){
 
@@ -292,7 +136,7 @@ function printCalendar(){
   list( $today_year, $today_month, $today_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $time );
   // echo $today_month;
 
-  $calendar = new Calendar($today_month,$today_year);
+  $calendar = new CreateCalendar($today_month,$today_year);
 
 
   return $calendar->markeDay($events);
@@ -303,7 +147,7 @@ add_shortcode('calendar', 'printCalendar');
 function printEvents() {
   setlocale(LC_TIME, "de_DE");
   global $wpdb;
-  $query = $wpdb->get_results("SELECT post_id,meta_value, post_title, post_content, wp_terms.name as category, term_id FROM `wp_postmeta` JOIN `wp_posts` ON wp_postmeta.post_id=wp_posts.ID
+  $query = $wpdb->get_results("SELECT post_id,meta_value, post_title, post_content, wp_terms.name as category,  wp_terms.slug as slug FROM `wp_postmeta` JOIN `wp_posts` ON wp_postmeta.post_id=wp_posts.ID
     JOIN `wp_term_relationships` ON wp_postmeta.post_id=wp_term_relationships.object_id
     JOIN `wp_terms` ON wp_term_relationships.term_taxonomy_id = wp_terms.term_id
     WHERE meta_key = '_calendar_event_value_key' ORDER BY meta_value;");
@@ -311,7 +155,7 @@ function printEvents() {
   foreach ($query as $value) {
     $string= $value->meta_value;
     $res = str_replace(".", "", $string);
-    array_push($events, array(strtotime($value->meta_value),$value->meta_value, $value->post_title,$value->post_content,$res, $value->post_id, $value->category,$value->term_id));
+    array_push($events, array(strtotime($value->meta_value),$value->meta_value, $value->post_title,$value->post_content,$res, $value->post_id, $value->category,$value->slug));
   }
 
 
@@ -336,6 +180,15 @@ function printEvents() {
 
   $month_name = date_i18n( 'F', false, false);
   $output .= '<h1>'.$month_name.'</h1>';
+
+  // check if font awesome plugin is activated
+  include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+  $activated = False;
+  if ( is_plugin_active( 'font-awesome/font-awesome.php' ) ) {
+    $activated = True;
+  }
+
   for ($i=0; $i < sizeof($events); $i++) {
     if ($events[$i][0] >= $current_timestamp = time()) {
 
@@ -346,20 +199,27 @@ function printEvents() {
       }
       $output .= '<div id="' .$events[$i][4].'_scrollPos">';
       $output .= '<h2>'.$events[$i][2];
-      //icon for Category
-      if ($events[$i][7] == 3) {
-        $output .= '<i class="fas fa-comments"></i></h2>';
 
-      }
-      elseif ($events[$i][7] == 4) {
-          $output .= '<i class="fas fa-dice"></i></h2>';
-      }
-      elseif ($events[$i][7] == 5) {
-          $output .= '<i class="fas fa-beer"></i></h2>';
+      //add Icon for Category if Font Awesome Plugin is activated
+      if ($activated) {
+        if ($events[$i][7] == "vortrag") {
+          $output .= '<i class="fas fa-comments"></i></h2>';
+
+        }
+        elseif ($events[$i][7] == "spiel-spass") {
+            $output .= '<i class="fas fa-dice"></i></h2>';
+        }
+        elseif ($events[$i][7] == "party") {
+            $output .= '<i class="fas fa-beer"></i></h2>';
+        }
+        else {
+            $output .= '<i class="fas fa-calendar-alt"></i></h2>';
+        }
       }
       else {
-          $output .= '<i class="fas fa-calendar-alt"></i></h2>';
+          $output .= '</h2>';
       }
+
       $output .= '<h3>'.' am '.$events[$i][1].'</h3>';
 
       //category
