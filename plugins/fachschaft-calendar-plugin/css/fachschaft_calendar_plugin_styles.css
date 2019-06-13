@@ -1,11 +1,42 @@
-.fachschaft_calendar_plugin_event_list h2 {
-  padding-top: 0;
+.fachschaft_calendar_plugin_event_list h2,  .fachschaft_calendar_plugin_event_list h3{
+  padding-top: 10px;
 }
+.fachschaft_calendar_plugin_event_list h3 {
+  color: rgb(128, 39, 82);
+}
+.fachschaft_calendar_plugin_event_list h1 {
+  font-weight: bolder;
+}
+.fachschaft_calendar_plugin_event_list div {
+  padding: 10px;
+  border-style: solid;
+  border-width: thin;
+  border-color: rgb(102, 102, 102);
+}
+
 .fachschaft_calendar_plugin_calendar_table .event {
    background: magenta;
+   cursor: pointer;
  }
 
 .fachschaft_calendar_plugin_widget .event {
   cursor: pointer;
   background: rgb(138, 233, 147);
+}
+.event {
+  cursor: pointer;
+}
+.fachschaft_calendar_plugin_event_list h2 {
+  width: 100%;
+}
+.fachschaft_calendar_plugin_event_list h2 i {
+  float: right;
+}
+
+.fachschaft_calendar_plugin_event_list .fas:before{
+  font-size: 40px;
+  color: #2F9B92;
+  float: right;
+  padding-right: 20px;
+  padding-top: 10px;
 }

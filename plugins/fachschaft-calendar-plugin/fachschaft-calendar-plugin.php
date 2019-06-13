@@ -4,9 +4,9 @@
 *  @package FachschaftCalendarPlugin
 */
 /*
-Plugin Name: Fachschaft Calendar FachschaftCalendarPlugin
+Plugin Name: Veranstaltungskalender
 Plugin URI:
-Description: This is a Calandar Plugin for our Fachschaft-Website
+Description: Dies ist ein Veranstaltungskalender bestehend aus einer Kalenderübersich und einer Veranstaltungsliste. Um Icons anzeigen zu können, ist die Aktivierung des Font Awesome Plugins nötig.
 Version: 1.0.0
 Author: Lena Kallenbach
 Author URI:
@@ -14,60 +14,15 @@ License: GPLv2 or later
 Text Domain: fachschaft-calendar-plugin
 */
 
-// namespace fachschaftCalendarPlugin;
 
 if(!defined('ABSPATH'))
 {
   die;
 }
 
-class CalendarPlugin{
-    protected static $_instance = null; // Singleton instance
-    public static function get_instance() {
-      if (null === self::$_instance) {
-      self::$_instance = new self;
-      }
-    return self::$_instance;
-    }
-    protected function __clone() {} // Prevent singleton cloning
-    protected function __construct() {
-      //add custom post type calendar
-      add_action('init', array($this, 'calendar_post_type'));
-      //metabox for custom post type
-      add_action('add_meta_boxes', 'calendar_add_meta_box');
-      add_action('save_post','save_calendar_event_data');
-    }
 
-    function activate(){
-      //generate custom post types
-
-      $this->calendar_post_type();
-      //new rewrite rules
-      flush_rewrite_rules();
-    }
-    function deactivate(){
-      flush_rewrite_rules();
-    }
-
-    function calendar_post_type(){
-      //specify custom post type
-      $public_pt_args = array(
-    		'label' => 'Kalender',
-    		'public' => true,
-    		'publicly_queryable' => true,
-    		'exclude_from_search' => false,
-    		'show_ui' => true,
-    		'show_in_menu' => true,
-    		'has_archive' => true,
-    		'rewrite' => true,
-    		'query_var' => true,
-        'supports' => array( 'title', 'editor', 'thumbnail'),
-        'menu_icon' =>  'dashicons-calendar-alt',
-    	);
-    	register_post_type( 'calendar_post_type', $public_pt_args );
-
-    }
-  }
+//CalendarPlugin class
+require plugin_dir_path( __FILE__ ) . 'calendar-plugin-fachschaft-calendar-plugin.php';
 
 if(class_exists('CalendarPlugin'))
 {
@@ -88,16 +43,19 @@ function fachschaft_calendar_add_stylesheet() {
     // Respects SSL, Style.css is relative to the current file
     wp_register_style( 'fachschaft-calendar-plugin-styles-css', plugins_url('/css/fachschaft_calendar_plugin_styles.css', __FILE__));
     wp_enqueue_style('fachschaft-calendar-plugin-styles-css');
+    //fontawesome.min.css
+    wp_register_style( 'font-awesome-css', plugins_url('/css/fontawesome.min.css', __FILE__));
+    wp_enqueue_style('font-awesome-css');
+
 }
 
 function add_date_picker(){
   //jQuery UI datepicker file
   wp_enqueue_script('jquery-ui-datepicker');
   //custom datepicker js
-  wp_enqueue_script('custom-datepicker', get_stylesheet_directory_uri().'/js/datepicker.js', array('jquery'));
+  wp_enqueue_script('custom-datepicker', plugins_url().'/fachschaft-calendar-plugin/js/datepicker.js', array('jquery'));
   //jQuery UI theme css file
   wp_enqueue_style('e2b-admin-ui-css','http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');
-  wp_enqueue_style('fachschaft-calendar-plugin-styles-css','/css/fachschaft_calendar_plugin_styles.css');
 
 }
 //frontend: wp_enqueue_scripts
@@ -119,18 +77,9 @@ function calendar_event_callback($post){
   // collect value
   //treu if single value, else false
   $value = get_post_meta($post->ID,'_calendar_event_value_key', true);
-
-  // echo "Test Date Picker: </br><div><p>Date: <input type='text' id='datepicker'></p> </div>";
   echo '<label for="calendar_event_field">Datum: </lable>';
   echo "<input type='text' id='datepicker' name='calendar_event_field' value='". esc_attr($value) ."' size='25'/>";
-  ?>
-        <script>
-          jQuery(document).ready(function() {
-              jQuery( "#datepicker" ).datepicker({ dateFormat: 'dd.mm.yy' }).val();
-          });
 
-        </script>
-        <?php
 }
 
 function save_calendar_event_data($post_id){
@@ -154,186 +103,136 @@ function save_calendar_event_data($post_id){
 }
 
 
-class Calendar{
-
-  private $month;
-  private $year;
-  private $day_of_week;
-  private $num_days;
-  private $date_info;
-  private $days_of_week;
-
-  public function __construct($month, $year, $days_of_week= array('Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'))
-    {
-      $this->month = $month;
-      $this->year = $year;
-      $this->days_of_week = $days_of_week;
-      $this->num_days = cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
-      $this->date_info = getdate(strtotime('first day of', mktime(0,0,0, $this->month, 1, $this->year)));
-      $this->day_of_week = $this->date_info['wday']-1;
-    }
-
-  public function show(){
-    $output = '<table class="calendar">';
-    $output .='<caption>'.$this->date_info['month'].' '.$this->year.'</caption>';
-    $output .='<tr>';
-
-    // Display dayes of the week header
-    foreach ($this->days_of_week as $day) {
-      $output .= '<th class="header">' .$day . '</th>';
-    }
-
-    $output .= '</tr><tr>';
-
-    if ($this->day_of_week >0) {
-      $output .= '<td colspan="' .$this->day_of_week .'"></td>';
-    }
-    $current_day = 1;
-
-    while ($current_day <= $this->num_days) {
-      if ($this->day_of_week == 7) {
-        $this->day_of_week = 0;
-        $output .= '</tr><tr>';
-      }
-
-      $output .= '<td class="day">' .$current_day .'</td>';
-
-      $current_day++;
-      $this->day_of_week++;
-    }
-
-    if ($this->day_of_week != 7) {
-      $remaining_days = 7 - $this->day_of_week;
-      $output .= '<td colspan="' .$remaining_days .'"></td>';
-    }
-
-    $output .= '</tr>';
-    $output .= '</table>';
-
-    //print calendar table
-    echo $output;
-
-  }
-
-  public function markeDay($event_days, $event_months, $event_years){
-
-    $output = '<div class="fachschaft_calendar_plugin_calendar_table">';
-    $output .= '<table class="calendar">';
-    $output .='<caption>'.$this->date_info['month'].' '.$this->year.'</caption>';
-    $output .='<tr>';
-
-    // Display dayes of the week header
-    foreach ($this->days_of_week as $day) {
-      $output .= '<th class="header">' .$day . '</th>';
-    }
-
-    $output .= '</tr><tr>';
-
-    if ($this->day_of_week >0) {
-      $output .= '<td colspan="' .$this->day_of_week .'"></td>';
-    }
-    $current_day = 1;
-    $counter =0;
-
-    while ($current_day <= $this->num_days) {
-      if ($this->day_of_week == 7) {
-        $this->day_of_week = 0;
-        $output .= '</tr><tr>';
-      }
-
-      if ($current_day == $event_days[$counter]) {
-        $output .= '<td class="day event">' .$current_day .'</td>';
-        $counter++;
-      }
-      else {
-        $output .= '<td class="day">' .$current_day .'</td>';
-      }
-
-
-      $current_day++;
-      $this->day_of_week++;
-    }
-
-    if ($this->day_of_week != 7) {
-      $remaining_days = 7 - $this->day_of_week;
-      $output .= '<td colspan="' .$remaining_days .'"></td>';
-    }
-
-    $output .= '</tr>';
-    $output .= '</table>';
-    $output .= '</div>';
-
-    //print calendar table
-    return $output;
-}
-}
+//CreateCalendar class
+require plugin_dir_path( __FILE__ ) . 'create-calendar-fachschaft-calendar-plugin.php';
 
 function printCalendar(){
 
-  // $calendar->markeDay(12,5,2019);
-  //get Event dates from db -> meta_value of _calendar_event_value_key
+  $events =array();
 
-  $days =array();
-  $months =array();
-  $years =array();
-  //test Data
-
-  // $events = array('1.5.2019', '21.5.2019', '6.6.2019', '31.5.2019', '11.5.2019');
-  $events = array();
-  // $events = get_post_custom_values('_calendar_event_value_key');
-  // $events = get_post_meta(get_the_ID(,'_calendar_event_value_key');
-  // var_dump($events);
-  global $wpdb;
-  $from_db = $wpdb->get_results("SELECT meta_value FROM `wp_postmeta` WHERE meta_key = '_calendar_event_value_key' ORDER BY meta_value;");
-
-
-  $events = array();
-  foreach ($from_db as $value) {
-    array_push($events, $value->meta_value);
+  $all_post_ids = get_posts(array(
+    'fields'          => 'ids',
+    'posts_per_page'  => -1,
+    'post_type' => 'calendar_post_type'
+  ));
+  $event_dates = array();
+  $post_ids = array_unique($all_post_ids);
+  foreach ($post_ids as $value) {
+    array_push($event_dates,get_post_meta($value,'_calendar_event_value_key'));
   }
 
-  // function date_sort($a, $b) {
-  //     return strtotime($a) - strtotime($b);
-  // }
-  // usort($events, "date_sort");
-
-
-  //split date
-  foreach ($events as $date) {
-    $parts = explode('.', $date);
-    array_push($days, $parts[0]);
-    array_push($months, $parts[1]);
-    array_push($years, $parts[2]);
+  //get timestajmp
+  for ($i=0; $i < sizeof($event_dates); $i++) {
+    array_push($events, array($event_dates[$i][0], strtotime($event_dates[$i][0])));
   }
-  $months_with_events = array_unique($months);
-  $years_with_events = array_unique($years);
+  foreach ($events as $key => $node) {
+   $eventsort[$key]    = $node[1];
+  }
+  //sort date events
+  array_multisort($eventsort, SORT_ASC, $events);
 
-  $calendar = new Calendar(5,2019);
+  //get current date
+  $time = current_time( 'mysql' );
+  list( $today_year, $today_month, $today_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $time );
+  // echo $today_month;
 
-  return $calendar->markeDay($days,$months,$years);
+  $calendar = new CreateCalendar($today_month,$today_year);
+
+
+  return $calendar->markeDay($events);
 }
 
 add_shortcode('calendar', 'printCalendar');
 
 function printEvents() {
+  setlocale(LC_TIME, "de_DE");
   global $wpdb;
-  $query = $wpdb->get_results("SELECT post_id,meta_value, post_title, post_content FROM `wp_postmeta` JOIN `wp_posts` ON wp_postmeta.post_id=wp_posts.ID WHERE meta_key = '_calendar_event_value_key' ORDER BY meta_value;");
-  $event_dates = array();
-  $event_title = array();
-  $event_content = array();
+  $query = $wpdb->get_results("SELECT post_id,meta_value, post_title, post_content, wp_terms.name as category,  wp_terms.slug as slug FROM `wp_postmeta` JOIN `wp_posts` ON wp_postmeta.post_id=wp_posts.ID
+    JOIN `wp_term_relationships` ON wp_postmeta.post_id=wp_term_relationships.object_id
+    JOIN `wp_terms` ON wp_term_relationships.term_taxonomy_id = wp_terms.term_id
+    WHERE meta_key = '_calendar_event_value_key' ORDER BY meta_value;");
+  $events = array();
   foreach ($query as $value) {
-    array_push($event_dates, $value->meta_value);
-    array_push($event_title, $value->post_title);
-    array_push($event_content, $value->post_content);
+    $string= $value->meta_value;
+    $res = str_replace(".", "", $string);
+    array_push($events, array(strtotime($value->meta_value),$value->meta_value, $value->post_title,$value->post_content,$res, $value->post_id, $value->category,$value->slug));
   }
 
+
+  foreach ($events as $key => $node) {
+   $eventsort[$key]    = $node[0];
+  }
+  //sort date events
+  array_multisort($eventsort, SORT_ASC, $events);
+
+
+  $time = current_time( 'mysql' );
+  list( $today_year, $today_month, $today_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $time );
+
+  //split .$events[$i][1]
+  $event_month = array();
+  for ($i=0; $i <sizeof($events) ; $i++) {
+    $str_arr = explode (".", $events[$i][1]);
+    array_push($event_month, $str_arr[1]);
+  }
   //generate $output
   $output = '<div class="fachschaft_calendar_plugin_event_list">';
-  for ($i=0; $i < sizeof($event_dates); $i++) {
-    $output .= '<h1>'.$event_title[$i] .'</h1>';
-    $output .= '<h2>'.' am '.$event_dates[$i].'</h2>';
 
-    $output .= '<text>'.$event_content[$i] .'</text>';
+  $month_name = date_i18n( 'F', false, false);
+  $output .= '<h1>'.$month_name.'</h1>';
+
+  // check if font awesome plugin is activated
+  include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+  $activated = False;
+  if ( is_plugin_active( 'font-awesome/font-awesome.php' ) ) {
+    $activated = True;
+  }
+
+  for ($i=0; $i < sizeof($events); $i++) {
+    if ($events[$i][0] >= $current_timestamp = time()) {
+
+      if ($event_month[$i] != $event_month[$i-1] && $event_month[$i-1] != NULL)  {
+        setlocale(LC_TIME, "de_DE");
+        $month_name = strftime("%B", $events[$i][0]);
+        $output .= '<h1>'.$month_name.'</h1>';
+      }
+      $output .= '<div id="' .$events[$i][4].'_scrollPos">';
+      $output .= '<h2>'.$events[$i][2];
+
+      //add Icon for Category if Font Awesome Plugin is activated
+      if ($activated) {
+        if ($events[$i][7] == "vortrag") {
+          $output .= '<i class="fas fa-comments"></i></h2>';
+
+        }
+        elseif ($events[$i][7] == "spiel-spass") {
+            $output .= '<i class="fas fa-dice"></i></h2>';
+        }
+        elseif ($events[$i][7] == "party") {
+            $output .= '<i class="fas fa-beer"></i></h2>';
+        }
+        else {
+            $output .= '<i class="fas fa-calendar-alt"></i></h2>';
+        }
+      }
+      else {
+          $output .= '</h2>';
+      }
+
+      $output .= '<h3>'.' am '.$events[$i][1].'</h3>';
+
+      //category
+      $output .= '<text>'.$events[$i][6] .'</br> </br></text>';
+
+      $output .= '<text>'.$events[$i][3] .'</text>';
+      $output .= '</div>';
+      $output .= '</br></br>';
+
+
+    }
+
+
   }
   $output .= '</div>';
 
@@ -376,6 +275,7 @@ echo $args['before_title'] . $title . $args['after_title'];
 
 // This is where you run the code and display the output
 echo "<div class='fachschaft_calendar_plugin_widget' href='http://localhost/wordpress/veranstaltungen/'>";
+
 ?>
 <script>
   jQuery(document).ready(function() {
@@ -426,7 +326,7 @@ return $instance;
 
     // Calendar Widget background
     $wp_customize->add_setting( 'event_background_color_widget', array(
-      'default'   => '',
+      'default'   => '#2F9B92',
       'transport' => 'refresh',
       'sanitize_callback' => 'sanitize_hex_color',
     ) );
@@ -437,7 +337,7 @@ return $instance;
     ) ) );
     // Calendar background
     $wp_customize->add_setting( 'event_background_color', array(
-      'default'   => '',
+      'default'   => '#2F9B92',
       'transport' => 'refresh',
       'sanitize_callback' => 'sanitize_hex_color',
     ) );
@@ -445,6 +345,28 @@ return $instance;
     $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'event_background_color', array(
       'section' => 'colors',
       'label'   => esc_html__( 'Hintergrundfarbe Veranstaltung Kalender', 'theme' ),
+    ) ) );
+    // Event List Date color
+    $wp_customize->add_setting( 'event_date_color', array(
+      'default'   => '#2F9B92',
+      'transport' => 'refresh',
+      'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'event_date_color', array(
+      'section' => 'colors',
+      'label'   => esc_html__( 'Datum Schriftfarbe in Veranstaltungsliste', 'theme' ),
+    ) ) );
+    // Event List Icon color
+    $wp_customize->add_setting( 'event_icon_color', array(
+      'default'   => '#2F9B92',
+      'transport' => 'refresh',
+      'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'event_icon_color', array(
+      'section' => 'colors',
+      'label'   => esc_html__( 'Iconfarbe in Veranstaltungsliste', 'theme' ),
     ) ) );
 
   }
@@ -455,8 +377,10 @@ return $instance;
 {
     ?>
          <style type="text/css">
-             .fachschaft_calendar_plugin_calendar_table .event { background: <?php echo get_theme_mod('event_background_color', '#000000'); ?>;}
-             .fachschaft_calendar_plugin_widget .event { background: <?php echo get_theme_mod('event_background_color_widget', '#000000'); ?>;}
+             .fachschaft_calendar_plugin_calendar_table .event { background: <?php echo get_theme_mod('event_background_color', '#2F9B92'); ?>;}
+             .fachschaft_calendar_plugin_widget .event { background: <?php echo get_theme_mod('event_background_color_widget', '#2F9B92'); ?>;}
+             .fachschaft_calendar_plugin_event_list h3 { color: <?php echo get_theme_mod('event_date_color', '#2F9B92'); ?>;}
+             .fachschaft_calendar_plugin_event_list .fas:before { color: <?php echo get_theme_mod('event_icon_color', '#2F9B92'); ?>;}
          </style>
     <?php
 }
