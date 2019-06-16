@@ -10,32 +10,26 @@ jQuery( document ).ready( function( $ )
 
         // Update the password strength meter
         meter.value = result.score;
-
-        // Update the text indicator
-        if (val !== "") 
-        {
-            text.innerHTML = "Strength: " + strength[result.score]; 
-        }  
-        else 
-        {
-            text.innerHTML = "";
-        }
     });
-    
-    $( 'form.test' ).bind('submit', function() 
+
+    $( 'form.reg_ajax_class' ).submit(function(e) 
     {
-        if(passwort.value != pass_again.value)
-        {
-
-          alert("Die Passwörter stimmen nicht überein!");
-          return false;
-        }
-        else
-        {
-          alert("Sie haben sich erfolgreich registriert!");
-          return true;
-        }
+        e.preventDefault();
       
+        var data = $('#reg_ajax_id').serialize();
+        
+        $.ajax({
+            url: reg_ajax_data.ajaxurl,
+            type: 'post',
+            data: data,
+            success: function(response)
+            {
+                e.target.reset();
+                $(".msg").html(response);
+            }
+        });
+        return false;  
     });
+
 });
 

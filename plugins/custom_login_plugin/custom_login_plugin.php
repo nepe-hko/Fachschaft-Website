@@ -13,7 +13,7 @@ Author: Odile
 if( ! defined( 'ABSPATH' ) ) {
     die;
 }
-
+require_once(plugin_dir_path(__FILE__). '/wp_limit_login_attempts.php');
 require_once(plugin_dir_path(__FILE__). '/widget_login.php');
 
 class Custom_Login extends WP_Widget
@@ -29,6 +29,7 @@ class Custom_Login extends WP_Widget
         add_filter( 'authenticate', array( $this, 'maybe_redirect_at_authenticate' ), 101, 3 );
 
         add_shortcode( 'custom-login-form', array($this,'login_form_html') );
+        //error_log('odile');
         
     }
 
@@ -109,9 +110,6 @@ class Custom_Login extends WP_Widget
             </p>
         </form> 
 <?php 
-
-        $username = $_POST['log'];
-        $passwort = $_POST['pwd'];
     }
 
 

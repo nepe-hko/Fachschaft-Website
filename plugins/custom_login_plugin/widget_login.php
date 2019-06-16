@@ -44,8 +44,8 @@ class Widget_Login extends WP_Widget
         </form> 
 <?php 
 
-        $username = $_POST['log'];
-        $passwort = $_POST['pwd'];
+        // $username = $_POST['log'];
+        // $passwort = $_POST['pwd'];
       
         echo $args['after_widget'];
     }

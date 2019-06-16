@@ -4,7 +4,7 @@
  */
 /*
 Plugin Name: Custom Registration Plugin
-Plugin URI: http://localhost:8080/wordpress
+Plugin URI: http://localhost:8080/wordpress/wp-admin/plugins.php
 Description: Custom Registration
 Version 1.0
 Author: Odile
@@ -13,6 +13,8 @@ Author: Odile
 if( ! defined( 'ABSPATH' ) ) {
     die;
 }
+
+
 class Custom_Registration
 {
     public function __construct()
@@ -22,51 +24,62 @@ class Custom_Registration
 
         add_action( 'login_form_register', array( $this, 'redirect_to_custom_register' ) );
 
+        add_action( 'wp_ajax_test_ajax', array($this,'test_ajax') );
+        add_action('wp_ajax_nopriv_test_ajax', array($this, 'test_ajax'));
+        
         add_shortcode('registration',array( $this, 'registration' ) );
     }
 
     public function redirect_to_custom_register() 
     {
         wp_redirect( home_url( 'registrierung' ) );
+    }
 
-        if ( $_SERVER['REQUEST_METHOD'] == 'POST'  ) 
+    public function test_ajax()
+    {
+        if( $_SERVER['REQUEST_METHOD'] == 'POST'  )
         {
-            $redirect_url = home_url( 'registrierung' );
-            if ( ! get_option( 'users_can_register' ) ) 
+            $vorname = sanitize_text_field($_POST['vorname']);
+            $nachname = sanitize_text_field($_POST['nachname']);
+            $username = sanitize_text_field($_POST['username']);
+            $email = sanitize_email($_POST['email']);
+            $passwort = $_POST['passwort'];
+            $pass_again =$_POST['pass_again'];
+            $role = $_POST['role'];
+
+            if(username_exists($username))
             {
-                // Registration closed, display error
-                $redirect_url = add_query_arg( 'register-errors', 'closed', $redirect_url );
-            } 
-            else 
-            {
-                $vorname = sanitize_text_field($_POST['vorname']);
-                $nachname = sanitize_text_field($_POST['nachname']);
-                $username = sanitize_text_field($_POST['username']);
-                $email = $_POST['email'];
-                $passwort = $_POST['passwort'];
-                $pass_again =$_POST['pass_again'];
-                $role = $_POST['role'];
-
-                $result = $this->register_user($email, $username, $vorname, $nachname, $passwort, $pass_again, $role);
-
-                if(is_wp_error($result))
-                {
-                    $error_codes = join( ',', $result->get_error_codes() );
-                    $redirect_url = add_query_arg( 'register-errors', $error_codes, $redirect_url );
-                }
-
-                else
-                {
-                    $redirect_url = home_url( 'login' );
-                    $redirect_url = add_query_arg( array(
-                        'registered' => $username,
-                    ), $redirect_url );
-                }
+                $message = 'Der Username "'.$username.'" existiert bereits.';
             }
-            wp_redirect( $redirect_url );
-           
-            exit;
+            elseif(email_exists($email))
+            {
+                $message = 'Die Email "'.$email.'" wird bereits verwendet.';
+            }
+            elseif(trim($passwort) != trim($pass_again))
+            {
+                $message = 'Passwörter müssen übereinstimmen';
+            }
+            else
+            {
+                $userdata = array
+                (
+                    'first_name' => $vorname,
+                    'last_name' => $nachname,
+                    'user_login' => $username,
+                    'user_email' => $email,
+                    'user_pass' => $passwort,
+                    'role' => $role
+                );
+            
+                $user_id = wp_insert_user($userdata);
+
+                $message = 'Sie haben sich erfolgreich registriert!';
+            }
+
+            echo $message;
         }
+
+        wp_die();
     }
 
     public function registration()
@@ -75,42 +88,27 @@ class Custom_Registration
         {
             return '<h1>Sie sind bereits registriert!</h1>';
         }
-        else
-        {
-            if ( isset( $_REQUEST['register-errors'] ) ) 
-            {
-                $err = explode( ',', $_REQUEST['register-errors'] );
-         
-                foreach ( $err as $err_code ) 
-                {
-                    $errors = $this->get_error_message($err_code);
-                    echo '<div style="text-align:center;">';
-                    echo '<h3><strong>ERROR</strong>: ';
-                    echo $errors . '</h3>';
-                    echo '</div>';
-                }
-            }
-
-
 ?>          
-        <h3><strong>ACCOUNT ERSTELLEN</strong></h3>
+        <strong><div id="msg" class="msg"></div></strong><br><br>
 
-        <form action="<?php echo wp_registration_url(); ?>" method="post" id="test" class="test"> 
+        <form  id="reg_ajax_id" action="<?php echo wp_registration_url(); ?>" method="post" class="reg_ajax_class" > 
+                
+            <h3><strong>ACCOUNT ERSTELLEN</strong></h3>
 
             <strong>Vorname:</strong>
-            <input type="text" name="vorname" required><br>
+            <input type="text" name="vorname" id ="vorname" required><br>
 
             <strong>Nachname:</strong>
-            <input type="text" name="nachname" required><br> 
+            <input type="text" name="nachname" id ="nachname"required><br> 
 
             <strong>Username:</strong>
-            <input type="text" name="username" required><br>
+            <input type="text" name="username" id ="username_val" keyup="test_ajax" required><br>
 
             <strong>Email:</strong>
-            <input type="email" name="email" required><br>
+            <input type="email" name="email" id ="email" required><br>
 
             <strong>Passwort</strong>
-            <input type="password" name="passwort" id="passwort" onkeyup="myFunction()" required>
+            <input type="password" name="passwort" id="passwort" required>
 
             <span id="password-strength"></span>
 
@@ -136,75 +134,29 @@ class Custom_Registration
 &bull;Autoren können ihre eigenen Beiträge veröffentlichen und verwalten, und auch Dateien hochladen.
 &bull;Redakteure können Beiträge und Seiten veröffentlichen und verwalten, und auch die Beiträge, Seiten, etc. von anderen Benutzern verwalten.
 &bull;Administratoren haben vollen Zugriff auf alle administrativen Funktionen.">&#63;</a><br><br>
+            <input type='hidden' name='action' value='test_ajax' />   
             <input type="submit"  name = "submit" value="Registrieren"  /><br>
-
         </form>
 <?php
-                $vorname = $_POST['vorname'];
-                $nachname = $_POST['nachname'];
-                $username = $_POST['username'];
-                $email = $_POST['email'];
-                $passwort = $_POST['passwort'];
-                $pass_again =$_POST['pass_again'];
-                $role = $_POST['role'];
-        }
     }
 
 
-    public function register_user($email, $username, $vorname, $nachname, $passwort, $pass_again, $role)
-    {
-        $userdata = array(
-            'first_name' => $vorname,
-            'last_name' => $nachname,
-            'user_login' => $username,
-            'user_email' => $email,
-            'user_pass' => $passwort,
-            'user_pass' => $pass_again,
-            'role' => $role);
-        $user_id = wp_insert_user($userdata);
-
-        //wp_new_user_notification( $user_id, $password );
-
-        return $user_id;
-       
-    }
-
-    public function get_error_message($err)
-    {
-        switch($err)
-        {
-            case 'existing_user_email':
-                return 'Diese Email existiert bereits';
-            case 'existing_user_login':
-                return 'Dieser Username wird bereits verwendet';
-            case 'empty_user_login':
-                return '
-                Es kann kein Benutzer mit einem leeren Anmeldenamen erstellt werden. Stellen Sie sicher, dass Sie nur die erlaubten Zeichen verwendet haben.';
-            default:
-                break;
-        }
-        return 'Unbekannter Fehler';
-    }
-    function add_process_ajax()
-    {
-        echo 'Test';
-        die();
-    }
+    
     function my_enqueue()
     {
         wp_register_script('js_snippet', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js');
         wp_enqueue_script('js_snippet');
+
         wp_register_script('js_meter','https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js');
         wp_enqueue_script('js_meter');
 
+        wp_register_script('ajax', plugins_url(). '/custom_registration_plugin/js/pass_error.js');
+        wp_enqueue_script('ajax');
+        wp_localize_script( 'ajax', 'reg_ajax_data', 
+        array('ajaxurl' => admin_url( 'admin-ajax.php' )));
+
         wp_register_style('style_register', plugins_url(). '/custom_registration_plugin/css/style.css');
         wp_enqueue_style('style_register');
-
-        wp_enqueue_script('pass_error', plugins_url(). '/custom_registration_plugin/js/pass_error.js');
-
-        wp_localize_script( 'ajax_script', 'reg_ajax_data', array( 
-            'ajaxurl' => admin_url( 'admin-ajax.php' )
-        ));
     }
 }
 $reg = new Custom_Registration();

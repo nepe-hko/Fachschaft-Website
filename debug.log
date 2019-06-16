@@ -1,0 +1,74 @@
+[13-Jun-2019 11:22:32 UTC] PHP Notice:  Undefined index: vorname in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 144
+[13-Jun-2019 11:22:32 UTC] PHP Notice:  Undefined index: nachname in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 145
+[13-Jun-2019 11:22:32 UTC] PHP Notice:  Undefined index: username in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 146
+[13-Jun-2019 11:22:32 UTC] PHP Notice:  Undefined index: email in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 147
+[13-Jun-2019 11:22:32 UTC] PHP Notice:  Undefined index: passwort in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 148
+[13-Jun-2019 11:22:32 UTC] PHP Notice:  Undefined index: pass_again in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 149
+[13-Jun-2019 11:22:32 UTC] PHP Notice:  Undefined index: role in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 150
+[13-Jun-2019 11:22:32 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\widget_login.php on line 47
+[13-Jun-2019 11:22:32 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\widget_login.php on line 48
+[13-Jun-2019 11:23:56 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\widget_login.php on line 47
+[13-Jun-2019 11:23:56 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\widget_login.php on line 48
+[13-Jun-2019 12:32:15 UTC] PHP Parse error:  syntax error, unexpected 'wp_enqueue_script' (T_STRING) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 195
+[13-Jun-2019 12:32:25 UTC] PHP Parse error:  syntax error, unexpected 'wp_enqueue_script' (T_STRING) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 195
+[13-Jun-2019 12:32:27 UTC] PHP Parse error:  syntax error, unexpected 'wp_enqueue_script' (T_STRING) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 195
+[13-Jun-2019 12:32:33 UTC] PHP Parse error:  syntax error, unexpected 'wp_enqueue_script' (T_STRING) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 195
+[15-Jun-2019 12:21:56 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 12:21:56 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 116
+[15-Jun-2019 12:59:26 UTC] WordPress-Datenbank-Fehler You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 8 für Abfrage CREATE TABLE $table_name (
+				contactform_id int(9) NOT NULL AUTO_INCREMENT,
+				contactform_name varchar(55) NOT NULL,
+				contactform_email_address varchar(55) NOT NULL,
+				contactform_subject varchar(55) NOT NULL,
+				contactform_message varchar(200) NOT NULL,
+				PRIMARY KEY  (contactform_id)
+			) $charset_collate von activate_plugin, do_action('activate_Kontaktformular/kontaktformular.php'), WP_Hook->do_action, WP_Hook->apply_filters, kontaktformular::createTable, dbDelta
+[15-Jun-2019 19:34:53 UTC] PHP Notice:  Undefined variable: err_code in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 80
+[15-Jun-2019 19:34:53 UTC] PHP Notice:  Undefined variable: error_codes in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 86
+[15-Jun-2019 19:56:03 UTC] PHP Notice:  Undefined variable: user_id in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 44
+[15-Jun-2019 19:56:32 UTC] PHP Notice:  Undefined variable: user_id in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 42
+[15-Jun-2019 20:14:49 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 20:14:49 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 20:16:39 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 20:16:39 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 20:18:10 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 20:18:10 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 20:19:40 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 20:19:40 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 20:25:25 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 249
+[15-Jun-2019 20:25:30 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 249
+[15-Jun-2019 20:25:32 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 249
+[15-Jun-2019 20:25:35 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 249
+[15-Jun-2019 20:25:38 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 249
+[15-Jun-2019 20:25:48 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 249
+[15-Jun-2019 20:26:08 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 249
+[15-Jun-2019 20:30:35 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 252
+[15-Jun-2019 20:32:17 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 251
+[15-Jun-2019 20:34:42 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 20:34:42 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 21:50:38 UTC] PHP Parse error:  syntax error, unexpected ')' in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 73
+[15-Jun-2019 21:51:31 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 21:51:31 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 21:52:01 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 21:52:01 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 21:52:22 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 21:52:22 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 21:52:42 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 21:52:42 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 21:52:48 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 21:52:48 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 21:54:28 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 21:54:28 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 21:54:37 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 21:54:37 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[15-Jun-2019 21:54:41 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[15-Jun-2019 21:54:41 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[16-Jun-2019 07:21:04 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[16-Jun-2019 07:21:04 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[16-Jun-2019 07:25:03 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[16-Jun-2019 07:25:03 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[16-Jun-2019 07:31:39 UTC] PHP Notice:  Undefined index: log in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 114
+[16-Jun-2019 07:31:39 UTC] PHP Notice:  Undefined index: pwd in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 115
+[16-Jun-2019 09:18:01 UTC] PHP Parse error:  syntax error, unexpected '}' in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 60
+[16-Jun-2019 09:18:50 UTC] PHP Parse error:  syntax error, unexpected '}' in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 60
+[16-Jun-2019 09:18:53 UTC] PHP Parse error:  syntax error, unexpected '}' in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_registration_plugin\custom_registration_plugin.php on line 60
