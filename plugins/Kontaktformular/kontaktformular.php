@@ -8,21 +8,18 @@ Description: Plugin das ein Kontaktformular anbietet
 */
 
 
-//exit if access directly 
+//exit, falls direkt auf den Link zugegriffen wird
 if( !defined( 'ABSPATH'))
 {
 	exit();
 }
 
-require_once( plugin_dir_path( __FILE__). '/widget.php'); // Damit widet im Backend sichtbar ist
-//__FILE__: startet ab dem Ordner wo die datei in der wir sind(kontaktformular.php) liegt 
-
+require_once( plugin_dir_path( __FILE__). '/widget.php'); 
 require_once( plugin_dir_path( __FILE__). '/kontaktformular-admin.php');
 require_once( plugin_dir_path( __FILE__). '/custom-post-type.php');
 
 
 register_activation_hook( __FILE__, array( 'kontaktformular', 'createTable'));
-register_deactivation_hook(__FILE__, array('kontaktformular', 'deactivate'));
 
 
 if( !class_exists( 'kontaktformular'))
@@ -31,60 +28,56 @@ if( !class_exists( 'kontaktformular'))
 	{
 		function __construct()
 		{
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue')); //Frontend
-			add_action( 'admin_enqueue_scripts', array($this, 'enqueue')); //Backend
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue')); 						//Frontend
+			add_action( 'admin_enqueue_scripts', array($this, 'enqueue')); 						//Backend
 			 
-			// mail und datenbank funktion
-			add_action( 'admin_post_nopriv_do_function', array( $this, 'do_function'));
-			
-			//ajax-function
-			add_action( 'wp_ajax_nopriv_do_function', array( $this, 'do_function'));
+			add_action( 'admin_post_nopriv_do_function', array( $this, 'do_function'));			// hook für Mail- und Datenbankfunktion
+
+			add_action( 'wp_ajax_nopriv_do_function', array( $this, 'do_function'));			//hook für ajax-Funktion
+
+			$plugin = plugin_basename(__FILE__);
+			add_filter("plugin_action_links_$plugin", array($this, 'linkToPlugin'));			// hook zum Link zur Kontaktformularseite im Plugin-Bereich
 
 			add_shortcode( 'form', array( $this, 'formInput'));
-
-			
-
 		}
-	
-		
-		public static function createTable()
+		function linkToPlugin($link)
 		{
-			
-			flush_rewrite_rules();
-
+			$pluginlink = '<a href="admin.php?page=kf">Kontaktformularseite</a>';			
+			array_push($link, $pluginlink);														// fügt contactform-link zum array, welcher an hook angehängt wird
+			return $link;
+		}
+		
+		public static function createTable()													// erstellt eigene Tabelle im phpmyadmin
+		{		
 			ob_start();				
 			
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'contactform';
 			$charset_collate = $wpdb->get_charset_collate();
 			
-			$sql = 'CREATE TABLE $table_name (
+			$sql = "CREATE TABLE $table_name (
 				contactform_id int(9) NOT NULL AUTO_INCREMENT,
 				contactform_name varchar(55) NOT NULL,
 				contactform_email_address varchar(55) NOT NULL,
 				contactform_subject varchar(55) NOT NULL,
 				contactform_message varchar(200) NOT NULL,
 				PRIMARY KEY  (contactform_id)
-			) $charset_collate;';
+			) $charset_collate;";
 
-			if( !function_exists( 'dbDelta'))
+			if( !function_exists( 'dbDelta'))													// falls dbDelta-Funktion nicht existiert, soll sie hinzugefügt werden
 			{
 				require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
 			}
 
-			dbDelta($sql);	// führt query aus um eine Tabelle in DB zu erzeugen
+			dbDelta($sql);																		// führt query aus um eine Tabelle in DB zu erzeugen
 
 			$db_version = '1.0';
 			add_option( 'db_version', $db_version);
 
 		//	return ob_get_clean();
 		}
-		public static function deactivate()
-		{
-			flush_rewrite_rules();
-
-		}
-		function formInput() // für ausgeloggte User
+	
+		function formInput() 																	// Form für ausgeloggte User
 		{
 			if( !is_user_logged_in())
 			{
@@ -107,21 +100,20 @@ if( !class_exists( 'kontaktformular'))
 	
 		public static function do_function()
 		{
-			// logged out
-			if(( isset( $_POST['name'])) &&( isset( $_POST['mail'])) &&( isset( $_POST['subject'])) &&( isset( $_POST['message'])))
+			// falls ausgeloggt
+			if(( isset( $_POST['name'])) && ( isset( $_POST['mail'])) && ( isset( $_POST['subject'])) && ( isset( $_POST['message'])))
 			{
 				if( check_ajax_referer( 'nonce','security'))
 				{
 					$name = sanitize_text_field($_POST['name']); //sanitize: Cleaning User Input
-					$mailFrom = $_POST['mail'];
+					$mailFrom = sanitize_email($_POST['mail']);
 					$subject = sanitize_text_field($_POST['subject']);
 					$message = sanitize_textarea_field($_POST['message']);
-
 				}
 			}
 
-			// logged in
-			if((isset( $_POST['subject_logged_in'])) &&(isset( $_POST['message_logged_in'])))
+			// falls eingeloggt
+			if((isset( $_POST['subject_logged_in'])) && (isset( $_POST['message_logged_in'])))
 			{
 				if(check_ajax_referer('nonce_login', 'secure'))
 				{
@@ -133,64 +125,69 @@ if( !class_exists( 'kontaktformular'))
 					$message = sanitize_textarea_field($_POST['message_logged_in']);
 				}
 			}
+
+
+			// Nachricht in Mail-Backend laden
 			$args = array(
-				'post_title' => $subject,
-				'post_content' => $message,
-				'post_type' => 'kfposttype',
-				'post_status' => 'publish', // damit nicht "Draft" im Email Backend angezeigt wird
-				'meta_input' => array(
-					'_contact_form_email' => $mailFrom,
-					'_contact_form_name' => $name
+				'post_title' 				=> $subject,
+				'post_content' 				=> $message,
+				'post_type' 				=> 'kfposttype',
+				'post_status' 				=> 'publish', 												// damit nicht "Draft" im Email Backend angezeigt wird
+				'meta_input' 				=> array(
+					'_contact_form_email' 		=> $mailFrom,
+					'_contact_form_name' 		=> $name
 				)
 			);
-			$postID = wp_insert_post($args); // aktiviert save post funktion
-			 //check ob sie empty ist: fail, nicht empty: neuer post wurde erstellt
+			$postID = wp_insert_post($args); 															
 			
-	
+			
+
+			// Mailversand
 			$mailTo = 'Vero@localhost';
 			$headers = 'From: ' . $mailFrom;
 			$body = 'Du hast eine Nachricht von ' . $name . ' erhalten' . "\n\n" . $message;
 			
-			//wp_mail($mailTo, $subject, $body, $headers);  
+			wp_mail($mailTo, $subject, $body, $headers);  												
 				
 
-			// Eintrag in Datenbank
-			// global $wpdb;
 
-			// $table = $wpdb->prefix . 'contactform'; 
-			// $data = array(
-			// 	'contactform_name' => $name,
-			// 	'contactform_email_address' => $mailFrom,
-			// 	'contactform_subject' => $subject,		
-			// 	'contactform_message' => $message
-			// );
-			// $format = array(
-			// 	'%s', // string-Wert
-			// 	'%s',
-			// 	'%s',
-			// 	'%s'
-			// );
+			//Eintrag in Datenbank
+			global $wpdb;
 
-			// $sucessful = $wpdb->insert($table, $data, $format); //function escapes data automatically
+			$table = $wpdb->prefix . 'contactform'; 
+			$data = array(
+				'contactform_name' => $name,
+				'contactform_email_address' => $mailFrom,
+				'contactform_subject' => $subject,		
+				'contactform_message' => $message
+			);
+			$format = array(
+				'%s', 																					// string-Wert
+				'%s',
+				'%s',
+				'%s'
+			);
 
-			// $id = $wpdb->insert_id;
+			$sucessful = $wpdb->insert($table, $data, $format); 										//Funktionion escaped Daten automatisch
 
-			// if($id == false && $sucessful == false)
-			// {
-			// 	echo 'Email konnte nicht in Datenbank gespeichert werden';
-			// }
-			wp_die(); // um sofort funktion zu beenden und ordnungsgemäße Antwort zurück zugeben
+			$id = $wpdb->insert_id;
+
+			if($id == false && $sucessful == false)
+			{
+				echo 'Email konnte nicht in Datenbank gespeichert werden';
+			}
+			wp_die(); 																					// sofortige Beendung und Rückgabe einer ordnungsgemäße Antwort
 		
 		}
 		
-		public function enqueue() // wird von wp aufgerufen deswegen muss es public sein
+		public function enqueue() 																		// wird von wp aufgerufen deswegen muss es public sein
 		{
-			//snippet für javaScript Bibliothek, immer vor der java-datei!
+			//snippet für javaScript Bibliothek
 			wp_register_script('js_snippet', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js');
 			wp_enqueue_script('js_snippet');
 			
-			//JS hinzufügen
-			//logout
+			
+			//javascriptdatei für Logout
 			wp_register_script('ajax_script', plugins_url(). '/kontaktformular/js/main.js');
 			wp_enqueue_script( 'ajax_script');
 			wp_localize_script( 'ajax_script', 'kf_ajax_data', array( 
@@ -198,7 +195,7 @@ if( !class_exists( 'kontaktformular'))
 				'ajax_nonce' => wp_create_nonce('nonce')
 			));
 
-			//login
+			//JavaScriptdatei für login
 			wp_register_script('ajax_script_login', plugins_url(). '/kontaktformular/js/logged-in.js');
 			wp_enqueue_script( 'ajax_script_login');
 			wp_localize_script( 'ajax_script_login', 'kf_ajax_data_login', array( 
@@ -207,7 +204,7 @@ if( !class_exists( 'kontaktformular'))
 			));
 
 
-			//CSS hinzufügen
+			//CSS-Datei Hinzufügung
 			wp_register_style('kf_main_style', plugins_url(). '/kontaktformular/css/kf-style.css');
 			wp_enqueue_style('kf_main_style');
 		}

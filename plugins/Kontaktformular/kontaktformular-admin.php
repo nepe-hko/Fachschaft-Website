@@ -6,9 +6,9 @@ add_action('admin_init', 'kf_custom_settings' );
 function kf_add_menu_page() // custom administration page und subpage
 {
     //admin page
-    add_menu_page('Kontaktformular', 'Kontaktformular', 'manage_options', 'kf_mail', 'kf_create_page_callback', 'dashicons-email', 115); // 6. Parameter icon    
+    add_menu_page('Kontaktformular', 'Kontaktformular', 'manage_options', 'kf', 'kf_create_page_callback', 'dashicons-email', 115); // 6. Parameter icon    
 
-    add_submenu_page('kf_mail', 'activedeactive', 'Activate/Deactivate', 'manage_options', 'kf_mail_contact', 'kf_contact_form_page_callback');
+    add_submenu_page('kf', 'activedeactive', 'Activate/Deactivate', 'manage_options', 'kf_mail_contact', 'kf_contact_form_page_callback');
 }
 function kf_create_page_callback() // Seiteninhalt der Startseite
 {
@@ -17,7 +17,6 @@ function kf_create_page_callback() // Seiteninhalt der Startseite
     echo '<h2>Hallo lieber Wordpress User. Vielen Dank dass du mein Plugin heruntergeladen hast! </h2>';
     echo '<p>Im Untermenu \'Activate/Deactivate\' kannst du die Mail Inbox ein- oder ausblenden lassen.</p>';
     echo '<p>Wenn du es angeschaltet hast, kannst du unter \'Mails\' die eingehenden Nachrichten anschauen.</p>';
-    echo '<p>Viel Spaß du Opfer!</p>';
 }
 function kf_custom_settings() 
 {
@@ -38,7 +37,7 @@ function kf_contact_form_page_callback() // Seiteninhalt der subpage
 }
 function kf_section_callback()
 {
-    echo 'Aktiviere oder deaktiviere den Nachrichteneingang. ';
+    echo 'Aktiviere oder deaktiviere die Mailansicht. ';
 }
 function kf_activate_contact_callback()
 {

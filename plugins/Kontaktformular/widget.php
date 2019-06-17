@@ -9,7 +9,7 @@ class symbol_widget extends WP_Widget //Widget wird nur dann angezeigt wenn man 
                         'classname' => 'symbol_widget',
                         'description' => __('Widget welches ein Kontaktformular anbietet', 'contactform'));
 
-                parent::__construct( 'symbol_widget', 'Kontaktformularsymbol', $widget_options );   
+                parent::__construct( 'symbol_widget', 'Kontaktformular', $widget_options );   
 
                 // Datenbankeintrag und Mailversand
                 add_action('admin_post_do_function', array('kontaktformular', 'do_function'));

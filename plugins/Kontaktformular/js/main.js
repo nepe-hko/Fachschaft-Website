@@ -2,7 +2,7 @@
 jQuery(document).ready(function ($) {    
     $('form.ajax_logged_out').submit(function (e) {
         if ($('#name').val() == '' || $('#mail').val() == '' || $('#subject').val() == '' || $('#message').val() == '') {
-            $('#answer').html('Bitte alle Felder ausfüllen. Log out');
+            $('#answer').html('Bitte alle Felder ausfüllen.');
             e.preventDefault();            // blockiert Action-Methode
         }
         else 
