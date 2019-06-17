@@ -1,4 +1,5 @@
-jQuery(document).ready(function ($) {    //logged out
+//logged out
+jQuery(document).ready(function ($) {    
     $('form.ajax_logged_out').submit(function (e) {
         if ($('#name').val() == '' || $('#mail').val() == '' || $('#subject').val() == '' || $('#message').val() == '') {
             $('#answer').html('Bitte alle Felder ausfüllen. Log out');
@@ -7,7 +8,7 @@ jQuery(document).ready(function ($) {    //logged out
         else 
         {
             e.preventDefault();         
-            
+
             var form_data = $('#form_logged_out').serialize();
             var logout_nonce = kf_ajax_data.ajax_nonce;
             form_data = form_data + '&ajaxform=true&submit=Form+Send&security=' + logout_nonce ;

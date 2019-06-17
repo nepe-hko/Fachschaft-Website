@@ -22,7 +22,7 @@ require_once( plugin_dir_path( __FILE__). '/custom-post-type.php');
 
 
 register_activation_hook( __FILE__, array( 'kontaktformular', 'createTable'));
-//register_deactivation_hook(__FILE__, array('kontaktformular', 'deactivate'));
+register_deactivation_hook(__FILE__, array('kontaktformular', 'deactivate'));
 
 
 if( !class_exists( 'kontaktformular'))
@@ -42,11 +42,16 @@ if( !class_exists( 'kontaktformular'))
 
 			add_shortcode( 'form', array( $this, 'formInput'));
 
+			
+
 		}
 	
 		
 		public static function createTable()
 		{
+			
+			flush_rewrite_rules();
+
 			ob_start();				
 			
 			global $wpdb;
@@ -69,10 +74,15 @@ if( !class_exists( 'kontaktformular'))
 
 			dbDelta($sql);	// führt query aus um eine Tabelle in DB zu erzeugen
 
-			$db_verion = '1.0';
-			add_option( 'db_version', $db_verion);
+			$db_version = '1.0';
+			add_option( 'db_version', $db_version);
 
 		//	return ob_get_clean();
+		}
+		public static function deactivate()
+		{
+			flush_rewrite_rules();
+
 		}
 		function formInput() // für ausgeloggte User
 		{
@@ -97,17 +107,20 @@ if( !class_exists( 'kontaktformular'))
 	
 		public static function do_function()
 		{
+			// logged out
 			if(( isset( $_POST['name'])) &&( isset( $_POST['mail'])) &&( isset( $_POST['subject'])) &&( isset( $_POST['message'])))
 			{
 				if( check_ajax_referer( 'nonce','security'))
 				{
 					$name = sanitize_text_field($_POST['name']); //sanitize: Cleaning User Input
-					$mailFrom = sanitize_email($_POST['mail']);
+					$mailFrom = $_POST['mail'];
 					$subject = sanitize_text_field($_POST['subject']);
 					$message = sanitize_textarea_field($_POST['message']);
+
 				}
 			}
 
+			// logged in
 			if((isset( $_POST['subject_logged_in'])) &&(isset( $_POST['message_logged_in'])))
 			{
 				if(check_ajax_referer('nonce_login', 'secure'))
@@ -120,39 +133,52 @@ if( !class_exists( 'kontaktformular'))
 					$message = sanitize_textarea_field($_POST['message_logged_in']);
 				}
 			}
+			$args = array(
+				'post_title' => $subject,
+				'post_content' => $message,
+				'post_type' => 'kfposttype',
+				'post_status' => 'publish', // damit nicht "Draft" im Email Backend angezeigt wird
+				'meta_input' => array(
+					'_contact_form_email' => $mailFrom,
+					'_contact_form_name' => $name
+				)
+			);
+			$postID = wp_insert_post($args); // aktiviert save post funktion
+			 //check ob sie empty ist: fail, nicht empty: neuer post wurde erstellt
+			
 	
 			$mailTo = 'Vero@localhost';
 			$headers = 'From: ' . $mailFrom;
 			$body = 'Du hast eine Nachricht von ' . $name . ' erhalten' . "\n\n" . $message;
 			
-			wp_mail($mailTo, $subject, $body, $headers);  
+			//wp_mail($mailTo, $subject, $body, $headers);  
 				
 
 			// Eintrag in Datenbank
-			global $wpdb;
+			// global $wpdb;
 
-			$table = $wpdb->prefix . 'contactform'; 
-			$data = array(
-				'contactform_name' => $name,
-				'contactform_email_address' => $mailFrom,
-				'contactform_subject' => $subject,		
-				'contactform_message' => $message
-			);
-			$format = array(
-				'%s', // string-Wert
-				'%s',
-				'%s',
-				'%s'
-			);
+			// $table = $wpdb->prefix . 'contactform'; 
+			// $data = array(
+			// 	'contactform_name' => $name,
+			// 	'contactform_email_address' => $mailFrom,
+			// 	'contactform_subject' => $subject,		
+			// 	'contactform_message' => $message
+			// );
+			// $format = array(
+			// 	'%s', // string-Wert
+			// 	'%s',
+			// 	'%s',
+			// 	'%s'
+			// );
 
-			$sucessful = $wpdb->insert($table, $data, $format); //function escapes data automatically
+			// $sucessful = $wpdb->insert($table, $data, $format); //function escapes data automatically
 
-			$id = $wpdb->insert_id;
+			// $id = $wpdb->insert_id;
 
-			if($id == false && $sucessful == false)
-			{
-				echo 'Email konnte nicht in Datenbank gespeichert werden';
-			}
+			// if($id == false && $sucessful == false)
+			// {
+			// 	echo 'Email konnte nicht in Datenbank gespeichert werden';
+			// }
 			wp_die(); // um sofort funktion zu beenden und ordnungsgemäße Antwort zurück zugeben
 		
 		}

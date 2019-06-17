@@ -14,8 +14,8 @@ function kf_create_page_callback() // Seiteninhalt der Startseite
 {
     echo '<h1>Kontaktformular Plugin</h1>';
     echo '<br>';
-    echo '<h2>Hallo lieber Wordpress User. Vielen Dank das du mein Plugin heruntergeladen hast! </h2>';
-    echo '<p>Im Untermenu \'Activate/Deactivate\' kannst du das Kontaktformular ein- oder ausblenden lassen.</p>';
+    echo '<h2>Hallo lieber Wordpress User. Vielen Dank dass du mein Plugin heruntergeladen hast! </h2>';
+    echo '<p>Im Untermenu \'Activate/Deactivate\' kannst du die Mail Inbox ein- oder ausblenden lassen.</p>';
     echo '<p>Wenn du es angeschaltet hast, kannst du unter \'Mails\' die eingehenden Nachrichten anschauen.</p>';
     echo '<p>Viel Spaß du Opfer!</p>';
 }
@@ -23,22 +23,22 @@ function kf_custom_settings()
 {
     register_setting('contactform-options', 'activate');
 
-    add_settings_section('kf-section', 'Contact Form', 'kf_section_callback', 'kf_mail_contact');
+    add_settings_section('kf-section', 'Kontaktformular', 'kf_section_callback', 'kf_mail_contact');
     add_settings_field('activate-form', 'Activate Contact Form', 'kf_activate_contact_callback', 'kf_mail_contact', 'kf-section');
 }
 function kf_contact_form_page_callback() // Seiteninhalt der subpage
 {
-   settings_errors();
 
    echo '<form method="post" action="options.php" class="kf-form" >';
    settings_fields('contactform-options');
    do_settings_sections('kf_mail_contact');
    submit_button();
    echo '</form>';
+   settings_errors();
 }
 function kf_section_callback()
 {
-    echo 'Activate or deactivate the contact form. ';
+    echo 'Aktiviere oder deaktiviere den Nachrichteneingang. ';
 }
 function kf_activate_contact_callback()
 {
