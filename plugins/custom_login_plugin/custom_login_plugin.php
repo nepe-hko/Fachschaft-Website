@@ -13,7 +13,7 @@ Author: Odile
 if( ! defined( 'ABSPATH' ) ) {
     die;
 }
-require_once(plugin_dir_path(__FILE__). '/wp_limit_login_attempts.php');
+
 require_once(plugin_dir_path(__FILE__). '/widget_login.php');
 
 class Custom_Login extends WP_Widget
@@ -29,14 +29,12 @@ class Custom_Login extends WP_Widget
         add_filter( 'authenticate', array( $this, 'maybe_redirect_at_authenticate' ), 101, 3 );
 
         add_shortcode( 'custom-login-form', array($this,'login_form_html') );
-        //error_log('odile');
-        
     }
 
     function redirect_logout() 
     {
         $login_url  = home_url();
-        wp_redirect($login_url . "?login=false");
+        wp_redirect($login_url . "?logedout=true");
         exit;
     }
     
@@ -48,11 +46,12 @@ class Custom_Login extends WP_Widget
 
     function maybe_redirect_at_authenticate( $user, $username, $password ) 
     {
+        
         if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) 
         {
             if ( is_wp_error( $user ) ) 
             {
-                $error_codes = join( ',', $user->get_error_codes() );
+               $error_codes = join( ',', $user->get_error_codes() );
      
                 $login_url = home_url('login');
                 $login_url = add_query_arg( 'login', $error_codes, $login_url );
@@ -131,8 +130,6 @@ class Custom_Login extends WP_Widget
         wp_register_style('style_login', plugins_url(). '/custom_login_plugin/css/style_login.css');
         wp_enqueue_style('style_login');
     }
-
-
 }
 
 $custom_login_plugin = new Custom_Login();

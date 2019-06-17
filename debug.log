@@ -1,0 +1,266 @@
+[16-Jun-2019 12:34:41 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 12:34:41 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:34:41 UTC] PHP Fatal error:  Uncaught Error: Call to a member function userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:77
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'gjhgjhgjhg')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'gjhgjhgjhg')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'gjhgjhgjhg')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:35:00 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 12:35:00 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:35:00 UTC] PHP Fatal error:  Uncaught Error: Call to a member function userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:77
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'jhjkjhkj')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'jhjkjhkj')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'jhjkjhkj')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:35:05 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 12:35:05 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:35:05 UTC] PHP Fatal error:  Uncaught Error: Call to a member function userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:77
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'jhkhkjh')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'jhkhkjh')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'jhkhkjh')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:35:12 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 12:35:12 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:35:12 UTC] PHP Fatal error:  Uncaught Error: Call to a member function userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:77
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'ljhkhjkjh')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'ljhkhjkjh')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'ljhkhjkjh')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:35:29 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 12:35:29 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:35:29 UTC] PHP Fatal error:  Uncaught Error: Call to a member function userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:77
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'ijijoiji', 'iji')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'ijijoiji', 'iji')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('ijijoiji', 'iji')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:35:48 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 74
+[16-Jun-2019 12:35:48 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 78
+[16-Jun-2019 12:35:48 UTC] PHP Fatal error:  Uncaught Error: Call to a member function userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:78
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Odile', 'ljhkj')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Odile', 'ljhkj')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Odile', 'ljhkj')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 78
+[16-Jun-2019 12:36:08 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 74
+[16-Jun-2019 12:36:08 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 78
+[16-Jun-2019 12:36:08 UTC] PHP Fatal error:  Uncaught Error: Call to a member function userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:78
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'kjhkjhkjh')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'kjhkjhkjh')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'kjhkjhkjh')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 78
+[16-Jun-2019 12:40:51 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 12:40:51 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:40:51 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:77
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'jkhkjkj')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'jkhkjkj')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'jkhkjkj')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:42:16 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 12:42:16 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 12:42:16 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:77
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'kjkjklj')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'kjkjklj')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'kjkjklj')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 13:00:50 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 13:00:50 UTC] PHP Notice:  Undefined property: Custom_Login::$session in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 13:00:50 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_userdata() on null in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:77
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'hkjjkhkjhk')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'hkjjkhkjhk')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'hkjjkhkjhk')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 77
+[16-Jun-2019 13:12:02 UTC] PHP Parse error:  syntax error, unexpected 'array' (T_ARRAY), expecting ',' or ')' in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 80
+[16-Jun-2019 13:13:25 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 13:13:25 UTC] PHP Notice:  Undefined variable: attempts in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 80
+[16-Jun-2019 13:13:25 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function wpdb::update(), 2 passed in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 80 and at least 3 expected in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php:2214
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php(80): wpdb->update('wp_users', Array)
+#1 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'ihjoihjk')
+#2 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#3 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'ihjoihjk')
+#4 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'ihjoihjk')
+#5 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#6 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php on line 2214
+[16-Jun-2019 13:13:46 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 13:13:46 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function wpdb::update(), 2 passed in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 80 and at least 3 expected in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php:2214
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php(80): wpdb->update('wp_users', Array)
+#1 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'ljhjhk')
+#2 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#3 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'ljhjhk')
+#4 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'ljhjhk')
+#5 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#6 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php on line 2214
+[16-Jun-2019 13:16:12 UTC] PHP Warning:  Use of undefined constant incorrect_password - assumed 'incorrect_password' (this will throw an Error in a future version of PHP) in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 13:20:08 UTC] PHP Parse error:  syntax error, unexpected ',' in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 13:20:13 UTC] PHP Parse error:  syntax error, unexpected ',' in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 13:20:57 UTC] PHP Notice:  Undefined property: WP_Error::$data in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 13:20:57 UTC] PHP Notice:  Trying to get property 'user_pass' of non-object in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 13:20:57 UTC] PHP Notice:  Undefined property: WP_Error::$ID in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 73
+[16-Jun-2019 13:20:57 UTC] PHP Warning:  hash_equals(): Expected known_string to be a string, null given in C:\xampp\htdocs\wordpress\wp-includes\pluggable.php on line 2320
+[16-Jun-2019 13:20:57 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function wpdb::update(), 2 passed in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 80 and at least 3 expected in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php:2214
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php(80): wpdb->update('wp_users', Array)
+#1 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'jkjkjhk')
+#2 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#3 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'jkjkjhk')
+#4 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'jkjkjhk')
+#5 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#6 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php on line 2214
+[16-Jun-2019 13:27:19 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function wpdb::update(), 2 passed in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 79 and at least 3 expected in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php:2214
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php(79): wpdb->update('wp_users', Array)
+#1 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'zujgzug')
+#2 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#3 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'zujgzug')
+#4 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'zujgzug')
+#5 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#6 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php on line 2214
+[16-Jun-2019 13:36:20 UTC] PHP Parse error:  syntax error, unexpected ''login_attempts'' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ')' in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 76
+[16-Jun-2019 13:38:44 UTC] PHP Parse error:  syntax error, unexpected 'login_attempts' (T_STRING), expecting ',' or ')' in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 76
+[16-Jun-2019 13:40:34 UTC] WordPress-Datenbank-Fehler You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''wp_users'' at line 1 für Abfrage SELECT login_attempts FROM 'wp_users' von wp_signon, wp_authenticate, apply_filters('authenticate'), WP_Hook->apply_filters, Custom_Login->maybe_redirect_at_authenticate
+[16-Jun-2019 13:40:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function wp_get_current_user_ID() in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:78
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'kjkljkl')
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'kjkljkl')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'kjkljkl')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 78
+[16-Jun-2019 13:41:00 UTC] WordPress-Datenbank-Fehler You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''wp_users'' at line 1 für Abfrage SELECT login_attempts FROM 'wp_users' von wp_signon, wp_authenticate, apply_filters('authenticate'), WP_Hook->apply_filters, Custom_Login->maybe_redirect_at_authenticate
+[16-Jun-2019 13:41:00 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function wpdb::update(), 2 passed in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 81 and at least 3 expected in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php:2214
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php(81): wpdb->update('wp_users', Array)
+#1 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(286): Custom_Login->maybe_redirect_at_authenticate(Object(WP_Error), 'Maxi', 'lkjlkjlkj')
+#2 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(Object(WP_Error), Array)
+#3 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'lkjlkjlkj')
+#4 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'lkjlkjlkj')
+#5 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#6 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-includes\wp-db.php on line 2214
+[16-Jun-2019 16:42:54 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Custom_Login::maybe_redirect_at_authenticate(), 1 passed in C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php on line 288 and exactly 3 expected in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:52
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(288): Custom_Login->maybe_redirect_at_authenticate(NULL)
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'ljhjhkjhj')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'ljhjhkjhj')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 52
+[16-Jun-2019 16:43:38 UTC] PHP Parse error:  syntax error, unexpected '}', expecting end of file in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 178
+[16-Jun-2019 16:44:08 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Custom_Login::maybe_redirect_at_authenticate(), 1 passed in C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php on line 288 and exactly 3 expected in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:52
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(288): Custom_Login->maybe_redirect_at_authenticate(NULL)
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'kjkjlkjlkj')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'kjkjlkjlkj')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 52
+[16-Jun-2019 16:44:12 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Custom_Login::maybe_redirect_at_authenticate(), 1 passed in C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php on line 288 and exactly 3 expected in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:52
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(288): Custom_Login->maybe_redirect_at_authenticate(NULL)
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'uhkuhkuh')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'uhkuhkuh')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 52
+[16-Jun-2019 16:44:16 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Custom_Login::maybe_redirect_at_authenticate(), 1 passed in C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php on line 288 and exactly 3 expected in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:52
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(288): Custom_Login->maybe_redirect_at_authenticate(NULL)
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'lkjlkjkj')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'lkjlkjkj')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 52
+[16-Jun-2019 16:44:21 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Custom_Login::maybe_redirect_at_authenticate(), 1 passed in C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php on line 288 and exactly 3 expected in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:52
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(288): Custom_Login->maybe_redirect_at_authenticate(NULL)
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'ijjijijpiiou')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'ijjijijpiiou')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 52
+[16-Jun-2019 16:44:25 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Custom_Login::maybe_redirect_at_authenticate(), 1 passed in C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php on line 288 and exactly 3 expected in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:52
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(288): Custom_Login->maybe_redirect_at_authenticate(NULL)
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'ijijio')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'ijijio')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 52
+[16-Jun-2019 16:44:30 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Custom_Login::maybe_redirect_at_authenticate(), 1 passed in C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php on line 288 and exactly 3 expected in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:52
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(288): Custom_Login->maybe_redirect_at_authenticate(NULL)
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'hallo')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'hallo')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 52
+[16-Jun-2019 16:44:39 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Custom_Login::maybe_redirect_at_authenticate(), 1 passed in C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php on line 288 and exactly 3 expected in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:52
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(288): Custom_Login->maybe_redirect_at_authenticate(NULL)
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Maxi', 'hallo123')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Maxi', 'hallo123')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 52
+[16-Jun-2019 16:44:43 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function Custom_Login::maybe_redirect_at_authenticate(), 1 passed in C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php on line 288 and exactly 3 expected in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php:52
+Stack trace:
+#0 C:\xampp\htdocs\wordpress\wp-includes\class-wp-hook.php(288): Custom_Login->maybe_redirect_at_authenticate(NULL)
+#1 C:\xampp\htdocs\wordpress\wp-includes\plugin.php(208): WP_Hook->apply_filters(NULL, Array)
+#2 C:\xampp\htdocs\wordpress\wp-includes\pluggable.php(539): apply_filters('authenticate', NULL, 'Odile', 'verod')
+#3 C:\xampp\htdocs\wordpress\wp-includes\user.php(95): wp_authenticate('Odile', 'verod')
+#4 C:\xampp\htdocs\wordpress\wp-login.php(929): wp_signon(Array, false)
+#5 {main}
+  thrown in C:\xampp\htdocs\wordpress\wp-content\plugins\custom_login_plugin\custom_login_plugin.php on line 52
