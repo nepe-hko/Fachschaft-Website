@@ -12,11 +12,19 @@ function kf_add_menu_page() // custom administration page und subpage
 }
 function kf_create_page_callback() // Seiteninhalt der Startseite
 {
-    echo '<h1>Kontaktformular Plugin</h1>';
-    echo '<br>';
-    echo '<h2>Hallo lieber Wordpress User. Vielen Dank dass du mein Plugin heruntergeladen hast! </h2>';
+    echo '<h1>Kontaktformular Plugin</h1><br>';
+
+    echo '<h4><u>Mail-Inbox Aktvierung</u></h4>';
     echo '<p>Im Untermenu \'Activate/Deactivate\' kannst du die Mail Inbox ein- oder ausblenden lassen.</p>';
-    echo '<p>Wenn du es angeschaltet hast, kannst du unter \'Mails\' die eingehenden Nachrichten anschauen.</p>';
+    echo '<p>Wenn du es angeschaltet hast, kannst du unter \'Mails\' die eingehenden Nachrichten anschauen.</p><br>';
+    
+    echo '<h4><u>Kontaktformular Aktivierung für den Logout Bereich</u></h4>';
+    echo '<p>Erstelle eine Seite für das Kontaktformular und gib den Code: <code>[contactform]</code> ein.</p>';
+    echo '<p>Achte darauf das im Unterpunkt \'Permalink\' für den \'URL Slug\' <strong>kontaktformular</strong> eingegeben ist.</p><br>';
+
+    echo '<h4><u>Kontaktformular Aktivierung für den Login Bereich</u></h4>';
+    echo '<p>Klick auf den Menupunkt \'Appearance/Widgets\' und füge das Kontaktformular-Widget in den gewünschten Bereich ein.</p>';
+
 }
 function kf_custom_settings() 
 {
@@ -33,7 +41,7 @@ function kf_contact_form_page_callback() // Seiteninhalt der subpage
    do_settings_sections('kf_mail_contact');
    submit_button();
    echo '</form>';
-   settings_errors();
+   settings_errors();                   // zeigt update/save Meldung an
 }
 function kf_section_callback()
 {

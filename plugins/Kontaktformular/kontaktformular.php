@@ -9,10 +9,10 @@ Description: Plugin das ein Kontaktformular anbietet
 
 
 //exit, falls direkt auf den Link zugegriffen wird
-if( !defined( 'ABSPATH'))
-{
-	exit();
-}
+// if( !defined( 'ABSPATH'))
+// {
+// 	exit();
+// }
 
 require_once( plugin_dir_path( __FILE__). '/widget.php'); 
 require_once( plugin_dir_path( __FILE__). '/kontaktformular-admin.php');
@@ -38,7 +38,7 @@ if( !class_exists( 'kontaktformular'))
 			$plugin = plugin_basename(__FILE__);
 			add_filter("plugin_action_links_$plugin", array($this, 'linkToPlugin'));			// hook zum Link zur Kontaktformularseite im Plugin-Bereich
 
-			add_shortcode( 'form', array( $this, 'formInput'));
+			add_shortcode( 'contactform', array( $this, 'formInput'));
 		}
 		function linkToPlugin($link)
 		{
@@ -93,8 +93,7 @@ if( !class_exists( 'kontaktformular'))
 						<div id='answer'></div>
 						<button type='submit' id='submit'>Absenden!</button>
 					</form>
-				<?php 	
-				
+				<?php 			
 			}	 
 		}	
 	
@@ -168,11 +167,12 @@ if( !class_exists( 'kontaktformular'))
 				'%s'
 			);
 
-			$sucessful = $wpdb->insert($table, $data, $format); 										//Funktionion escaped Daten automatisch
+			$sucessful = $wpdb->insert($table, $data, $format); 										//Funktion escaped Daten automatisch
 
 			$id = $wpdb->insert_id;
 
-			if($id == false && $sucessful == false)
+
+			if($id == false && $sucessful == false)														// Test ob es in DB gespeichert werden konnte
 			{
 				echo 'Email konnte nicht in Datenbank gespeichert werden';
 			}
@@ -188,7 +188,7 @@ if( !class_exists( 'kontaktformular'))
 			
 			
 			//javascriptdatei für Logout
-			wp_register_script('ajax_script', plugins_url(). '/kontaktformular/js/main.js');
+			wp_register_script('ajax_script', plugins_url(). '/kontaktformular/js/logged-out.js');
 			wp_enqueue_script( 'ajax_script');
 			wp_localize_script( 'ajax_script', 'kf_ajax_data', array( 
 				'ajaxurl' => admin_url( 'admin-ajax.php'),

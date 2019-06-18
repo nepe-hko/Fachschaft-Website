@@ -18,18 +18,17 @@ function kf_contact_cpt()
         'singular_name'     => 'Mail',
         'menu_name'         => 'Mails',
         'name_admin_bar'    => 'Mail'
-        // 'menu_icon' =>
     );
 
     $args = array(
         'labels'            => $labels,
         'show_ui'           => true,
         'show_in_menu'      => true,
-      //  'capability_type'   => 'post',
         'hierarchical'      => false,
         'custom-fields'     => true,
+        'menu_icon'         => 'dashicons-email',
         'menu_position'     => 26,
-        'supports'          => array('title', 'editor', 'author') //author damit er in "add new" noch da ist
+        'supports'          => array('title', 'editor', 'author')                                //author damit er in "add new" noch da ist
 
     );
 
@@ -46,7 +45,7 @@ function kf_change_columns($columns)
     $newColumns['date'] = 'Datum';
     return $newColumns;
 }
-function kf_show_colums_content($column, $post_id) //ist ein loop
+function kf_show_colums_content($column, $post_id)                                              //ist ein loop
 {
     switch($column)
     {
@@ -71,25 +70,23 @@ function kf_meta_box_email()
 }
 
 
-function kf_meta_box_callback($post) // $post automatisch von der meta-box hinzugefügt, enthält alle Infos über den aktuellen Post -> kf-contact
+function kf_meta_box_callback($post)                                                                // $post automatisch von der meta-box hinzugefügt, enthält alle Infos über den aktuellen Post -> kf-contact
 {
     wp_nonce_field('check_update_meta_data_email', 'email_meta_box_nonce');
     $email_meta_box = get_post_meta($post->ID, '_contact_form_email', true); // true: single value not array
 
-    error_log($email_meta_box);
     echo '<label for="kf_email_field">Deine Email Adresse: </label>';
     echo '<input type="email" id="kf_email_field" name="kf_email_field" value="' . esc_attr($email_meta_box) . '" size="25"/><br>';
 
     wp_nonce_field('check_update_meta_data_name', 'name_meta_box_nonce');
     $name_meta_box = get_post_meta($post->ID, '_contact_form_name', true); 
 
-    error_log($name_meta_box);
     echo '<label for="kf_name_field">Dein Namen: </label>';
     echo '<input type="text" id="kf_name_field" name="kf_name_field" value="' . esc_attr($name_meta_box) . '" size="25"/><br>';
 }
 
 
-function check_update_meta_data_email($post_id) // irgendwo Fehler drin
+function check_update_meta_data_email($post_id) 
 {
 
     if( ! isset($_POST['email_meta_box_nonce']))
@@ -100,7 +97,7 @@ function check_update_meta_data_email($post_id) // irgendwo Fehler drin
     {
         return;
     }
-    if( ! current_user_can('edit_post', $post_id)) // check ob User die benötigte Priorität hat was zu ändern
+    if( ! current_user_can('edit_post', $post_id))                                                                              // check ob User die benötigte Priorität hat was zu ändern
     {
         return;
     }
@@ -108,7 +105,6 @@ function check_update_meta_data_email($post_id) // irgendwo Fehler drin
     if ( isset($_POST['kf_email_field']))
     { 
         $email_data = sanitize_text_field( $_POST['kf_email_field'] );  
-        error_log($email_data);
         update_post_meta( $post_id, '_contact_form_email', $email_data );
     }
 }

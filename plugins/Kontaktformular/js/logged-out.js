@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
     $('form.ajax_logged_out').submit(function (e) {
         if ($('#name').val() == '' || $('#mail').val() == '' || $('#subject').val() == '' || $('#message').val() == '') {
             $('#answer').html('Bitte alle Felder ausfüllen.');
-            e.preventDefault();            // blockiert Action-Methode
+            e.preventDefault();                                                                                         // blockiert Action-Methode
         }
         else 
         {
@@ -18,7 +18,7 @@ jQuery(document).ready(function ($) {
                 type: 'post',
                 data: form_data
             })
-            .done( function () { //wenn alles geklappt hat
+            .done( function () {
                 $('#answer').text('Nachricht wurde versendet.');
             })
             .fail( function() {

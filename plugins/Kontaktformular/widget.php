@@ -45,6 +45,15 @@ class symbol_widget extends WP_Widget //Widget wird nur dann angezeigt wenn man 
                         </form>                   
                         <?php           
                 }
+
+                if (!is_user_logged_in())
+                {       
+                         ?>
+                                <a href='http://localhost/wordpress/kontaktformular/' >
+                                        <p id='brief_logged_in'>&#9993; Schreibe eine Nachricht an uns!</p>
+                                </a>
+                         <?php
+                }
                 echo $after_widget;
         }
 

@@ -47,8 +47,15 @@
 #form_logged_in {
   display: none;
 }
-#brief
+#brief, #brief_logged_in
 {
 	cursor: pointer;
+	text-decoration: underline;
+	color: black;
 }
+/* #form_logged_in #subject_logged_in, #message_logged_in, #submit_logged_in
+{
+	
+} */
+
 
