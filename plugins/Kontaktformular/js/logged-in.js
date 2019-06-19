@@ -20,7 +20,7 @@
 
     $('form.ajax_logged_in').submit(function (e) {
         if ($('#subject_logged_in').val() == '' || $('#message_logged_in').val() == '') {
-            $('#answer_logged_in').text('Bitte alle Felder ausfüllen.');
+            $('#answer_logged_in').i18n('Bitte alle Felder ausfüllen.');
             e.preventDefault();                                          // verhindert Wechsel zur admin-post.php 
         }
         else 

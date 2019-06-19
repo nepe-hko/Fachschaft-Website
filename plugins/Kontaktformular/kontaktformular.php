@@ -4,15 +4,17 @@ Plugin Name: kontaktformular
 Plugin URI: http://localhost/wordpress/wp-admin/plugins.php
 Author: Veronika Sedlackova
 Version: 1.0
+Text Domain: kontaktformular
+Domain Path: /languages
 Description: Plugin das ein Kontaktformular anbietet
 */
 
 
 //exit, falls direkt auf den Link zugegriffen wird
-// if( !defined( 'ABSPATH'))
-// {
-// 	exit();
-// }
+if( !defined( 'ABSPATH'))
+{
+	exit();
+}
 
 require_once( plugin_dir_path( __FILE__). '/widget.php'); 
 require_once( plugin_dir_path( __FILE__). '/kontaktformular-admin.php');
@@ -36,13 +38,14 @@ if( !class_exists( 'kontaktformular'))
 			add_action( 'wp_ajax_nopriv_do_function', array( $this, 'do_function'));			//hook für ajax-Funktion
 
 			$plugin = plugin_basename(__FILE__);
-			add_filter("plugin_action_links_$plugin", array($this, 'linkToPlugin'));			// hook zum Link zur Kontaktformularseite im Plugin-Bereich
+			add_filter("plugin_action_links_$plugin", array($this, 'linkToPlugin'));			// hook zum Link zur Kontaktformularseite im Plugin-Admin-Bereich
 
 			add_shortcode( 'contactform', array( $this, 'formInput'));
 		}
+
 		function linkToPlugin($link)
 		{
-			$pluginlink = '<a href="admin.php?page=kf">Kontaktformularseite</a>';			
+			$pluginlink = '<a href="admin.php?page=kf">' . __('Kontaktformularseite', 'kontaktformular') . '</a>';			
 			array_push($link, $pluginlink);														// fügt contactform-link zum array, welcher an hook angehängt wird
 			return $link;
 		}
@@ -73,8 +76,6 @@ if( !class_exists( 'kontaktformular'))
 
 			$db_version = '1.0';
 			add_option( 'db_version', $db_version);
-
-		//	return ob_get_clean();
 		}
 	
 		function formInput() 																	// Form für ausgeloggte User
@@ -83,15 +84,15 @@ if( !class_exists( 'kontaktformular'))
 			{
 				?>
   					<form id='form_logged_out' action='<?php echo esc_url( admin_url( 'admin-post.php')); ?>' method='post' class='ajax_logged_out'> 
-						<p>Schreibe eine Nachricht an uns!</p>
-						<input type='text' name='name' id='name' maxlength='55' placeholder='Vor- und Nachname *'/>
-						<input type='email' name='mail' id='mail' maxlength='55' placeholder='Deine E-Mail-Adresse *' required/>
-						<input type='text' name='subject' id='subject' maxlength='55' placeholder='Betreff *'/>		
-						<textarea id='message' name='message' maxlength='200' placeholder='Deine Nachricht... *'></textarea>
+						<p><?php _e('Irgendwelche Anliegen?', 'kontaktformular'); ?><br><?php _e('Dann teile sie uns mit!', 'kontaktformular'); ?></p>
+						<input type='text' name='name' id='name' maxlength='55' placeholder='<?php esc_html_e('Vor- und Nachname *', 'kontaktformular'); ?>' />
+						<input type='email' name='mail' id='mail' maxlength='55' placeholder='<?php esc_html_e('Deine E-Mail-Adresse *', 'kontaktformular'); ?>' required/>
+						<input type='text' name='subject' id='subject' maxlength='55' placeholder='<?php esc_html_e('Betreff *', 'kontaktformular'); ?>'/>		
+						<textarea id='message' name='message' maxlength='200' placeholder='<?php esc_html_e('Deine Nachricht... *', 'kontaktformular'); ?>'></textarea>
 
 						<input type='hidden' name='action' value='do_function' />	
 						<div id='answer'></div>
-						<button type='submit' id='submit'>Absenden!</button>
+						<button type='submit' id='submit'><?php _e('Absenden!', 'kontaktformular'); ?></button>
 					</form>
 				<?php 			
 			}	 
@@ -143,8 +144,8 @@ if( !class_exists( 'kontaktformular'))
 
 			// Mailversand
 			$mailTo = 'Vero@localhost';
-			$headers = 'From: ' . $mailFrom;
-			$body = 'Du hast eine Nachricht von ' . $name . ' erhalten' . "\n\n" . $message;
+			$headers = __('Von: ', 'kontaktformular') . $mailFrom;
+			$body = __('Du hast eine Nachricht von ', 'kontaktformular') . $name . __(' erhalten', 'kontaktformular') . "\n\n" . $message;
 			
 			wp_mail($mailTo, $subject, $body, $headers);  												
 				
@@ -174,7 +175,7 @@ if( !class_exists( 'kontaktformular'))
 
 			if($id == false && $sucessful == false)														// Test ob es in DB gespeichert werden konnte
 			{
-				echo 'Email konnte nicht in Datenbank gespeichert werden';
+				_e('Email konnte nicht in Datenbank gespeichert werden', 'kontaktformular');
 			}
 			wp_die(); 																					// sofortige Beendung und Rückgabe einer ordnungsgemäße Antwort
 		

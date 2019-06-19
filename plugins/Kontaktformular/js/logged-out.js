@@ -1,4 +1,5 @@
 //logged out
+
 jQuery(document).ready(function ($) {    
     $('form.ajax_logged_out').submit(function (e) {
         if ($('#name').val() == '' || $('#mail').val() == '' || $('#subject').val() == '' || $('#message').val() == '') {

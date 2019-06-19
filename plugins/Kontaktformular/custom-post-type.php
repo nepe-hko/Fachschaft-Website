@@ -14,10 +14,10 @@ if (@$contact == 5) // wenn button aktiviert ist führe den cpt aus
 function kf_contact_cpt()
 {
     $labels = array(
-        'name'              => 'Mails',
-        'singular_name'     => 'Mail',
-        'menu_name'         => 'Mails',
-        'name_admin_bar'    => 'Mail'
+        'name'              => __('Mails', 'kontaktformular'),
+        'singular_name'     => __('Mail', 'kontaktformular'),
+        'menu_name'         => __('Mails', 'kontaktformular'),
+        'name_admin_bar'    => __('Mail', 'kontaktformular')
     );
 
     $args = array(
@@ -38,11 +38,11 @@ function kf_contact_cpt()
 function kf_change_columns($columns)
 {
     $newColumns = array();
-    $newColumns['title'] = 'Betreff';
-    $newColumns['email'] = 'E-mail';
-    $newColumns['name'] = 'Name';
-    $newColumns['message'] = 'Nachricht';
-    $newColumns['date'] = 'Datum';
+    $newColumns['title'] = __('Betreff', 'kontaktformular');
+    $newColumns['email'] = __('E-mail', 'kontaktformular');
+    $newColumns['name'] = __('Name', 'kontaktformular');
+    $newColumns['message'] = __('Nachricht', 'kontaktformular');
+    $newColumns['date'] = __('Datum', 'kontaktformular');
     return $newColumns;
 }
 function kf_show_colums_content($column, $post_id)                                              //ist ein loop
@@ -66,7 +66,7 @@ function kf_show_colums_content($column, $post_id)                              
 }
 function kf_meta_box_email()
 {
-    add_meta_box('email_meta_box_id', 'Deine Email-Adresse: ', 'kf_meta_box_callback', 'kfposttype', 'side');
+    add_meta_box('email_meta_box_id', __('Deine Email-Adresse: ', 'kontaktformular'), 'kf_meta_box_callback', 'kfposttype', 'side');
 }
 
 
@@ -75,14 +75,18 @@ function kf_meta_box_callback($post)                                            
     wp_nonce_field('check_update_meta_data_email', 'email_meta_box_nonce');
     $email_meta_box = get_post_meta($post->ID, '_contact_form_email', true); // true: single value not array
 
-    echo '<label for="kf_email_field">Deine Email Adresse: </label>';
-    echo '<input type="email" id="kf_email_field" name="kf_email_field" value="' . esc_attr($email_meta_box) . '" size="25"/><br>';
+    ?>
+    <label for="kf_email_field"><?php _e('Deine Email Adresse:', 'kontaktformular'); ?> </label>
+    <input type="email" id="kf_email_field" name="kf_email_field" value="<?php esc_attr_e($email_meta_box) ?>" size="25"/><br>
+    <?php
 
     wp_nonce_field('check_update_meta_data_name', 'name_meta_box_nonce');
     $name_meta_box = get_post_meta($post->ID, '_contact_form_name', true); 
 
-    echo '<label for="kf_name_field">Dein Namen: </label>';
-    echo '<input type="text" id="kf_name_field" name="kf_name_field" value="' . esc_attr($name_meta_box) . '" size="25"/><br>';
+    ?>
+    <label for="kf_name_field"><?php _e('Dein Namen:', 'kontaktformular'); ?></label>
+    <input type="text" id="kf_name_field" name="kf_name_field" value="<?php esc_attr_e($name_meta_box) ?>" size="25"/><br>
+    <?php
 }
 
 
