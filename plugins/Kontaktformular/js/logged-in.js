@@ -20,7 +20,7 @@
 
     $('form.ajax_logged_in').submit(function (e) {
         if ($('#subject_logged_in').val() == '' || $('#message_logged_in').val() == '') {
-            $('#answer_logged_in').i18n('Bitte alle Felder ausfüllen.');
+            $('#answer_logged_in').html(kf_ajax_data_login.answer_all_fields_filled);
             e.preventDefault();                                          // verhindert Wechsel zur admin-post.php 
         }
         else 
@@ -37,10 +37,10 @@
                 data: form_data_login                                   // alle Input daten
             })
             .done( function () { 
-                $('#answer_logged_in').text('Nachricht wurde versendet.');
+                $('#answer_logged_in').html(kf_ajax_data_login.ajax_success_message);
             })
             .fail( function() {
-                $('#answer_logged_in').text('Es ist ein Fehler unterlaufen');
+                $('#answer_logged_in').html(kf_ajax_data_login.ajax_fail_message);
             })
             .always( function(){  
                 e.target.reset();                                       // löscht Forminput

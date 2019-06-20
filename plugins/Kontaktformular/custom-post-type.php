@@ -84,7 +84,7 @@ function kf_meta_box_callback($post)                                            
     $name_meta_box = get_post_meta($post->ID, '_contact_form_name', true); 
 
     ?>
-    <label for="kf_name_field"><?php _e('Dein Namen:', 'kontaktformular'); ?></label>
+    <label for="kf_name_field"><?php _e('Dein Name:', 'kontaktformular'); ?></label>
     <input type="text" id="kf_name_field" name="kf_name_field" value="<?php esc_attr_e($name_meta_box) ?>" size="25"/><br>
     <?php
 }

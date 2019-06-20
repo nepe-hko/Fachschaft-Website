@@ -16,12 +16,20 @@ if( !defined( 'ABSPATH'))
 	exit();
 }
 
+
+// lädt benötigte Dateien
 require_once( plugin_dir_path( __FILE__). '/widget.php'); 
 require_once( plugin_dir_path( __FILE__). '/kontaktformular-admin.php');
 require_once( plugin_dir_path( __FILE__). '/custom-post-type.php');
-
-
 register_activation_hook( __FILE__, array( 'kontaktformular', 'createTable'));
+
+
+// lädt textdomain
+function kf_plugin_load_text_domain() 
+{
+	load_plugin_textdomain('kontaktformular', false, dirname(plugin_basename(__FILE__)) . '/languages');
+}
+add_action('plugins_loaded', 'kf_plugin_load_text_domain');
 
 
 if( !class_exists( 'kontaktformular'))
@@ -37,12 +45,15 @@ if( !class_exists( 'kontaktformular'))
 
 			add_action( 'wp_ajax_nopriv_do_function', array( $this, 'do_function'));			//hook für ajax-Funktion
 
+
+
 			$plugin = plugin_basename(__FILE__);
 			add_filter("plugin_action_links_$plugin", array($this, 'linkToPlugin'));			// hook zum Link zur Kontaktformularseite im Plugin-Admin-Bereich
 
 			add_shortcode( 'contactform', array( $this, 'formInput'));
 		}
-
+		
+	
 		function linkToPlugin($link)
 		{
 			$pluginlink = '<a href="admin.php?page=kf">' . __('Kontaktformularseite', 'kontaktformular') . '</a>';			
@@ -183,27 +194,27 @@ if( !class_exists( 'kontaktformular'))
 		
 		public function enqueue() 																		// wird von wp aufgerufen deswegen muss es public sein
 		{
-			//snippet für javaScript Bibliothek
-			wp_register_script('js_snippet', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js');
-			wp_enqueue_script('js_snippet');
-			
-			
 			//javascriptdatei für Logout
-			wp_register_script('ajax_script', plugins_url(). '/kontaktformular/js/logged-out.js');
-			wp_enqueue_script( 'ajax_script');
-			wp_localize_script( 'ajax_script', 'kf_ajax_data', array( 
-				'ajaxurl' => admin_url( 'admin-ajax.php'),
-				'ajax_nonce' => wp_create_nonce('nonce')
+			wp_register_script('ajax_script_logout', plugins_url(). '/kontaktformular/js/logged-out.js', array('jquery')); // lädt jquery-Bibliothek vor dem logged-out.js Skript
+			wp_enqueue_script('ajax_script_logout');
+			wp_localize_script( 'ajax_script_logout', 'kf_ajax_data_logout', array( 
+				 	'ajaxurl' 					=> admin_url( 'admin-ajax.php'),
+					'ajax_nonce' 				=> wp_create_nonce('nonce'),
+					'answer_all_fields_filled' 	=> esc_html__('Bitte alle Felder ausfuellen.', 'kontaktformular'),
+					'ajax_success_message' 		=> esc_html__('Nachricht wurde versendet.', 'kontaktformular'),
+					'ajax_fail_message'			=> esc_html__('Es ist ein Fehler unterlaufen', 'kontaktformular')
 			));
 
 			//JavaScriptdatei für login
-			wp_register_script('ajax_script_login', plugins_url(). '/kontaktformular/js/logged-in.js');
-			wp_enqueue_script( 'ajax_script_login');
+			wp_register_script('ajax_script_login', plugins_url(). '/kontaktformular/js/logged-in.js', array('jquery'));
+			wp_enqueue_script('ajax_script_login');
 			wp_localize_script( 'ajax_script_login', 'kf_ajax_data_login', array( 
-				'ajaxurl' => admin_url( 'admin-ajax.php'),
-				'ajax_nonce_login' => wp_create_nonce('nonce_login')
-			));
-
+				 	'ajaxurl' => admin_url( 'admin-ajax.php'),
+					'ajax_nonce_login' => wp_create_nonce('nonce_login'),
+					'answer_all_fields_filled' 	=> esc_html__('Bitte alle Felder ausfuellen.', 'kontaktformular'),
+					'ajax_success_message' 		=> esc_html__('Nachricht wurde versendet.', 'kontaktformular'),
+					'ajax_fail_message'			=> esc_html__('Es ist ein Fehler unterlaufen', 'kontaktformular')		
+				 ));
 
 			//CSS-Datei Hinzufügung
 			wp_register_style('kf_main_style', plugins_url(). '/kontaktformular/css/kf-style.css');

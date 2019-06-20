@@ -3,14 +3,14 @@
 add_action('admin_menu', 'kf_add_menu_page');
 add_action('admin_init', 'kf_custom_settings' );
 
-function kf_add_menu_page() // custom administration page und subpage
+function kf_add_menu_page()                                                                       // custom administration page und subpage
 {
     //admin page
     add_menu_page( __('Kontaktformular', 'kontaktformular'), __('Kontaktformular', 'kontaktformular'), 'manage_options', 'kf', 'kf_create_page_callback', 'dashicons-email', 115); // 6. Parameter icon    
 
     add_submenu_page('kf', __('activedeactive', 'kontaktformular'), __('Activate/Deactivate', 'kontaktformular'), 'manage_options', 'kf_mail_contact', 'kf_contact_form_page_callback');
 }
-function kf_create_page_callback() // Seiteninhalt der Startseite
+function kf_create_page_callback()                                                               // Seiteninhalt der Startseite
 {
     ?>
     <h1><?php _e('Kontaktformular Plugin', 'kontaktformular'); ?></h1><br>
@@ -35,7 +35,7 @@ function kf_custom_settings()
     add_settings_section('kf-section', __('Kontaktformular', 'kontaktformular'), 'kf_section_callback', 'kf_mail_contact');
     add_settings_field('activate-form', __('Activate Contact Form', 'kontaktformular'), 'kf_activate_contact_callback', 'kf_mail_contact', 'kf-section');
 }
-function kf_contact_form_page_callback() // Seiteninhalt der subpage
+function kf_contact_form_page_callback()                                                        // Seiteninhalt der subpage
 {
     ?>
     <form method="post" action="options.php" class="kf-form" >
@@ -46,7 +46,7 @@ function kf_contact_form_page_callback() // Seiteninhalt der subpage
     ?>
     </form>
     <?php
-    settings_errors();                   // zeigt update/save Meldung an
+    settings_errors();                                                                          // zeigt update/save Meldung an
 }
 function kf_section_callback()
 {
@@ -55,6 +55,6 @@ function kf_section_callback()
 function kf_activate_contact_callback()
 {
     $options = get_option('activate');
-    $checked = (@$options == 5 ? 'checked' : ''); // wenn options exisiert und true ist dann checked
+    $checked = (@$options == 5 ? 'checked' : '');                                               // wenn options exisiert und 5 ist dann soll es checked sein
     echo '<input type="checkbox" name="activate" value="5" ' .$checked. '/>';
 }
