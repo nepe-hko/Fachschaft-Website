@@ -18,7 +18,7 @@
     vertical-align: middle;
 }
 
-#input_widget{
+#log_widget, #pwd_widget {
     font-size:15pt;
     border-radius:8px;
     width: 75%; 

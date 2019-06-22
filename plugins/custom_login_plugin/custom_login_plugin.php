@@ -34,7 +34,7 @@ class Custom_Login extends WP_Widget
     function redirect_logout() 
     {
         $login_url  = home_url();
-        wp_redirect($login_url . "?logedout=true");
+        wp_redirect($login_url . "?loggedout=true");
         exit;
     }
     

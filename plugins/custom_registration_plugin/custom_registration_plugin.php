@@ -14,6 +14,7 @@ if( ! defined( 'ABSPATH' ) ) {
     die;
 }
 
+require_once(plugin_dir_path(__FILE__). '/cpt_register.php');
 
 class Custom_Registration
 {
@@ -23,6 +24,9 @@ class Custom_Registration
         add_action('admin_enqueue_scripts', array($this, 'my_enqueue')); 	
 
         add_action( 'login_form_register', array( $this, 'redirect_to_custom_register' ) );
+
+        add_action('admin_post_test_ajax', array($this, 'test_ajax'));
+        add_action('admin_post_nopriv_test_ajax', array($this, 'test_ajax'));
 
         add_action( 'wp_ajax_test_ajax', array($this,'test_ajax') );
         add_action('wp_ajax_nopriv_test_ajax', array($this, 'test_ajax'));
@@ -71,6 +75,19 @@ class Custom_Registration
                     'role' => $role
                 );
             
+                $args = array(
+                    'post_type' => 'reg',
+                    'post_status'   => 'publish',
+                    'post_author'  => get_current_user_id(),
+                    'meta_input' => array(
+                        '_vorname_value_key' => $vorname,
+                        '_nachname_value_key' => $nachname,
+                        '_email_value_key' => $email,
+                        '_username_value_key' => $username
+                    )
+                );
+                
+                $post_id = wp_insert_post($args);
                 $user_id = wp_insert_user($userdata);
 
                 $message = 'Sie haben sich erfolgreich registriert!';
@@ -91,7 +108,7 @@ class Custom_Registration
 ?>          
         <strong><div id="msg" class="msg"></div></strong><br><br>
 
-        <form  id="reg_ajax_id" action="<?php echo wp_registration_url(); ?>" method="post" class="reg_ajax_class" > 
+        <form  id="reg_ajax_id" action="<?php echo admin_url('admin-post.php'); ?>" method="post" class="reg_ajax_class" > 
                 
             <h3><strong>ACCOUNT ERSTELLEN</strong></h3>
 
@@ -99,10 +116,10 @@ class Custom_Registration
             <input type="text" name="vorname" id ="vorname" required><br>
 
             <strong>Nachname:</strong>
-            <input type="text" name="nachname" id ="nachname"required><br> 
+            <input type="text" name="nachname" id ="nachname" required><br> 
 
             <strong>Username:</strong>
-            <input type="text" name="username" id ="username_val" keyup="test_ajax" required><br>
+            <input type="text" name="username" id ="username" required><br>
 
             <strong>Email:</strong>
             <input type="email" name="email" id ="email" required><br>
@@ -123,7 +140,7 @@ class Custom_Registration
                 <option value='contributor'>Mitarbeiter</option>
                 <option value='author'>Autor</option>
                 <option value='editor'>Redakteur</option>
-                <option value='administrator'>Administrator</option>			
+                <!-- <option value='administrator'>Administrator</option>			 -->
             
             </select>
 
@@ -137,6 +154,20 @@ class Custom_Registration
             <input type='hidden' name='action' value='test_ajax' />   
             <input type="submit"  name = "submit" value="Registrieren"  /><br>
         </form>
+
+        <script type="text/javascript">
+            var password = document.getElementById('passwort'); 
+            var meter = document.getElementById('password-strength-meter');
+
+            password.addEventListener('input', function() 
+            {
+                var val = password.value;
+                var result = zxcvbn(val);
+
+                // Update the password strength meter
+                meter.value = result.score;
+                },false);
+        </script>
 <?php
     }
 
@@ -144,13 +175,11 @@ class Custom_Registration
     
     function my_enqueue()
     {
-        wp_register_script('js_snippet', 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js');
-        wp_enqueue_script('js_snippet');
 
         wp_register_script('js_meter','https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js');
         wp_enqueue_script('js_meter');
 
-        wp_register_script('ajax', plugins_url(). '/custom_registration_plugin/js/pass_error.js');
+        wp_register_script('ajax', plugins_url(). '/custom_registration_plugin/js/pass_error.js',array('jquery'));
         wp_enqueue_script('ajax');
         wp_localize_script( 'ajax', 'reg_ajax_data', 
         array('ajaxurl' => admin_url( 'admin-ajax.php' )));

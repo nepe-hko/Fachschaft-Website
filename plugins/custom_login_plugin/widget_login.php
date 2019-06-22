@@ -27,11 +27,11 @@ class Widget_Login extends WP_Widget
         <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>" id="widget_form">
         <div id="div">
             <i id="widget_icon" class="material-icons">account_circle</i>
-            <input id="input_widget" type="text" name="log"  placeholder=" Username" maxlength="40" required><br>
+            <input id="log_widget" class="input_widg"type="text" name="log"  placeholder=" Username" maxlength="40" required><br>
         </div>
         <div id="div">
             <i id="widget_icon" class="material-icons">lock</i>
-            <input id="input_widget" type="password" name="pwd" maxlength="40" placeholder=" Password" required><br>
+            <input id="pwd_widget"  class="input_widg" type="password" name="pwd" maxlength="40" placeholder=" Password" required><br>
         </div>
             <p>
             <input id="submit" type="submit" name="sendIt" value="Login" class="btn btn-default"><br>
