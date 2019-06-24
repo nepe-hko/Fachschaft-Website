@@ -62,6 +62,7 @@ class CreateCalendar{
       }
 
       if ($current_calendar_day == $event_days[$counter] && $current_month == $event_months[$counter]  && $current_year == $event_years[$counter]) {
+
         if ($current_calendar_day < 10) {
           if ($events[$counter][1] < $current_timestamp = time()) {
           $output .= '<td class="day event past" id="0' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';

@@ -159,7 +159,6 @@ function printEvents() {
     array_push($events, array(strtotime($value->meta_value),$value->meta_value, $value->post_title,$value->post_content,$res, $value->post_id, $value->category,$value->slug));
   }
 
-
   foreach ($events as $key => $node) {
    $eventsort[$key]    = $node[0];
   }
@@ -233,9 +232,18 @@ function printEvents() {
   }
   //past events
     $output .= '<h1>Vergangene Veranstaltungen </h1>';
-    $output .= '<h1>'.$month_name.'</h1>';
+
   for ($i=0; $i < sizeof($events); $i++) {
+
     if ($events[$i][0] < $current_timestamp = time()) {
+      static $function_called = false;
+      if (!$function_called) {
+        setlocale(LC_TIME, "de_DE");
+        $month_name = strftime("%B", $events[$i][0]);
+        $output .= '<h1>'.$month_name.'</h1>';
+
+        $function_called = true;
+      }
 
       if ($event_month[$i] != $event_month[$i-1] && $event_month[$i-1] != NULL)  {
         setlocale(LC_TIME, "de_DE");
