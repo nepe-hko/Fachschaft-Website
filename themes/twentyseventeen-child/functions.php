@@ -36,6 +36,7 @@ function hk_show_pending_number($menu) {
 }
 add_filter('add_menu_classes', 'hk_show_pending_number');
 
+
 /*
 Customize Appearance Options
 */
@@ -69,6 +70,10 @@ function hk_customize_register($wp_customize) {
         'section' => 'hk_standard_colors',
         'settings' => 'hk_widget_title_color'
     )));
+    
+    #remove from parent theme
+    
+
 
 }
 add_action('customize_register', 'hk_customize_register');

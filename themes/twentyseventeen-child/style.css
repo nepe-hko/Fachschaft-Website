@@ -13,6 +13,36 @@ Text Domain: twentyseventeen-child
 .navigation-top {background: #2F9B92;}
 .navigation-top .logo img { height:50px; display: none;}
 
+.wrap {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.hk-post-container {
+    padding: 10px;
+    padding-bottom: 20px !important;
+    margin-bottom: 25px;
+    border: 1px solid #bbb; 
+    border-radius: 3px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+}
+.entry-header .entry-title {
+    font-weight: 800;
+    letter-spacing: 0.1818em;
+    text-transform: uppercase;
+    font-family: "Libre Franklin", "Helvetica Neue", helvetica, arial, sans-serif;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+.entry-date {
+    font-size: 0.75rem;
+    float: right;
+}
+
+.entry-content {
+    margin-top: 20px;
+}
+
 /*--------------------------------------------------------------
 2.0 Media Queries
 --------------------------------------------------------------*/
@@ -38,16 +68,48 @@ Text Domain: twentyseventeen-child
     .main-navigation li::before {display:none !important;} /*Pfeil deaktivieren*/
     .main-navigation li::after {display:none !important;}
     .sub-menu  {border:1px solid #666; background-color: darkgrey; left:50%; top:64px}
-    .sub-menu a {background-color: #767676}
+    .sub-menu a {background-color: #ddd}
     .sub-menu li:hover {border: none !important}
-
+    .sub-menu .menu-item:last-child:hover {border-bottom: 0 !important} /*Weißer Balken unten*/
     .sub-menu .sub-menu .current-menu-item { border-bottom: none !important;}
-
-
+    .navigation-top .current-menu-item > a, .navigation-top .current_page_item > a {color: black;}
+    .main-navigation li li a:hover {color: #444}
+    
     /*Content*/
     .site-content .wrap {max-width: 1600px }
     .page-header {padding-bottom: 2em;}
     .widget-area {max-width: 300px; float: right; width:36%;}
     .content-area {float:left; width: 58%;}
+
+    .wrap {
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+    .has-sidebar:not(.error404) #primary {
+        width: 65%;
+    }
+    .has-sidebar:not(.error404) #secondary {
+        width: 30%;
+    }
+
+
+    /*Posts*/
+    .hk-post-container {
+        padding: 30px;
+        padding-bottom: 20px !important;
+        margin-bottom: 25px;
+    }
+    .entry-header .entry-title {
+        margin-bottom: 0;
+    }
+    .entry-date {
+        font-size: 0.75rem;
+        float: right;
+    }
+
+    .entry-content {
+        margin-top: 20px;
+    }
 
 }

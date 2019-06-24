@@ -25,30 +25,38 @@ class Verbesserungsvorschlaege
         add_action('init', array($this, 'register_improvement_post_type'));
         add_action('add_meta_boxes', array($this, 'add_custom_meta_box'));
         add_action('save_post', array($this, 'save_from_admin'));
-        add_shortcode('verbesserungsvorschlaege', array($this, 'to_frontend'));
+        //add_shortcode('verbesserungsvorschlaege', array($this, 'to_frontend'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue'));
-        add_action( 'wp_ajax_request', array($this, 'request') );
-        add_action( 'wp_ajax_nopriv_request', array($this, 'request') );
+        add_action( 'wp_ajax_vbv_submit', array($this, 'vbv_submit') );
+        add_action( 'wp_ajax_nopriv_vbv_submit', array($this, 'vbv_submit') );
     }
 
     public function enqueue() {
 
         // enqueue javascript on the frontend.
-        wp_enqueue_script(
-            'send_form_script',
-            plugins_url() . '/verbesserungsvorschlaege/public/js/send_form.js',
+        wp_register_script(
+            'send_form_script', 
+            plugins_url(). '/verbesserungsvorschlaege/public/js/send_form.js',
             array('jquery')
         );
+        wp_enqueue_script('send_form_script');
 
         // add ajax url to script
-        wp_localize_script(
-            'send_form_script',
-            'obj',
-            array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) )
-        );
+        wp_localize_script('send_form_script', 'vbv_ajax_data', array( 
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'vbv_secure' => wp_create_nonce('vbv_secure')
+        ));
+
+        wp_register_style( 'vbv_style', plugins_url(). '/verbesserungsvorschlaege/public/css/vbv_style.css' );
+        wp_enqueue_style( 'vbv_style' );
     }
 
-    public function request() {
+    public function vbv_submit() {
+
+        if( !check_ajax_referer('vbv_secure', 'vbv_secure')) {
+            echo "Fehler beim übertragen der Daten";
+            die();
+        }
  
         // The $_REQUEST contains all the data sent via ajax
         if ( isset($_POST['title']) && isset($_POST['content']) ) {
@@ -128,29 +136,14 @@ class Verbesserungsvorschlaege
         $verified = isset($_POST['verified']) ? "checked" : "";
         update_post_meta($post_id, 'verified', $verified);
     }
-
+/*
     public function to_frontend() {
-        
-
-        $args = array('post_type' => 'improvement', 'posts_per_page' => '3');
-        $query = new WP_Query($args);
-        if ($query->have_posts()) { ?>
-            <h2>Eingereichte Verbesserungsvorschläge</h2><?php
-            while ($query->have_posts()){
-                $query->the_post();?>
-                <h4><?php the_title();?></h1>
-                <?php the_content();?>
-                <h4><?php the_author();?></h4><hr>
-                <?php
-            } 
-        }
-
-        
-
-        echo '
+              
+        return '
             <div id="vbv_headline"><h2>Verbesserungsvorschlag einreichen</h2></div>
-            <form id="vbv_container">
+            <form id="vbv_container" class="vbv_form">
                 <input id="vbv_title" name="title" type="text" placeholder="Titel" required></input>
+                <input type="hidden" name="action" value="vbv_submit" />	
                 <textarea id="vbv_content" name="content" placeholder="Deine Nachricht..." required></textarea>
                 <button id="submit" type="submit">Vorschlag einreichen!</button>
             </form>
@@ -158,6 +151,7 @@ class Verbesserungsvorschlaege
         ';
         
     }
+    */
 }
 
 $plugin = Verbesserungsvorschlaege::get_instance();

@@ -5,7 +5,9 @@ Version: 1.0
 Author: Daniel Hauk
 Description: Zeigt den Speiseplan der TH-Nünberg Fakultät Informatik an
 */
-
+if(!defined('ABSPATH')) {
+    die;
+}
 
 class SpeiseplanPlugin extends WP_Widget
 {
@@ -26,14 +28,17 @@ class SpeiseplanPlugin extends WP_Widget
         );
     }
 
-    public function toFrontend() 
+    public function toFrontend($atts = []) 
     {
-        
+        $showDays = $atts['days'];
+        $dayCount = 0;
         $meals = $this->getMeals();
         $html = "<table class=\"speiseplan\">";
         $date = "";
         $lastDate = "";
         foreach ($meals->meals as $meal) {
+
+            if ($dayCount >= $showDays) break;
 
             $translate = array(
                 'Mon'       => 'Montag',
@@ -52,6 +57,7 @@ class SpeiseplanPlugin extends WP_Widget
 
             if($date !== $lastDate) {
                 $html .= "<tr class=\"date\"><td colspan=\"2\">$dayofWeek&nbsp;&nbsp;-&nbsp;&nbsp; $day.$month</td></tr><tr class=\"whitespace\"><td colspan=\"2\"></td></tr>";
+                $dayCount++;
             }
             $html .= "<tr><td class=\"title\">" . $meal->title . "</td>";
             $html .= "<td class=\"price\">" . $meal->prices[0] . "</td></tr>";
@@ -97,7 +103,7 @@ class SpeiseplanPlugin extends WP_Widget
     public function loadWidget()
     {
         register_widget($this);
-        wp_enqueue_style('speiseplan', plugins_url( 'css/speiseplan.css', __FILE__ ));
+        wp_enqueue_style('speiseplan', plugins_url( 'public/css/speiseplan.css', __FILE__ ));
     }
 
     # create widget front-end
