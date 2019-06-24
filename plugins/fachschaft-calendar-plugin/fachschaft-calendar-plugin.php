@@ -15,14 +15,16 @@ Text Domain: fachschaft-calendar-plugin
 */
 
 
+
 if(!defined('ABSPATH'))
 {
   die;
 }
 
 
-//CalendarPlugin class
 require plugin_dir_path( __FILE__ ) . 'calendar-plugin-fachschaft-calendar-plugin.php';
+require plugin_dir_path( __FILE__ ) . 'widget-fachschaft-calendar-plugin.php';
+require plugin_dir_path( __FILE__ ) . 'create-calendar-fachschaft-calendar-plugin.php';
 
 if(class_exists('CalendarPlugin'))
 {
@@ -49,7 +51,7 @@ function fachschaft_calendar_add_stylesheet() {
 
 }
 
-function add_date_picker(){
+function add_javascript(){
   //jQuery UI datepicker file
   wp_enqueue_script('jquery-ui-datepicker');
   //custom datepicker js
@@ -57,11 +59,13 @@ function add_date_picker(){
   //jQuery UI theme css file
   wp_enqueue_style('e2b-admin-ui-css','http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css');
 
+  wp_enqueue_script('scroll-to-event', plugins_url().'/fachschaft-calendar-plugin/js/scroll.js', array('jquery'));
+
 }
 //frontend: wp_enqueue_scripts
 //backend: admin_enqueue_scripts
-add_action('admin_enqueue_scripts', 'add_date_picker');
-add_action('wp_enqueue_scripts', 'add_date_picker');
+add_action('admin_enqueue_scripts', 'add_javascript');
+add_action('wp_enqueue_scripts', 'add_javascript');
 
 
 
@@ -102,9 +106,6 @@ function save_calendar_event_data($post_id){
     update_post_meta($post_id, '_calendar_event_value_key', $calendar_event_data);
 }
 
-
-//CreateCalendar class
-require plugin_dir_path( __FILE__ ) . 'create-calendar-fachschaft-calendar-plugin.php';
 
 function printCalendar(){
 
@@ -157,7 +158,6 @@ function printEvents() {
     $res = str_replace(".", "", $string);
     array_push($events, array(strtotime($value->meta_value),$value->meta_value, $value->post_title,$value->post_content,$res, $value->post_id, $value->category,$value->slug));
   }
-
 
   foreach ($events as $key => $node) {
    $eventsort[$key]    = $node[0];
@@ -228,12 +228,63 @@ function printEvents() {
       $output .= '<text>'.$events[$i][3] .'</text>';
       $output .= '</div>';
       $output .= '</br></br>';
-
-
     }
-
-
   }
+  //past events
+    $output .= '<h1>Vergangene Veranstaltungen </h1>';
+
+  for ($i=0; $i < sizeof($events); $i++) {
+
+    if ($events[$i][0] < $current_timestamp = time()) {
+      static $function_called = false;
+      if (!$function_called) {
+        setlocale(LC_TIME, "de_DE");
+        $month_name = strftime("%B", $events[$i][0]);
+        $output .= '<h1>'.$month_name.'</h1>';
+
+        $function_called = true;
+      }
+
+      if ($event_month[$i] != $event_month[$i-1] && $event_month[$i-1] != NULL)  {
+        setlocale(LC_TIME, "de_DE");
+        $month_name = strftime("%B", $events[$i][0]);
+        $output .= '<h1>'.$month_name.'</h1>';
+      }
+      $output .= '<div id="' .$events[$i][4].'_scrollPos">';
+      $output .= '<h2>'.$events[$i][2];
+
+      //add Icon for Category if Font Awesome Plugin is activated
+      if ($activated) {
+        if ($events[$i][7] == "vortrag") {
+          $output .= '<i class="fas fa-comments past"></i></h2>';
+
+        }
+        elseif ($events[$i][7] == "spiel-spass") {
+            $output .= '<i class="fas fa-dice past"></i></h2>';
+        }
+        elseif ($events[$i][7] == "party") {
+            $output .= '<i class="fas fa-beer past"></i></h2>';
+        }
+        else {
+            $output .= '<i class="fas fa-calendar-alt past"></i></h2>';
+        }
+      }
+      else {
+          $output .= '</h2>';
+      }
+
+      $output .= '<h3 class = "past">'.' am '.$events[$i][1].'</h3>';
+
+      //category
+      $output .= '<text>'.$events[$i][6] .'</br> </br></text>';
+
+      $output .= '<text>'.$events[$i][3] .'</text>';
+      $output .= '</div>';
+      $output .= '</br></br>';
+    }
+  }
+
+
   $output .= '</div>';
 
   return $output;
@@ -247,79 +298,8 @@ function wpb_load_widget() {
 }
 add_action( 'widgets_init', 'wpb_load_widget' );
 
-// Creating the widget
-class wpb_widget extends WP_Widget {
 
-function __construct() {
-parent::__construct(
 
-// Base ID of your widget
-'wpb_widget',
-
-// Widget name will appear in UI
-__('Veranstaltungskalender', 'wp_widget_domain'),
-
-// Widget description
-array( 'description' => __( 'Fachschaft Veranstaltungskalender Widget', 'wp_widget_domain' ), )
-);
-}
-
-//widget front-end
-
-public function widget( $args, $instance ) {
-$title = apply_filters( 'widget_title', $instance['title'] );
-
-echo $args['before_widget'];
-if ( ! empty( $title ) )
-echo $args['before_title'] . $title . $args['after_title'];
-
-// This is where you run the code and display the output
-echo "<div class='fachschaft_calendar_plugin_widget' href='http://localhost/wordpress/veranstaltungen/'>";
-
-?>
-<script>
-  jQuery(document).ready(function() {
-    jQuery( ".fachschaft_calendar_plugin_widget" ).bind('click', function() {
-
-      jQuery(location).attr('href','http://localhost/wordpress/veranstaltungen/');
-      jQuery(".fachschaft_calendar_plugin_widget").css("cursor", "pointer");
-    });
-  });
-
-</script>
-<?php
-echo __( 'Veranstaltungen in diesem Monat </br> </br> ', 'wp_widget_domain' );
-echo printCalendar();
-echo "</div>";
-echo $args['after_widget'];
-}
-
-// Widget Backend
-public function form( $instance ) {
-  if ( isset( $instance[ 'title' ] ) ) {
-  $title = $instance[ 'title' ];
-  }
-  else {
-  $title = __( 'New title', 'wp_widget_domain' );
-  }
-// Widget admin form
-?>
-<p>
-<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title );
-?>" />
-</p>
-<?php
-
-}
-
-// Updating widget replacing old instances with new
-public function update( $new_instance, $old_instance ) {
-$instance = array();
-$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-return $instance;
-}
-} // Class wpb_widget ends here
 
 
   function theme_customize_register( $wp_customize ) {

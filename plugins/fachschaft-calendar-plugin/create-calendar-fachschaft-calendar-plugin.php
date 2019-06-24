@@ -36,6 +36,7 @@ class CreateCalendar{
     list( $current_year, $current_month, $current_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $time );
 
     $output = '<div class="fachschaft_calendar_plugin_calendar_table">';
+    $output .= '<h1>Anstehende Veranstaltungen </h1>';
     $output .= '<table class="calendar">';
     $current_month_name = date_i18n( 'F', false, false);
     $output .='<caption>'.$current_month_name.' '.$current_year.'</caption>';
@@ -61,11 +62,22 @@ class CreateCalendar{
       }
 
       if ($current_calendar_day == $event_days[$counter] && $current_month == $event_months[$counter]  && $current_year == $event_years[$counter]) {
+
         if ($current_calendar_day < 10) {
-          $output .= '<td class="day event" id="0' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
+          if ($events[$counter][1] < $current_timestamp = time()) {
+          $output .= '<td class="day event past" id="0' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
+          }
+          else {
+            $output .= '<td class="day event" id="0' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
+          }
         }
         else {
-          $output .= '<td class="day event" id="' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
+          if ($events[$counter][1] < $current_timestamp = time()) {
+            $output .= '<td class="day event past" id="' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
+          }
+          else {
+            $output .= '<td class="day event" id="' .$current_calendar_day .$event_months[$counter] .$event_years[$counter].'">' .$current_calendar_day .'</td>';
+          }
         }
 
         $counter++;
