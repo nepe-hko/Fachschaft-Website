@@ -51,13 +51,22 @@ class SpeiseplanPlugin extends WP_Widget
 
         foreach ($meals->meals as $meal) {
 
-            if ($dayCount >= $showDays) {
-                break;
+            $date = $meal->date;
+            $sameday = false;
+            if($date == $lastDate) {
+                $sameday = true;
             }
 
-            $date = $meal->date;
+            // maximum displayed meals reached
+            if ($dayCount >= $showDays && !$sameday)  {
+                break;
+            }
+            // date is in the past
+            if ($date < date("Y-m-d")) {
+                continue;
+            }
+
             $timestamp = strtotime($date);
-            //return wenn date vor timestamp liegt
             $dayofWeek = strtr(date("D",$timestamp), $translate);
             $day = date("d", $timestamp);
             $month = date("m", $timestamp);

@@ -12,20 +12,18 @@ class Verbesserungsvorschlaege
 
     private static $instance;
 
-    public static function get_instance(){
+    static function get_instance(){
         if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-
     private function __construct() {
 
         add_action('init', array($this, 'register_improvement_post_type'));
         add_action('admin_init', array($this, 'add_custom_meta_boxes'));
         add_action('save_post', array($this, 'save_from_admin'));
-        //add_shortcode('verbesserungsvorschlaege', array($this, 'to_frontend'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue'));
         add_action( 'wp_ajax_vbv_submit', array($this, 'vbv_submit') );
         add_action( 'wp_ajax_nopriv_vbv_submit', array($this, 'vbv_submit') );
@@ -51,14 +49,14 @@ class Verbesserungsvorschlaege
         wp_enqueue_style( 'vbv_style' );
     }
 
-    public function vbv_submit() {
+    # callback function for submitting new improvement from frontend
+    function vbv_submit() {
 
         if( !check_ajax_referer('vbv_secure', 'vbv_secure')) {
             echo "Fehler beim übertragen der Daten";
             die();
         }
  
-        // The $_REQUEST contains all the data sent via ajax
         if ( isset($_POST['title']) && isset($_POST['content']) ) {
 
             # get data from frontend
@@ -82,11 +80,11 @@ class Verbesserungsvorschlaege
     }
 
     # register custom post type "improvement"
-    public function register_improvement_post_type() {
+    function register_improvement_post_type() {
         $args = array(
     		'label'                 => 'Verbesserungen',
-    		'public'                => true,
-    		'publicly_queryable'    => true,
+    		''                => true,
+    		'ly_queryable'    => true,
     		'exclude_from_search'   => false,
     		'show_ui'               => true,
     		'show_in_menu'          => true,
@@ -101,7 +99,7 @@ class Verbesserungsvorschlaege
 
 
     # add meta box
-    public function add_custom_meta_boxes() {
+    function add_custom_meta_boxes() {
         add_meta_box(
             'improvement_infos',                # $id
             'Kommentar der Fachschaft',         # $title 
@@ -114,7 +112,7 @@ class Verbesserungsvorschlaege
 
 
     # outputs the meta boxes in backend
-    public function print_info_meta_box($post){
+    function print_info_meta_box($post){
 
         wp_nonce_field('save_improvement_data', 'improvement_admin_nonce');
 
@@ -129,23 +127,23 @@ class Verbesserungsvorschlaege
     }
 
     # saves changes from backend
-    public function save_from_admin($post_id) {
+    function save_from_admin($post_id) {
 
-    if(!isset( $_POST['improvement_admin_nonce'])){
-        return;
-    }
-    if(! wp_verify_nonce($_POST['improvement_admin_nonce'], 'save_improvement_data')){
-        return;
-    }
-    if(!current_user_can('edit_post',$post_id)){
-        return;
-    }
-    if(!isset($_POST['calendar_event_field'])){
-        return;
-    }
+        if(!isset( $_POST['improvement_admin_nonce'])){
+            return;
+        }
+        if(! wp_verify_nonce($_POST['improvement_admin_nonce'], 'save_improvement_data')){
+            return;
+        }
+        if(!isset($_POST['calendar_event_field'])){
+            return;
+        }
+        if(!current_user_can('edit_post',$post_id)){
+            return;
+        }
 
-    $admin_comment = sanitize_textarea_field($_POST['admin_comment']);
-    update_post_meta($post_id, 'admin_comment', $admin_comment);
+        $admin_comment = sanitize_textarea_field($_POST['admin_comment']);
+        update_post_meta($post_id, 'admin_comment', $admin_comment);
    
     }
 }
