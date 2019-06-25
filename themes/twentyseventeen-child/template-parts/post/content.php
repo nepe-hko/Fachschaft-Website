@@ -6,7 +6,6 @@
 		<div class="entry-author">von <?php the_author_meta('first_name') ?> <?php the_author_meta('last_name') ?></div>
 		<div class="entry-date"><?php echo get_the_date(); ?></div>
 	</header><!-- .entry-header -->
-	Content-Template
 	<div class="entry-content">
 		<?php the_content();
 		$admin_comment = get_post_meta($post->ID,'admin_comment', true);
