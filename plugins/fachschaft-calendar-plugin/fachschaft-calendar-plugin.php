@@ -159,7 +159,7 @@ function printEvents() {
     $res = str_replace(".", "", $string);
     array_push($events, array(strtotime($value->meta_value),$value->meta_value, $value->post_title,$value->post_content,$res, $value->post_id, $value->category,$value->slug));
   }
-
+  $eventsort = array();
   foreach ($events as $key => $node) {
    $eventsort[$key]    = $node[0];
   }
