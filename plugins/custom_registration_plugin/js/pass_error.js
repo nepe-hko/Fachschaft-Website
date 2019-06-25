@@ -19,5 +19,14 @@ jQuery( document ).ready( function( $ )
         return false;  
     });
 
+    var password = document.getElementById('passwort'); 
+    var meter = document.getElementById('password-strength-meter');
+    $('#passwort').keyup(function()
+    {
+        var val = password.value;
+        var result = zxcvbn(val);
+    
+        // Update the password strength meter
+        meter.value = result.score;
+    });
 });
-

@@ -113,71 +113,43 @@ if( ! class_exists('Custom_Registration'))
         {
             if(is_user_logged_in())
             {
-                return _e('<h1>Sie sind bereits registriert!</h1>', 'custom_registration_plugin' );
+                $loggedin = _e('<h1>Sie sind bereits registriert!</h1>', 'custom_registration_plugin' );
+                return $loggedin;
             }
-?>          
+
+        return '          
             <strong><div id="msg" class="msg"></div></strong><br><br>
 
-            <form  id="reg_ajax_id" action="<?php echo admin_url('admin-post.php'); ?>" method="post" class="reg_ajax_class" > 
+            <form  id="reg_ajax_id" action="' . esc_url(admin_url('admin-post.php')) . ' " method="post" class="reg_ajax_class" > 
                 
                 <h3><strong>ACCOUNT ERSTELLEN</strong></h3>
 
-                <strong><?php _e('Vorname:', 'custom_registration_plugin' ); ?></strong>
+                <strong>' . __('Vorname:', 'custom_registration_plugin' ) . '</strong>
                 <input type="text" name="vorname" id ="vorname" required><br>
 
-                <strong><?php _e('Nachname:', 'custom_registration_plugin' ); ?></strong>
+                <strong>' . __('Nachname:', 'custom_registration_plugin' ) . '</strong>
                 <input type="text" name="nachname" id ="nachname" required><br> 
 
-                <strong><?php _e('Username:', 'custom_registration_plugin' ); ?></strong>
+                <strong>' . __('Username:', 'custom_registration_plugin' ) . '</strong>
                 <input type="text" name="username" id ="username" required><br>
 
-                <strong><?php _e('Email:', 'custom_registration_plugin' ); ?></strong>
+                <strong>' . __('Email:', 'custom_registration_plugin' ) .'</strong>
                 <input type="email" name="email" id ="email" required><br>
 
-                <strong><?php _e('Passwort:', 'custom_registration_plugin' ); ?></strong>
+                <strong>' . __('Passwort:', 'custom_registration_plugin' ) . '</strong>
                 <input type="password" name="passwort" id="passwort" required>
 
                 <span id="password-strength"></span>
 
                 <meter max="4" id="password-strength-meter" ></meter>
-                <strong><?php _e('Passwort bitte nochmal eingeben:', 'custom_registration_plugin' ); ?></strong>
+                <strong>' . __('Passwort bitte nochmal eingeben:', 'custom_registration_plugin' ) . '</strong>
                 <input type="password" name="pass_again" id="pass_again" required><br>
 
-                <strong><?php _e('Rolle:', 'custom_registration_plugin' ); ?></strong>
-                <select name="role" id="role">
-			
-                    <option selected='selected' value='subscriber'>Abonnent</option>
-                    <option value='contributor'>Mitarbeiter</option>
-                    <option value='author'>Autor</option>
-                    <option value='editor'>Redakteur</option>
-                    <!-- <option value='administrator'>Administrator</option>			 -->
-            
-                </select>
+                <input type="hidden" name="action" value="test_ajax" />   
+                <input type="submit"  name = "submit" value="' . __('Registrieren', 'custom-registration-plugin') .'"  /><br>
+             </form>
 
-                <a href=" " style="vertical-align: top;" title="<?php _e('Hier ist ein grober Überblick über die verschiedenen Benutzerrollen und die jeweils damit verknüpften Berechtigungen:
-
-&bull;Abonnenten können nur Kommentare lesen und abgeben, aber keine eigenen Inhalte erstellen.
-&bull;Mitarbeiter können eigene Beiträge schreiben und bearbeiten, sie jedoch nicht veröffentlichen. Auch dürfen sie keine Dateien hochladen.
-&bull;Autoren können ihre eigenen Beiträge veröffentlichen und verwalten, und auch Dateien hochladen.
-&bull;Redakteure können Beiträge und Seiten veröffentlichen und verwalten, und auch die Beiträge, Seiten, etc. von anderen Benutzern verwalten.', 'custom-registration-plugin'); ?>">&#63;</a><br><br>
-                <input type='hidden' name='action' value='test_ajax' />   
-                <input type="submit"  name = "submit" value="<?php _e('Registrieren', 'custom-registration-plugin'); ?>"  /><br>
-            </form>
-
-            <script type="text/javascript">
-                var password = document.getElementById('passwort'); 
-                var meter = document.getElementById('password-strength-meter');
-
-                password.addEventListener('input', function() 
-                {
-                    var val = password.value;
-                    var result = zxcvbn(val);
-
-                    // Update the password strength meter
-                    meter.value = result.score;
-                },false);
-            </script>
-<?php
+            ';
         }
 
         function my_enqueue()
