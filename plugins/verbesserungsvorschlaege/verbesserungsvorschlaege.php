@@ -29,7 +29,7 @@ class Verbesserungsvorschlaege
         add_action( 'wp_ajax_nopriv_vbv_submit', array($this, 'vbv_submit') );
     }
 
-    public function enqueue() {
+    function enqueue() {
 
         // enqueue javascript on the frontend.
         wp_register_script(
@@ -57,25 +57,27 @@ class Verbesserungsvorschlaege
             die();
         }
  
-        if ( isset($_POST['title']) && isset($_POST['content']) ) {
-
-            # get data from frontend
-            $title = sanitize_text_field($_POST['title']);
-            $content = sanitize_textarea_field($_POST['content']);
-                        
-            # create new improvement-post
-            $new_post = array(
-                'post_title' => $title,
-                'post_content' => $content,
-                'post_status' => 'pending',
-                'post_votes' => 0,
-                'post_type' => 'improvement',
-
-            );
-            $post_id = wp_insert_post($new_post);
-            echo "vielen Dank. <br>Dein Vorschlag wurde eingereicht und wird nach einer Prüfung veröffentlicht";            
-         
+        if ( !isset($_POST['title']) && !isset($_POST['content']) ) {
+            return;
         }
+
+        # get data from frontend
+        $title = sanitize_text_field($_POST['title']);
+        $content = sanitize_textarea_field($_POST['content']);
+                    
+        # create new improvement-post
+        $new_post = array(
+            'post_title' => $title,
+            'post_content' => $content,
+            'post_status' => 'pending',
+            'post_votes' => 0,
+            'post_type' => 'improvement',
+
+        );
+        $post_id = wp_insert_post($new_post);
+        echo "vielen Dank. <br>Dein Vorschlag wurde eingereicht und wird nach einer Prüfung veröffentlicht";            
+         
+        
        die();
     }
 
@@ -83,8 +85,8 @@ class Verbesserungsvorschlaege
     function register_improvement_post_type() {
         $args = array(
     		'label'                 => 'Verbesserungen',
-    		''                => true,
-    		'ly_queryable'    => true,
+    		'public'                => true,
+    		'ly_queryable'          => true,
     		'exclude_from_search'   => false,
     		'show_ui'               => true,
     		'show_in_menu'          => true,

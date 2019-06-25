@@ -38,7 +38,7 @@ get_header(); ?>
             <div id="vbv_response"></div>
         </div>
 
-        <main id="main" class="site-main" role="main">
+        <main id="main" class="site-main" role="main"></main>
 
             <?php
             $args = array('post_type' => 'improvement');
