@@ -7,6 +7,7 @@ Plugin Name: Custom Login Plugin
 Plugin URI: http://localhost:8080/wordpress/login
 Description: Custom Login
 Version 1.0
+Text Domain: custom_login_plugin
 Author: Odile
 */
 

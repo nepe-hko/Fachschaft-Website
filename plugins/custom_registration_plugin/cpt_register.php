@@ -13,7 +13,6 @@
     add_action( 'save_post', 'register_save_email_data' );
     add_action( 'save_post', 'register_save_user_data' );
     add_action( 'save_post', 'register_save_role_data' );
-    add_action( 'save_post', 'register_save_pass_data' );
 
 function create_posttype()
 {

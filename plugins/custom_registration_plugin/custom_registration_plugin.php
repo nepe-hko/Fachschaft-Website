@@ -7,6 +7,7 @@ Plugin Name: Custom Registration Plugin
 Plugin URI: http://localhost:8080/wordpress/wp-admin/plugins.php
 Description: Custom Registration
 Version 1.0
+Text Domain: custom_registration_plugin
 Author: Odile
 */
 
