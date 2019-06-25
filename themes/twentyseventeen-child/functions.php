@@ -118,7 +118,7 @@ function remove_sidebar() {
     
 }
 add_action('widgets_init', "remove_sidebar", 1001);
-
+/*
 add_filter(
     'show_admin_bar',
     '__return_false'
@@ -131,4 +131,4 @@ function deactivate_admin_bar( $content ) {
 add_filter(
     'show_admin_bar',
     'deactivate_admin_bar'
-);
+);*/
