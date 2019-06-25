@@ -110,6 +110,7 @@ function save_calendar_event_data($post_id){
 function printCalendar(){
 
   $events =array();
+  $eventsort = array();
 
   $all_post_ids = get_posts(array(
     'fields'          => 'ids',
