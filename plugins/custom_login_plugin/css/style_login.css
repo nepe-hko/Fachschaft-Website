@@ -24,12 +24,12 @@
     width: 75%; 
     float:right;
 }
-#submit{
+#submit, #submit_widget{
     width:100%;
     border-radius:10px;
     text-align:center;
 }
-#input_login{
+#pwd_login, #log_login{
     font-size:20pt;
     border-radius:10px;
     width: 80%; 

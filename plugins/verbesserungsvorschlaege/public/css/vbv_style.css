@@ -1,0 +1,12 @@
+.vbv {margin-bottom: 50px;}
+.vbv.hide { max-height: 0; transition: max-height 0.35s ease-in; overflow: hidden;}
+#vbv_btn_show.hide {display: none;}
+.vbv.show {max-height: 300px; height: auto;}
+.vbv input, .vbv textarea {margin-bottom: 10px;}
+.vbv button {margin-top: 20px;}
+
+@media screen and (min-width: 48em) {
+    .single-improvement .comment-body {
+        margin-left: 65px;
+    }
+}
