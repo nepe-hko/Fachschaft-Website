@@ -23,7 +23,7 @@ class Verbesserungsvorschlaege
     private function __construct() {
 
         add_action('init', array($this, 'register_improvement_post_type'));
-        add_action('add_meta_boxes', array($this, 'add_custom_meta_box'));
+        add_action('admin_init', array($this, 'add_custom_meta_boxes'));
         add_action('save_post', array($this, 'save_from_admin'));
         //add_shortcode('verbesserungsvorschlaege', array($this, 'to_frontend'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue'));
@@ -101,10 +101,10 @@ class Verbesserungsvorschlaege
 
 
     # add meta box
-    public function add_custom_meta_box() {
+    public function add_custom_meta_boxes() {
         add_meta_box(
             'improvement_infos',                # $id
-            'Info',                             # $title 
+            'Kommentar der Fachschaft',         # $title 
             array($this,'print_info_meta_box'), # $callback
             'improvement',                      # $page
             'normal',                           # $context
@@ -116,42 +116,38 @@ class Verbesserungsvorschlaege
     # outputs the meta boxes in backend
     public function print_info_meta_box($post){
 
-        $author = get_post_meta($post->ID,'post_author', true);
+        wp_nonce_field('save_improvement_data', 'improvement_admin_nonce');
+
+        $author = esc_html(get_post_meta($post->ID,'post_author', true));
         echo "<label for='author'>Username: </label>";
         echo "<label id='author' name='author'>" . esc_attr($author) . "</label><br>";  
 
-        $verified = get_post_meta($post->ID,'post_verified', true);
-        echo "<label for='verified'>Geprüft: </label>";
-        echo "<input type='checkbox' id='verified' name='verified' ". esc_attr($verified) . "></input><br>";
+        $admin_comment = esc_html(get_post_meta($post->ID,'admin_comment', true));
+        echo "<label for='admin_comment'>Kommentar: </label>";
+        echo "<textarea type='text' name='admin_comment' rows='10' cols='80'>$admin_comment</textarea><br>";
         
-        $votes = get_post_meta($post->ID,'post_votes', true);
-        echo "<label for='votes'>Anzahl Votes: </label>";
-        echo "<label id='votes' name='votes'>" . esc_attr($votes) . "</label><br>";  
     }
-
 
     # saves changes from backend
     public function save_from_admin($post_id) {
 
-        $verified = isset($_POST['verified']) ? "checked" : "";
-        update_post_meta($post_id, 'verified', $verified);
+    if(!isset( $_POST['improvement_admin_nonce'])){
+        return;
     }
-/*
-    public function to_frontend() {
-              
-        return '
-            <div id="vbv_headline"><h2>Verbesserungsvorschlag einreichen</h2></div>
-            <form id="vbv_container" class="vbv_form">
-                <input id="vbv_title" name="title" type="text" placeholder="Titel" required></input>
-                <input type="hidden" name="action" value="vbv_submit" />	
-                <textarea id="vbv_content" name="content" placeholder="Deine Nachricht..." required></textarea>
-                <button id="submit" type="submit">Vorschlag einreichen!</button>
-            </form>
-            <div id="vbv_response"></div>
-        ';
-        
+    if(! wp_verify_nonce($_POST['improvement_admin_nonce'], 'save_improvement_data')){
+        return;
     }
-    */
+    if(!current_user_can('edit_post',$post_id)){
+        return;
+    }
+    if(!isset($_POST['calendar_event_field'])){
+        return;
+    }
+
+    $admin_comment = sanitize_textarea_field($_POST['admin_comment']);
+    update_post_meta($post_id, 'admin_comment', $admin_comment);
+   
+    }
 }
 
 $plugin = Verbesserungsvorschlaege::get_instance();

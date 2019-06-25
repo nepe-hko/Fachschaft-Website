@@ -5,6 +5,8 @@ Version: 1.0
 Author: Daniel Hauk
 Description: Zeigt den Speiseplan der TH-Nünberg Fakultät Informatik an
 */
+
+
 if(!defined('ABSPATH')) {
     die;
 }
@@ -14,7 +16,7 @@ class SpeiseplanPlugin extends WP_Widget
 
     private static $instance;
 
-    public static function getInstance(){
+    public static function get_instance(){
         if (self::$instance === null) {
             self::$instance = new self();
         }
@@ -28,7 +30,8 @@ class SpeiseplanPlugin extends WP_Widget
         );
     }
 
-    public function toFrontend($atts = []) 
+    // callback function for shortcut, outputs meals
+    public function print($atts = []) 
     {
         $showDays = $atts['days'];
         $dayCount = 0;
@@ -36,21 +39,25 @@ class SpeiseplanPlugin extends WP_Widget
         $html = "<table class=\"speiseplan\">";
         $date = "";
         $lastDate = "";
+        $translate = array(
+            'Mon'       => 'Montag',
+            'Tue'       => 'Dienstag',
+            'Wed'       => 'Mittwoch',
+            'Thu'       => 'Donnerstag',
+            'Fri'       => 'Freitag',
+            'Sat'       => 'Samstag',
+            'Sun'       => 'Sonntag',
+        );
+
         foreach ($meals->meals as $meal) {
 
-            if ($dayCount >= $showDays) break;
+            if ($dayCount >= $showDays) {
+                break;
+            }
 
-            $translate = array(
-                'Mon'       => 'Montag',
-                'Tue'       => 'Dienstag',
-                'Wed'       => 'Mittwoch',
-                'Thu'       => 'Donnerstag',
-                'Fri'       => 'Freitag',
-                'Sat'       => 'Samstag',
-                'Sun'       => 'Sonntag',
-            );
             $date = $meal->date;
             $timestamp = strtotime($date);
+            //return wenn date vor timestamp liegt
             $dayofWeek = strtr(date("D",$timestamp), $translate);
             $day = date("d", $timestamp);
             $month = date("m", $timestamp);
@@ -66,9 +73,10 @@ class SpeiseplanPlugin extends WP_Widget
         return $html . "</table>";
     }
 
-
+    // returns all meals
     private function getMeals()
     {
+        // get meals from DBN
         global $wpdb;
         $date = date("Y-m-d");
         $tableName = $wpdb->prefix . 'meal';
@@ -90,7 +98,8 @@ class SpeiseplanPlugin extends WP_Widget
             } catch (Exception $e) {
                 return array();
             }
-            //save to DB
+            //delete old entrys and save new to DB
+            $wpdb->query("TRUNCATE TABLE $tableName");
             $wpdb->insert($tableName, array('meals' => $meals, 'lastUpdate' => $date));
             return json_decode($meals);
         }
@@ -98,7 +107,7 @@ class SpeiseplanPlugin extends WP_Widget
     }
 
 
-    /* WIDGET STUFF */
+    /**************** WIDGET *******************/
 
     public function loadWidget()
     {
@@ -116,8 +125,7 @@ class SpeiseplanPlugin extends WP_Widget
             echo $args['before_title'] . $title . $args['after_title'];
         }
 
-        // Speiseplan abrufen und ausgeben
-
+        // retrieve meals and print meals from today
         $json = $this->getMeals();
         
         $html = "<table class=\"speiseplanWidget\">";
@@ -171,7 +179,7 @@ class SpeiseplanPlugin extends WP_Widget
         return $instance;
     }
 
-    public function onActivation()
+    public function on_activation()
     {
         # create DB table
         global $wpdb;
@@ -187,7 +195,7 @@ class SpeiseplanPlugin extends WP_Widget
         dbDelta($sql);
     }
 
-    public function onDeactivation()
+    public function on_deactivation()
     {
         # drop DB table
         global $wpdb;
@@ -197,9 +205,9 @@ class SpeiseplanPlugin extends WP_Widget
 
 }
 
-$speiseplanPlugin = SpeiseplanPlugin::getInstance();
-add_shortcode('speiseplan', array($speiseplanPlugin, 'toFrontend'));
+$speiseplanPlugin = SpeiseplanPlugin::get_instance();
+add_shortcode('speiseplan', array($speiseplanPlugin, 'print'));
 add_action('widgets_init', array($speiseplanPlugin, 'loadWidget'));
-register_activation_hook( __FILE__, array($speiseplanPlugin, 'onActivation'));
-register_deactivation_hook(__FILE__, array($speiseplanPlugin, 'onDeactivation'));
+register_activation_hook( __FILE__, array($speiseplanPlugin, 'on_activation'));
+register_deactivation_hook(__FILE__, array($speiseplanPlugin, 'on_deactivation'));
 ?>

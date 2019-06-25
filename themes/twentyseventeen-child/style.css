@@ -8,23 +8,21 @@ Text Domain: twentyseventeen-child
 */ 
 
 
+/*Navigation*/
+.navigation-top { background: #2F9B92}
+.navigation-top .logo img { height:50px; display: none}
 
+/*Content*/
+.wrap { padding-left: 1em; padding-right: 1em}
 
-.navigation-top {background: #2F9B92;}
-.navigation-top .logo img { height:50px; display: none;}
-
-.wrap {
-    padding-left: 1em;
-    padding-right: 1em;
-}
-
+/*Posts*/
 .hk-post-container {
     padding: 10px;
     padding-bottom: 20px !important;
     margin-bottom: 25px;
     border: 1px solid #bbb; 
     border-radius: 3px;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12)
 }
 .entry-header .entry-title {
     font-weight: 800;
@@ -32,16 +30,12 @@ Text Domain: twentyseventeen-child
     text-transform: uppercase;
     font-family: "Libre Franklin", "Helvetica Neue", helvetica, arial, sans-serif;
     font-size: 1rem;
-    margin-bottom: 0;
+    margin-bottom: 0
 }
-.entry-date {
-    font-size: 0.75rem;
-    float: right;
-}
-
-.entry-content {
-    margin-top: 20px;
-}
+.entry-date { font-size: 0.75rem; float: right}
+.entry-content { margin-top: 10px}
+.entry-author { font-size: 0.75rem; margin-top: 5px}
+.admin-comment {font-size: 0.75rem}
 
 /*--------------------------------------------------------------
 2.0 Media Queries
@@ -50,48 +44,38 @@ Text Domain: twentyseventeen-child
 @media screen and (min-width: 48em) {
 
     /*Navigation*/
-    .navigation-top {border:none;}
-    .navigation-top .wrap {padding: 0 0 0 80px; float:left;}
+    .navigation-top {border:none}
+    .navigation-top .wrap {padding: 0 0 0 80px; float:left}
+    .navigation-top .logo {float:right; margin-right: 20px}
+    .navigation-top .logo img { height:50px; display: none}
 
-    .navigation-top .logo {float:right; margin-right: 20px;}
-    .navigation-top .logo img { height:50px; display: none;}
-
-    .menu > .menu-item {padding: 1.25em 1.25em; margin: 0 0;}
+    .menu > .menu-item {padding: 1.25em 1.25em; margin: 0 0}
     .menu > .menu-item > a {padding: 0; margin: 0; font-weight: 400; font-size: 16px; color: black}
-    .menu > .menu-item:last-child {border-bottom: 7px solid #2F9B92;}
+    .menu > .menu-item:last-child {border-bottom: 7px solid #2F9B92}
     .menu > .current-menu-item,.menu-item:hover,.menu-item:last-child:hover {border-bottom: 7px solid white !important} /*Weißer Balken unten*/
     .menu > li.menu-item-has-children:hover {border-bottom: none !important}
 
-
     /*Sub-Navigation*/
-    .main-navigation li:hover .sub-menu {display:block;} /*Position of Submenu*/
-    .main-navigation li::before {display:none !important;} /*Pfeil deaktivieren*/
-    .main-navigation li::after {display:none !important;}
+    .main-navigation li:hover .sub-menu {display:block} /*Position of Submenu*/
+    .main-navigation li::before {display:none !important} /*Pfeil deaktivieren*/
+    .main-navigation li::after {display:none !important}
     .sub-menu  {border:1px solid #666; background-color: darkgrey; left:50%; top:64px}
     .sub-menu a {background-color: #ddd}
     .sub-menu li:hover {border: none !important}
     .sub-menu .menu-item:last-child:hover {border-bottom: 0 !important} /*Weißer Balken unten*/
-    .sub-menu .sub-menu .current-menu-item { border-bottom: none !important;}
-    .navigation-top .current-menu-item > a, .navigation-top .current_page_item > a {color: black;}
+    .sub-menu .sub-menu .current-menu-item {border-bottom: none !important;}
+    .navigation-top .current-menu-item > a, .navigation-top .current_page_item > a {color: black}
     .main-navigation li li a:hover {color: #444}
     
     /*Content*/
-    .site-content .wrap {max-width: 1600px }
-    .page-header {padding-bottom: 2em;}
-    .widget-area {max-width: 300px; float: right; width:36%;}
-    .content-area {float:left; width: 58%;}
+    .site-content .wrap {max-width: 1600px}
+    .page-header {padding-bottom: 2em}
+    .widget-area {max-width: 300px; float: right; width:36%}
+    .content-area {float:left; width: 58%}
 
-    .wrap {
-        padding-left: 2em;
-        padding-right: 2em;
-    }
-
-    .has-sidebar:not(.error404) #primary {
-        width: 65%;
-    }
-    .has-sidebar:not(.error404) #secondary {
-        width: 30%;
-    }
+    .wrap {padding-left: 2em; padding-right: 2em}
+    .has-sidebar:not(.error404) #primary {width: 65%}
+    .has-sidebar:not(.error404) #secondary {width: 30%}
 
 
     /*Posts*/
@@ -100,16 +84,6 @@ Text Domain: twentyseventeen-child
         padding-bottom: 20px !important;
         margin-bottom: 25px;
     }
-    .entry-header .entry-title {
-        margin-bottom: 0;
-    }
-    .entry-date {
-        font-size: 0.75rem;
-        float: right;
-    }
-
-    .entry-content {
-        margin-top: 20px;
-    }
+    .entry-header .entry-title { margin-bottom: 0}
 
 }
