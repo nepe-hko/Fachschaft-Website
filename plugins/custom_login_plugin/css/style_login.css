@@ -23,7 +23,7 @@
     width: 75%; 
     float:right;
 }
-#submit, #submit_widget, #submit_widget_logout{
+#submit_login, #submit_widget, #submit_widget_logout{
     width:100%;
     border-radius:10px;
     text-align:center;
@@ -33,7 +33,4 @@
     border-radius:10px;
     width: 80%; 
     float:right;
-}
-#div{
-    margin-bottom:5px;
 }

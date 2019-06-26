@@ -110,7 +110,7 @@ if( ! class_exists('Custom_Login'))
                 <input id="pwd_login" type="password" name="pwd" maxlength="40" placeholder="' . __(' Passwort', 'custom_login_plugin') . '" required><br><br>
              
                 <p>
-                    <input id="submit" type="submit" name="sendIt" value="' . __('Login', 'custom_login_plugin') . '" class="btn btn-default"><br>
+                    <input id="submit_login" type="submit" name="sendIt" value="' . __('Login', 'custom_login_plugin') . '" class="btn btn-default"><br>
             
                     <label style="margin:-15px;">
                         <p style="float: left;" ><a href="' . wp_registration_url() . '">' . __('Registrieren!', 'custom_login_plugin') . '</a></p>
