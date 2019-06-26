@@ -33,7 +33,7 @@ class SpeiseplanPlugin extends WP_Widget
     // callback function for shortcut, outputs meals
     public function print($atts = []) 
     {
-        $showDays = $atts['days'];
+        $atts = shortcode_atts( array('days' => 5), $atts, 'speiseplan');
         $dayCount = 0;
         $meals = $this->getMeals();
         $html = "<table class=\"speiseplan\">";
@@ -58,7 +58,7 @@ class SpeiseplanPlugin extends WP_Widget
             }
 
             // maximum displayed meals reached
-            if ($dayCount >= $showDays && !$sameday)  {
+            if ($dayCount >= $atts['days'] && !$sameday)  {
                 break;
             }
             // date is in the past

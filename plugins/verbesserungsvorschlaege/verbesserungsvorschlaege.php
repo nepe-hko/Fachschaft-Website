@@ -117,14 +117,8 @@ class Verbesserungsvorschlaege
     function print_info_meta_box($post){
 
         wp_nonce_field('save_improvement_data', 'improvement_admin_nonce');
-
-        $author = esc_html(get_post_meta($post->ID,'post_author', true));
-        echo "<label for='author'>Username: </label>";
-        echo "<label id='author' name='author'>" . esc_attr($author) . "</label><br>";  
-
         $admin_comment = esc_html(get_post_meta($post->ID,'admin_comment', true));
-        echo "<label for='admin_comment'>Kommentar: </label>";
-        echo "<textarea type='text' name='admin_comment' rows='10' cols='80'>$admin_comment</textarea><br>";
+        echo "<textarea type='text' name='admin_comment' rows='10' style='width:99%'>$admin_comment</textarea><br>";
         
     }
 

@@ -103,32 +103,24 @@ function hk_customize_css() { ?>
 add_action('wp_head', 'hk_customize_css');
 
 
-/*
+
 
 // Remove Sections/Controls from Parent Theme (after Parent Theme loaded)
 function remove_from_parent ($wp_customize) {
     $wp_customize->remove_control('colorscheme');
-/$wp_customize->remove_section('theme_options');
+    $wp_customize->remove_section('theme_options');
 }
 add_action('customize_register', 'remove_from_parent', 1000);
 
 // Remove Footer 2 from Parent Theme
 function remove_sidebar() {
     unregister_sidebar("sidebar-3");
-    
 }
 add_action('widgets_init', "remove_sidebar", 1001);
 
-add_filter(
-    'show_admin_bar',
-    '__return_false'
-);
 
+//Deactivate Admin bar for Subscribers
 function deactivate_admin_bar( $content ) {
-    return ( current_user_can( 'administrator' ) ) ? $content : false;
+    return current_user_can( 'edit_posts') ? true : false;
 }
-
-add_filter(
-    'show_admin_bar',
-    'deactivate_admin_bar'
-);*/
+add_filter( 'show_admin_bar', 'deactivate_admin_bar');
