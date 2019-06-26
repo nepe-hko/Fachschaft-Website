@@ -138,7 +138,7 @@ if( !class_exists( 'kontaktformular' ) )
 					'_contact_form_name' 		=> $name
 				)
 			);
-			$postID = wp_insert_post( $args ); 															
+			$postID = wp_insert_post( $args );
 			
 			
 			// Mailversand
