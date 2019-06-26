@@ -33,6 +33,17 @@ function create_posttype()
         'custom-fields'   => true,
         'menu_position'   => 25 ,
         'supports'        => false,
+        'capabilities' => array(
+            'edit_post'          => 'update_core',
+            'read_post'          => 'update_core',
+            'delete_post'        => 'update_core',
+            'edit_posts'         => 'update_core',
+            'edit_others_posts'  => 'update_core',
+            'delete_posts'       => 'update_core',
+            'publish_posts'      => 'update_core',
+            'read_private_posts' => 'update_core'
+        ),
+        'map_meta_cap' => true,
         'menu_icon'       =>  'dashicons-groups'
     );
     register_post_type( 'register-cpt', $args );
@@ -114,7 +125,7 @@ function register_user_callback( $post )
                     <td><?php _e('Rolle: ', 'custom_registration_plugin' ); ?></td>
                     <td>            
                         <select name="register_role_field" id="register_role_field">
-			                <option selected='selected' value='subscriber'><?php _e('Abonnent', 'custom_registration_plugin' ); ?></option>
+			                <option value='subscriber'><?php _e('Abonnent', 'custom_registration_plugin' ); ?></option>
                             <option value='contributor'><?php _e('Mitarbeiter', 'custom_registration_plugin' ); ?></option>
                             <option value='author'><?php _e('Autor', 'custom_registration_plugin' ); ?></option>
                             <option value='editor'><?php _e('Redakteur', 'custom_registration_plugin' ); ?></option>
@@ -128,13 +139,17 @@ function register_user_callback( $post )
 
 function insert_in_database()
 {
+    
     if(isset( $_POST['register_nn_field'] ) &&  isset( $_POST['register_vn_field'] ) &&  isset( $_POST['register_email_field'] ) && isset( $_POST['register_user_field'] ) && isset( $_POST['register_role_field'] ))
     {
+        $screen = get_current_screen(); 
+
         $vorname = sanitize_text_field($_POST['register_vn_field']);
         $nachname = sanitize_text_field($_POST['register_nn_field']);
         $username = sanitize_text_field($_POST['register_user_field']);
         $email = sanitize_email($_POST['register_email_field']);
         $role = $_POST['register_role_field'];
+
 
         $passwort = wp_generate_password( 12, false );
 
@@ -142,13 +157,15 @@ function insert_in_database()
         (
             'first_name' => $vorname,
             'last_name' => $nachname,
-            'user_login' => $username,
+            'user_login' => $username, 
             'user_email' => $email,
             'user_pass' => $passwort,
             'role' => $role
         );
+
         $user_id = wp_insert_user($user_data);
         wp_new_user_notification( $user_id, $passwort );
+
     }
 }
 
@@ -206,4 +223,3 @@ function register_save_role_data( $post_id )
     $my_data_role = $_POST['register_role_field'];
     update_post_meta( $post_id, '_role_value_key', $my_data_role );
 }
-

@@ -8,6 +8,7 @@ Plugin URI: http://localhost:8080/wordpress/wp-admin/plugins.php
 Description: Custom Registration
 Version 1.0
 Text Domain: custom_registration_plugin
+Domain Path: /languages
 Author: Odile
 */
 
@@ -53,6 +54,7 @@ if( ! class_exists('Custom_Registration'))
         {
             if( $_SERVER['REQUEST_METHOD'] == 'POST'  )
             {
+
                 $vorname = sanitize_text_field($_POST['vorname']);
                 $nachname = sanitize_text_field($_POST['nachname']);
                 $username = sanitize_text_field($_POST['username']);
@@ -113,7 +115,7 @@ if( ! class_exists('Custom_Registration'))
         {
             if(is_user_logged_in())
             {
-                $loggedin = _e('<h1>Sie sind bereits registriert!</h1>', 'custom_registration_plugin' );
+                $loggedin = __('<h1>Sie sind bereits registriert!</h1>', 'custom_registration_plugin' );
                 return $loggedin;
             }
 
@@ -147,6 +149,8 @@ if( ! class_exists('Custom_Registration'))
 
                 <input type="hidden" name="action" value="test_ajax" />   
                 <input type="submit"  name = "submit" value="' . __('Registrieren', 'custom-registration-plugin') .'"  /><br>
+
+                <input type="hidden" name="role" value="contributor" >
              </form>
 
             ';
@@ -161,7 +165,8 @@ if( ! class_exists('Custom_Registration'))
             wp_register_script('ajax', plugins_url(). '/custom_registration_plugin/js/pass_error.js',array('jquery'));
             wp_enqueue_script('ajax');
             wp_localize_script( 'ajax', 'reg_ajax_data', 
-            array('ajaxurl' => admin_url( 'admin-ajax.php' )));
+            array('ajaxurl' => admin_url( 'admin-ajax.php' ),
+            ));
 
             wp_register_style('style_register', plugins_url(). '/custom_registration_plugin/css/style.css');
             wp_enqueue_style('style_register');

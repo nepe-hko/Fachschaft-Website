@@ -8,6 +8,7 @@ Plugin URI: http://localhost:8080/wordpress/login
 Description: Custom Login
 Version 1.0
 Text Domain: custom_login_plugin
+Domain Path: /languages
 Author: Odile
 */
 
@@ -75,7 +76,7 @@ if( ! class_exists('Custom_Login'))
         {
             if ( is_user_logged_in() ) 
             {
-                $html = _e('<h1>Sie sind bereits eingeloggt.</h1>', 'custom_login_plugin');
+                $html = __('<h1>Sie sind bereits eingeloggt.</h1>', 'custom_login_plugin');
                 return $html;
             }
 
@@ -92,13 +93,13 @@ if( ! class_exists('Custom_Login'))
 
             foreach($errors as $error)
             {
-                return '<div style="text-align:center;"> 
+                $error_html = '<div style="text-align:center;"> 
                  <h3><strong>ERROR</strong>: 
                  '. $error .' </h3>
                  </div>';
             }
 
-            return '
+            return ''. $error_html .'
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
             <form method = "post" action= "' . esc_url(wp_login_url( home_url() )) . '" id="login_form">
             
@@ -117,9 +118,7 @@ if( ! class_exists('Custom_Login'))
                     </label>
                 </p>
             </form> ';
-
         }
-
 
         function get_error_message($err)
         {

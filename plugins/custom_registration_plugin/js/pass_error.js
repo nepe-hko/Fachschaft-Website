@@ -5,7 +5,7 @@ jQuery( document ).ready( function( $ )
         e.preventDefault();
       
         var data = $('#reg_ajax_id').serialize();
-        
+
         $.ajax({
             url: reg_ajax_data.ajaxurl,
             type: 'post',
