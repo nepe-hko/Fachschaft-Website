@@ -131,7 +131,7 @@ class Verbesserungsvorschlaege
         if(! wp_verify_nonce($_POST['improvement_admin_nonce'], 'save_improvement_data')){
             return;
         }
-        if(!isset($_POST['calendar_event_field'])){
+        if(!isset($_POST['admin_comment'])){
             return;
         }
         if(!current_user_can('edit_post',$post_id)){

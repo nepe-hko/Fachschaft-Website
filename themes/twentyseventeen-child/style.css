@@ -59,13 +59,13 @@ Text Domain: twentyseventeen-child
     .main-navigation li:hover .sub-menu {display:block} /*Position of Submenu*/
     .main-navigation li::before {display:none !important} /*Pfeil deaktivieren*/
     .main-navigation li::after {display:none !important}
+    .main-navigation a:hover {color: black !important}
     .sub-menu  {border:1px solid #666; background-color: darkgrey; left:50%; top:64px}
     .sub-menu a {background-color: #ddd}
     .sub-menu li:hover {border: none !important}
     .sub-menu .menu-item:last-child:hover {border-bottom: 0 !important} /*Weißer Balken unten*/
     .sub-menu .sub-menu .current-menu-item {border-bottom: none !important;}
     .navigation-top .current-menu-item > a, .navigation-top .current_page_item > a {color: black}
-    .main-navigation li li a:hover {color: #444}
     
     /*Content*/
     .site-content .wrap {max-width: 1600px}

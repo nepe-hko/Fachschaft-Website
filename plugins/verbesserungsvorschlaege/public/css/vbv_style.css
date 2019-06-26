@@ -4,6 +4,7 @@
 .vbv.show {max-height: 300px; height: auto;}
 .vbv input, .vbv textarea {margin-bottom: 10px;}
 .vbv button {margin-top: 20px;}
+.admin-comment {padding-bottom: 10px;}
 
 @media screen and (min-width: 48em) {
     .single-improvement .comment-body {

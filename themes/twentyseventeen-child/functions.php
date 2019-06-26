@@ -39,15 +39,10 @@ add_filter('add_menu_classes', 'hk_show_pending_number');
 
 
 //Customize Appearance Options
-
 function hk_customize_register($wp_customize) {
 
 
     # settings
-    $wp_customize->add_setting('hk_link_color', array(
-        'default' => 'red',
-        'transport' => 'refresh'
-    ));
     $wp_customize->add_setting('hk_widget_title_color', array(
         'default' => '#222',
         'transport' => 'refresh'
@@ -58,11 +53,6 @@ function hk_customize_register($wp_customize) {
     ));
 
     #controls
-    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hk_link_color_control', array(
-        'label' => __('Links', 'twentyseventeen-child'),
-        'section' => 'colors',
-        'settings' => 'hk_link_color'
-    )));
     $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'hk_widget_title_control', array(
         'label' => __('Widget Überschriften', 'twentyseventeen-child'),
         'section' => 'colors',
@@ -81,9 +71,6 @@ add_action('customize_register', 'hk_customize_register');
 // Output Customize CSS
 function hk_customize_css() { ?>
     <style type="text/css">
-        a:link, a:visited {
-            color: <?php echo get_theme_mod('hk_link_color');?>
-        }
 
         h2.widget-title {
             color: <?php echo get_theme_mod('hk_widget_title_color');?>
@@ -103,14 +90,13 @@ function hk_customize_css() { ?>
 add_action('wp_head', 'hk_customize_css');
 
 
-
-
 // Remove Sections/Controls from Parent Theme (after Parent Theme loaded)
 function remove_from_parent ($wp_customize) {
     $wp_customize->remove_control('colorscheme');
     $wp_customize->remove_section('theme_options');
 }
 add_action('customize_register', 'remove_from_parent', 1000);
+
 
 // Remove Footer 2 from Parent Theme
 function remove_sidebar() {

@@ -8,7 +8,7 @@
 		<?php the_content(); 
 		$admin_comment = get_post_meta($post->ID,'admin_comment', true);
 		if($admin_comment) : ?>
-			<div class="admin-comment">Kommentar der Fachschaft:</div> <br><?php echo $admin_comment;
+			<div class="admin-comment">Kommentar der Fachschaft:</div><?php echo $admin_comment;
 		endif; ?>
 		<br><br>
 		<a href="<?php comments_link(); ?>"> Kommentieren (
