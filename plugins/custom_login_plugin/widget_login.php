@@ -23,8 +23,13 @@ if(! class_exists('Widget_Login'))
 
             if ( is_user_logged_in() ) 
             {
-                return '';
+                ?>
+                <form method="post" action = "<?php echo wp_logout_url( home_url() ); ?>">
+                    <input id="submit_widget_logout" type="submit" name="sendIt" value="<?php _e('Logout', 'custom_login_plugin') ?>" class="btn btn-default">
+                </form>
+                <?php
             }
+            else{
 ?>
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
             <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>" id="widget_form">
@@ -43,7 +48,7 @@ if(! class_exists('Widget_Login'))
                     </label>
                 </p>
             </form> 
-<?php 
+            <?php }
             echo $args['after_widget'];
         }
 

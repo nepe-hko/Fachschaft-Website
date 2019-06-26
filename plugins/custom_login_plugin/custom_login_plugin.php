@@ -75,7 +75,8 @@ if( ! class_exists('Custom_Login'))
         {
             if ( is_user_logged_in() ) 
             {
-                return _e('<h1>Sie sind bereits eingeloggt.</h1>', 'custom_login_plugin');
+                $html = _e('<h1>Sie sind bereits eingeloggt.</h1>', 'custom_login_plugin');
+                return $html;
             }
 
             $errors = array();
@@ -91,32 +92,32 @@ if( ! class_exists('Custom_Login'))
 
             foreach($errors as $error)
             {
-                echo '<div style="text-align:center;">';
-                echo '<h3><strong>ERROR</strong>: ';
-                echo $error . '</h3>';
-                echo '</div>';
+                return '<div style="text-align:center;"> 
+                 <h3><strong>ERROR</strong>: 
+                 '. $error .' </h3>
+                 </div>';
             }
-?>
 
+            return '
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-            <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>" id="login_form">
+            <form method = "post" action= "' . esc_url(wp_login_url( home_url() )) . '" id="login_form">
             
                 <i id="login_icon" class="material-icons">account_circle</i>
-                <input id="log_login" type="text" name="log"  placeholder="<?php _e(' Username', 'custom_login_plugin') ?>" maxlength="40" required><br><br>
+                <input id="log_login" type="text" name="log"  placeholder="' . __(' Username', 'custom_login_plugin') . '" maxlength="40" required><br><br>
     
                 <i id="login_icon" class="material-icons" >lock</i>
-                <input id="pwd_login" type="password" name="pwd" maxlength="40" placeholder="<?php _e(' Passwort', 'custom_login_plugin') ?>" required><br><br>
+                <input id="pwd_login" type="password" name="pwd" maxlength="40" placeholder="' . __(' Passwort', 'custom_login_plugin') . '" required><br><br>
              
                 <p>
-                    <input id="submit" type="submit" name="sendIt" value="<?php _e('Login', 'custom_login_plugin') ?>" class="btn btn-default"><br>
+                    <input id="submit" type="submit" name="sendIt" value="' . __('Login', 'custom_login_plugin') . '" class="btn btn-default"><br>
             
                     <label style="margin:-15px;">
-                        <p style="float: left;" ><a href="<?php echo wp_registration_url(); ?>"><?php _e('Registrieren!', 'custom_login_plugin') ?></a></p>
-                        <span style="float: right;" ><a href="<?php echo wp_lostpassword_url(); ?>"><?php _e('Passwort vergessen?', 'custom_login_plugin') ?></a></span><br>
+                        <p style="float: left;" ><a href="' . wp_registration_url() . '">' . __('Registrieren!', 'custom_login_plugin') . '</a></p>
+                        <span style="float: right;" ><a href="' . wp_lostpassword_url() . '">' . __('Passwort vergessen?', 'custom_login_plugin') . '</a></span><br>
                     </label>
                 </p>
-            </form> 
-<?php 
+            </form> ';
+
         }
 
 

@@ -84,17 +84,19 @@ if( !class_exists( 'kontaktformular' ) )
 		{
 			if( !is_user_logged_in() )
 			{
-				?><form id='form_logged_out' action='<?php echo esc_url( admin_url ( 'admin-post.php' ) ); ?>' method='post' class='ajax_logged_out'> 
-					<p><?php _e( 'Irgendwelche Anliegen?', 'kontaktformular' ); ?><br><?php _e( 'Dann teile sie uns mit!', 'kontaktformular' ); ?></p>
-					<input type='text' name='name' id='name' maxlength='55' placeholder='<?php esc_html_e( 'Vor- und Nachname *', 'kontaktformular' ); ?>' />
-					<input type='email' name='mail' id='mail' maxlength='55' placeholder='<?php esc_html_e( 'Deine E-Mail-Adresse *', 'kontaktformular' ); ?>' required/>
-					<input type='text' name='subject' id='subject' maxlength='55' placeholder='<?php esc_html_e( 'Betreff *', 'kontaktformular' ); ?>'/>		
-					<textarea id='message' name='message' maxlength='200' placeholder='<?php esc_html_e( 'Deine Nachricht... *', 'kontaktformular' ); ?>'></textarea>
+				$shortcodevar = 
+				"<form id='form_logged_out' action='echo esc_url( admin_url ( 'admin-post.php' ) );' method='post' class='ajax_logged_out'>" .
+					"<p>" . __( 'Irgendwelche Anliegen?', 'kontaktformular' ) ."<br>" . __( 'Dann teile sie uns mit!', 'kontaktformular' ) ." </p>" .
+					"<input type='text' name='name' id='name' maxlength='55' placeholder='" . __( 'Vor- und Nachname *', 'kontaktformular' ) . "'/>" .
+					"<input type='email' name='mail' id='mail' maxlength='55' placeholder='" . __( 'Deine E-Mail-Adresse *', 'kontaktformular' ) ."' required/>" .
+					"<input type='text' name='subject' id='subject' maxlength='55' placeholder='" . __( 'Betreff *', 'kontaktformular' ) ."'/>" .
+					"<textarea id='message' name='message' maxlength='200' placeholder='" .__( 'Deine Nachricht... *', 'kontaktformular' ) ."'></textarea>" .
 
-					<input type='hidden' name='action' value='do_function' />	
-					<div id='answer'></div>
-					<button type='submit' id='submit'><?php _e( 'Absenden!', 'kontaktformular' ); ?></button>
-				</form><?php 
+					"<input type='hidden' name='action' value='do_function' />" .
+					"<div id='answer'></div>" .
+					"<button type='submit' id='submit'>" . __( 'Absenden!', 'kontaktformular' ) . "</button>" .
+				"</form>"; 
+				return $shortcodevar;
 			}	 
 		}	
 		public static function do_function()

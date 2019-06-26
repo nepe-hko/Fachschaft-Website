@@ -31,7 +31,6 @@ class symbol_widget extends WP_Widget //Widget wird nur dann angezeigt wenn man 
                                 echo $before_title . esc_html_e( $title ) . $after_title;
                         }
                         
-                        
                         // form ouput in frontend
                         ?><p id="brief"><b>&#9993; <?php _e( 'Schreibe eine Nachricht an uns!', 'kontaktformular' ); ?></b></p>
                         <form id='form_logged_in' action='<?php echo esc_url( admin_url( 'admin-post.php' ) );?>' method='POST' class='ajax_logged_in' >  

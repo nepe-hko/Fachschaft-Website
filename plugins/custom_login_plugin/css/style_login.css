@@ -24,7 +24,7 @@
     width: 75%; 
     float:right;
 }
-#submit, #submit_widget{
+#submit, #submit_widget, #submit_widget_logout{
     width:100%;
     border-radius:10px;
     text-align:center;
