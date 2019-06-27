@@ -34,7 +34,3 @@ jQuery(document).ready(function ($) {
     });
 
 });
-
-
-
-

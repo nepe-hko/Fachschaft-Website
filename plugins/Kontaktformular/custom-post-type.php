@@ -65,7 +65,7 @@ function kf_show_colums_content( $column, $post_id )                            
 }
 function kf_meta_box_email()
 {
-    add_meta_box( 'email_meta_box_id', __( 'Deine Email-Adresse: ', 'kontaktformular' ), 'kf_meta_box_callback', 'kfposttype', 'side' );
+    add_meta_box( 'email_meta_box_id', __( 'Email-Adresse und Name:', 'kontaktformular' ), 'kf_meta_box_callback', 'kfposttype', 'side' );
 }
 function kf_meta_box_callback( $post )                                                                // $post automatisch von der meta-box hinzugefügt, enthält alle Infos über den aktuellen Post -> kf-contact
 {
@@ -74,12 +74,12 @@ function kf_meta_box_callback( $post )                                          
     $name_meta_box = get_post_meta( $post->ID, '_contact_form_name', true ); 
 
 
-    ?><label for="kf_email_field"><?php _e( 'Deine Email Adresse:', 'kontaktformular' ); ?></label>
+    ?><label for="kf_email_field"><?php _e( 'Email Adresse:', 'kontaktformular' ); ?></label>
     <input type="email" id="kf_email_field" name="kf_email_field" value="<?php esc_attr_e( $email_meta_box, 'kontaktformular' ) ?>" size="25"/><br><?php
 
 
 
-    ?><label for="kf_name_field"><?php _e( 'Dein Name:', 'kontaktformular' ); ?></label>
+    ?><label for="kf_name_field"><?php _e( 'Name:', 'kontaktformular' ); ?></label><br>
     <input type="text" id="kf_name_field" name="kf_name_field" value="<?php esc_attr_e( $name_meta_box, 'kontaktformular' ) ?>" size="25"/><br><?php
 }
 function update_meta_box_and_databaseinsertion( $post_id ) 
