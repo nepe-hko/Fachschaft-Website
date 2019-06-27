@@ -150,7 +150,7 @@ if( ! class_exists('Custom_Registration'))
                 <input type="hidden" name="action" value="test_ajax" />   
                 <input type="submit"  name = "submit" value="' . __('Registrieren', 'custom-registration-plugin') .'"  /><br>
 
-                <input type="hidden" name="role" value="contributor" >
+                <input type="hidden" name="role" value="subscriber" >
              </form>
 
             ';
