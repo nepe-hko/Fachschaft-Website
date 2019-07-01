@@ -3,6 +3,7 @@ if(! class_exists('Widget_Login'))
 {
     class Widget_Login extends WP_Widget
     {
+        //Register widget
         public function __construct() 
         {
             $widget_options = array( 
@@ -10,17 +11,21 @@ if(! class_exists('Widget_Login'))
                 'description' => 'Widget for Login',
             );
 
-            parent::__construct( 'login_widget', 'Login', $widget_options );
-      
-            add_action( 'login_form_login', array( $this, 'redirect_to_custom_login' ) );
+            parent::__construct( 'login_widget',        //Base ID
+                                 'Login',               //Name
+                                  $widget_options );    //Args
         }
         
+        //Front - end display of widget
+        // $args    Widget arguments
+        //$instance Saved values from database
         public function widget( $args, $instance ) 
         {
             $title = apply_filters( 'widget_title', $instance[ 'title' ] );
 
             echo $args['before_widget'] . $args['before_title'] . $title . $args['after_title']; 
 
+            // If User is logged in
             if ( is_user_logged_in() ) 
             {
                 ?>
@@ -29,7 +34,7 @@ if(! class_exists('Widget_Login'))
                 </form>
                 <?php
             }
-            else{
+            else{ //if User is logged out
 ?>
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
             <form method = "post" action= "<?php echo wp_login_url( home_url() ); ?>" id="widget_form">
@@ -42,9 +47,9 @@ if(! class_exists('Widget_Login'))
                 <p>
                     <input id="submit_widget" type="submit" name="sendIt" value="<?php _e('Login', 'custom_login_plugin') ?>" class="btn btn-default"><br>
            
-                    <label style="margin:-15px;">
-                        <p style="float: left;" ><a href="<?php echo wp_registration_url(); ?>"><?php _e('Registrieren!', 'custom_login_plugin') ?></a></p>
-                        <span style="float: right;" ><a href="<?php echo wp_lostpassword_url(); ?>"><?php _e('Passwort vergessen?', 'custom_login_plugin') ?></a></span><br>
+                    <label id="label_margin">
+                        <p id="reg_url_id"><a href="<?php echo wp_registration_url(); ?>"><?php _e('Registrieren!', 'custom_login_plugin') ?></a></p>
+                        <span id="lost_pwd_url_id"><a href="<?php echo wp_lostpassword_url(); ?>"><?php _e('Passwort vergessen?', 'custom_login_plugin') ?></a></span><br>
                     </label>
                 </p>
             </form> 
@@ -52,12 +57,7 @@ if(! class_exists('Widget_Login'))
             echo $args['after_widget'];
         }
 
-
-        public function redirect_to_custom_login()
-        {
-            wp_redirect(home_url('login'));
-        }
-
+        //Backend widget form
         public function form( $instance ) 
         {
             $title = ! empty( $instance['title'] ) ? $instance['title'] : ''; 
@@ -77,6 +77,8 @@ if(! class_exists('Widget_Login'))
         }
     }
 }
+
+//Register Widget_Login
 function register_login_widget() 
 { 
     register_widget( 'Widget_Login' );

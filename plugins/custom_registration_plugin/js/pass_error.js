@@ -2,31 +2,32 @@ jQuery( document ).ready( function( $ )
 {
     $( 'form.reg_ajax_class' ).submit(function(e) 
     {
-        e.preventDefault();
+        e.preventDefault(); //default action of the event will not be triggered.
       
-        var data = $('#reg_ajax_id').serialize();
+        var data_res = $('#reg_ajax_id').serialize();
 
-        $.ajax({
+        $.ajax({ //form gets send to admin-ajax.php
             url: reg_ajax_data.ajaxurl,
             type: 'post',
-            data: data,
+            data: data_res,
             success: function(response)
             {
-                e.target.reset();
-                $(".msg").html(response);
+                e.target.reset();   //restores a form element's default values.
+                $(".msg").html(response);  //sets the content of the selected elements.
             }
         });
         return false;  
     });
 
+    //Password Strength Meter
     var password = document.getElementById('passwort'); 
     var meter = document.getElementById('password-strength-meter');
-    $('#passwort').keyup(function()
+    $('#passwort').keyup(function(event) //keyup - key is released
     {
         var val = password.value;
         var result = zxcvbn(val);
     
-        // Update the password strength meter
+        // Updates the password strength meter
         meter.value = result.score;
     });
 });
