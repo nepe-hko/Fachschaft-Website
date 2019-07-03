@@ -3,7 +3,7 @@
 .ajax_logged_out{
 	
 	background-color: #2F9B92;
- 	border-radius: 3%;									 /*	gerundetet Ecken */
+ 	border-radius: 3%;															 /*	gerundetet Ecken */
 } 
 
 .ajax_logged_out #submit
@@ -76,7 +76,7 @@
 
 .ajax_logged_in
 {
-	display: none;												/* form wird nicht angezeigt */
+	display: none;															/*form wird nicht angezeigt*/
 	border: 1px solid grey;
 	background-color: #2F9B92;
 }
@@ -87,3 +87,4 @@
 	color: white;
 	font-size: 18px;
 }
+

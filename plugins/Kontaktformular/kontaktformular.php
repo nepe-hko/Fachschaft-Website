@@ -37,22 +37,21 @@ if( !class_exists( 'kontaktformular' ) )
 	{
 		function __construct()
 		{
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) ); 						//Frontend
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) ); 						//Backend
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) ); 						// JS und CSS für das Frontend
 			 
-			add_action( 'admin_post_nopriv_do_function', array( $this, 'do_function' ) );			// hook für Mail- und Datenbankfunktion
+			add_action( 'admin_post_nopriv_do_function', array( $this, 'do_function' ) );		// Hook für Mail- und Datenbankfunktion
 
-			add_action( 'wp_ajax_nopriv_do_function', array( $this, 'do_function' ) );			//hook für ajax-Funktion
+			add_action( 'wp_ajax_nopriv_do_function', array( $this, 'do_function' ) );			// Hook für die Ajax-Funktion
 
 			$plugin = plugin_basename( __FILE__ );
-			add_filter( "plugin_action_links_$plugin", array( $this, 'linkToPlugin' ) );			// hook zum Link zur Kontaktformularseite im Plugin-Admin-Bereich
+			add_filter( "plugin_action_links_$plugin", array( $this, 'linkToPlugin' ) );		// Hook zum Link zur Kontaktformularseite im Plugin-Admin-Bereich
 
 			add_shortcode( 'contactform', array( $this, 'formInput' ) );
 		}
 		function linkToPlugin($link)
 		{
 			$pluginlink = '<a href="admin.php?page=kf">' . __( 'Kontaktformularseite', 'kontaktformular' ) . '</a>';			
-			array_push( $link, $pluginlink );														// fügt contactform-link zum array, welcher an hook angehängt wird
+			array_push( $link, $pluginlink );													// Fügt contactform-link zum array, welcher an Hook angehängt wird
 			return $link;
 		}
 		public static function createTable()													// erstellt eigene Tabelle im phpmyadmin
@@ -70,12 +69,12 @@ if( !class_exists( 'kontaktformular' ) )
 				PRIMARY KEY  (contactform_id)
 			) $charset_collate;";
 
-			if( !function_exists( 'dbDelta'))													// falls dbDelta-Funktion nicht existiert, soll sie hinzugefügt werden
+			if( !function_exists( 'dbDelta'))													// falls dbDelta-Funktion nicht existiert, wird sie hinzugefügt 
 			{
 				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			}
 
-			dbDelta( $sql );																		// führt query aus um eine Tabelle in DB zu erzeugen
+			dbDelta( $sql );																	// führt query aus um eine Tabelle in DB zu erzeugen
 
 			$db_version = '1.0';
 			add_option( 'db_version', $db_version );
@@ -106,7 +105,7 @@ if( !class_exists( 'kontaktformular' ) )
 			{
 				if( check_ajax_referer( 'nonce','security' ) )
 				{
-					$name = sanitize_text_field( $_POST['name'] ); //sanitize: Cleaning User Input
+					$name = sanitize_text_field( $_POST['name'] ); 								//sanitize: Cleaning User Input
 					$mailFrom = sanitize_email( $_POST['mail'] );
 					$subject = sanitize_text_field( $_POST['subject'] );
 					$message = sanitize_textarea_field( $_POST['message'] );
@@ -118,21 +117,21 @@ if( !class_exists( 'kontaktformular' ) )
 			{
 				if( check_ajax_referer( 'nonce_login', 'secure' ) )
 				{
-					$user = wp_get_current_user(); //Name und Email aus worpress-Admin in Variable speichern
+					$user = wp_get_current_user(); 											
 
-					$name = esc_html( $user->user_login );
-					$mailFrom = esc_html( $user->user_email );
+					$name = esc_html( $user->user_login );										// Name aus WordPress-Admin
+					$mailFrom = esc_html( $user->user_email );									// E-Mail-Adresse aus WordPress-Admin
 					$subject = sanitize_text_field( $_POST['subject_logged_in'] );
 					$message = sanitize_textarea_field( $_POST['message_logged_in'] );
 				}
 			}
 
-			// Nachricht in Mail-Backend laden
+			// Nachricht in CPT laden
 			$args = array(
 				'post_title' 				=> $subject,
 				'post_content' 				=> $message,
 				'post_type' 				=> 'kfposttype',
-				'post_status' 				=> 'publish', 												// damit nicht "Draft" im Email Backend angezeigt wird
+				'post_status' 				=> 'publish', 										// damit nicht "Draft" im Email Backend angezeigt wird
 				'meta_input' 				=> array(
 					'_contact_form_email' 		=> $mailFrom,
 					'_contact_form_name' 		=> $name
@@ -142,7 +141,7 @@ if( !class_exists( 'kontaktformular' ) )
 			
 			
 			// Mailversand
-			$mailTo = 'Vero@localhost';
+			$mailTo = 'Vero@localhost';															// zu Testzwecken 
 			$headers = __( 'Von: ', 'kontaktformular' ) . $mailFrom;
 			$body = __( 'Du hast eine Nachricht von ', 'kontaktformular' ) . $name . __( ' erhalten', 'kontaktformular' ) . "\n\n" . $message;
 			
@@ -161,33 +160,33 @@ if( !class_exists( 'kontaktformular' ) )
 				'contactform_message' => $message
 			);
 			$format = array(
-				'%s', 																					// string-Wert
+				'%s', 																			// string-Wert
 				'%s',
 				'%s',
 				'%s'
 			);
 
-			$sucessful = $wpdb->insert( $table, $data, $format ); 										//Funktion escaped Daten automatisch
+			$sucessful = $wpdb->insert( $table, $data, $format ); 								//Funktion escaped Daten automatisch
 
 			$id = $wpdb->insert_id;
 
 
-			if( $id == false && $sucessful == false )														// Test ob es in DB gespeichert werden konnte
+			if( $id == false && $sucessful == false )											// Test ob es in DB gespeichert werden konnte
 			{
 				_e( 'Email konnte nicht in Datenbank gespeichert werden', 'kontaktformular' );
 			}
-			wp_die(); 																					// sofortige Beendung und Rückgabe einer ordnungsgemäße Antwort
+			wp_die(); 																			// sofortige Beendung und Rückgabe einer ordnungsgemäße Antwort
 		
 		}
-		public function enqueue() 																		// wird von wp aufgerufen deswegen muss es public sein
+		public function enqueue() 																
 		{
 			//javascriptdatei für Logout
-			wp_register_script( 'ajax_script_logout', plugins_url(). '/kontaktformular/js/logged-out.js', array( 'jquery' ) ); // lädt jquery-Bibliothek vor dem logged-out.js Skript
+			wp_register_script( 'ajax_script_logout', plugins_url(). '/kontaktformular/js/logged-out.js', array( 'jquery' ) ); 	// lädt jquery-Bibliothek vor dem logged-out.js Skript
 			wp_enqueue_script( 'ajax_script_logout' );
 			wp_localize_script( 'ajax_script_logout', 'kf_ajax_data_logout', array( 
 				 	'ajaxurl' 					=> admin_url( 'admin-ajax.php' ),
 					'ajax_nonce' 				=> wp_create_nonce( 'nonce' ),
-					'answer_all_fields_filled' 	=> esc_html__( 'Bitte alle Felder ausfuellen.', 'kontaktformular' ),
+					'answer_all_fields_filled' 	=> esc_html__( 'Bitte alle Felder ausfuellen.', 'kontaktformular' ),			// um i18n zu unterstützen
 					'ajax_success_message' 		=> esc_html__( 'Nachricht wurde versendet.', 'kontaktformular' ),
 					'ajax_fail_message'			=> esc_html__( 'Es ist ein Fehler unterlaufen', 'kontaktformular' )
 				) );

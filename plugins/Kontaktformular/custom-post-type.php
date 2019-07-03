@@ -1,16 +1,16 @@
 <?php 
 
 $contact = get_option( 'activate' ); 
-if ( @$contact == 5 ) // wenn button aktiviert ist führe den cpt aus
+if ( @$contact == 5 )                                                                               // wenn button haken hat ist führe den cpt aus
 {
     add_action( 'init', 'kf_contact_cpt' );
-    add_filter( 'manage_kfposttype_posts_columns', 'kf_change_columns' ); //hook greift alle automatisch erzeugten Coloumns aus dem admin und reicht sie an die Funktion? 
-    add_action( 'manage_kfposttype_posts_custom_column', 'kf_show_colums_content', 10, 2 ); //10 priority, 2 variablen in funktion
-    add_action( 'add_meta_boxes', 'kf_meta_box_email' ); //aktiviere Meta-box
+    add_filter( 'manage_kfposttype_posts_columns', 'kf_change_columns' );                           
+    add_action( 'manage_kfposttype_posts_custom_column', 'kf_show_colums_content', 10, 2 );         // 10 Priorität, 2 variablen in funktion
+    add_action( 'add_meta_boxes', 'kf_meta_box_email' );
     add_action( 'save_post', 'update_meta_box_and_databaseinsertion' );
 }
 
-function kf_contact_cpt()
+function kf_contact_cpt()                                                                           // registriert CPT
 {
     $labels = array(
         'name'              => __( 'Mails', 'kontaktformular' ),
@@ -23,18 +23,17 @@ function kf_contact_cpt()
         'labels'            => $labels,
         'show_ui'           => true,
         'show_in_menu'      => true,
-        'hierarchical'      => false,
         'custom-fields'     => true,
         'menu_icon'         => 'dashicons-email',
         'menu_position'     => 26,
-        'supports'          => array( 'title', 'editor', 'author' )                                //author damit er in "add new" noch da ist
+        'supports'          => array( 'title', 'editor' )                                
 
     );
 
     register_post_type( 'kfposttype', $args );
 }
 
-function kf_change_columns( $columns )
+function kf_change_columns( $columns )                                                              // neue Spaltenbeschriftungen
 {
     $newColumns = array();
     $newColumns['title'] = __( 'Betreff', 'kontaktformular' );
@@ -44,7 +43,7 @@ function kf_change_columns( $columns )
     $newColumns['date'] = __( 'Datum', 'kontaktformular' );
     return $newColumns;
 }
-function kf_show_colums_content( $column, $post_id )                                              //ist ein loop
+function kf_show_colums_content( $column, $post_id )                                              // gibt in den Spalten passenden Inhalt aus
 {
     switch( $column )
     {
@@ -67,22 +66,19 @@ function kf_meta_box_email()
 {
     add_meta_box( 'email_meta_box_id', __( 'Email-Adresse und Name:', 'kontaktformular' ), 'kf_meta_box_callback', 'kfposttype', 'side' );
 }
-function kf_meta_box_callback( $post )                                                                // $post automatisch von der meta-box hinzugefügt, enthält alle Infos über den aktuellen Post -> kf-contact
+function kf_meta_box_callback( $post )                                                                
 {
     wp_nonce_field( 'update_meta_box_and_databaseinsertion', 'meta_box_nonce' );
-    $email_meta_box = get_post_meta( $post->ID, '_contact_form_email', true ); // true: single value not array
+    $email_meta_box = get_post_meta( $post->ID, '_contact_form_email', true );                      // true: single Wert nicht Array
     $name_meta_box = get_post_meta( $post->ID, '_contact_form_name', true ); 
-
 
     ?><label for="kf_email_field"><?php _e( 'Email Adresse:', 'kontaktformular' ); ?></label>
     <input type="email" id="kf_email_field" name="kf_email_field" value="<?php esc_attr_e( $email_meta_box, 'kontaktformular' ) ?>" size="25"/><br><?php
 
-
-
     ?><label for="kf_name_field"><?php _e( 'Name:', 'kontaktformular' ); ?></label><br>
     <input type="text" id="kf_name_field" name="kf_name_field" value="<?php esc_attr_e( $name_meta_box, 'kontaktformular' ) ?>" size="25"/><br><?php
 }
-function update_meta_box_and_databaseinsertion( $post_id ) 
+function update_meta_box_and_databaseinsertion( $post_id )      
 {
     if( ! isset( $_POST['meta_box_nonce'] ) )
     {
@@ -92,7 +88,7 @@ function update_meta_box_and_databaseinsertion( $post_id )
     {
         return;
     }
-    if( ! current_user_can( 'edit_post', $post_id ) )                                                                              // check ob User die benötigte Priorität hat was zu ändern
+    if( ! current_user_can( 'edit_post', $post_id ) )                                               // Überprüfung ob User benötigte Priorität hat
     {
         return;
     }
@@ -107,7 +103,7 @@ function update_meta_box_and_databaseinsertion( $post_id )
         update_post_meta( $post_id, '_contact_form_name', $name_data );
     }
 
-    // Datenbank Einfügung
+    // Datenbank Eintrag
     global $wpdb;
     $table = $wpdb->prefix . 'contactform';
  
@@ -125,7 +121,7 @@ function update_meta_box_and_databaseinsertion( $post_id )
         'contactform_message' => $message
     );
     $format = array(
-        '%s', 																					// string-Wert
+        '%s', 																					
         '%s',
         '%s',
         '%s'
