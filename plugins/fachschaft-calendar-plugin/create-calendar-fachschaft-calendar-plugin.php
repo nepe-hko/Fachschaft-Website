@@ -36,7 +36,7 @@ class CreateCalendar{
     list( $current_year, $current_month, $current_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $time );
 
     $output = '<div class="fachschaft_calendar_plugin_calendar_table">';
-    $output .= '<h1>Anstehende Veranstaltungen </h1>';
+    $output .= '<h1>'.__('Anstehende Veranstaltungen') .'</h1>';
     $output .= '<table class="calendar">';
     $current_month_name = date_i18n( 'F', false, false);
     $output .='<caption>'.$current_month_name.' '.$current_year.'</caption>';

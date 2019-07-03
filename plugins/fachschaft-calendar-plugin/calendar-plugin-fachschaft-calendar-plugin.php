@@ -1,17 +1,16 @@
 <?php
 class CalendarPlugin{
-    protected static $_instance = null; // Singleton instance
+    protected static $_instance = null; // Singleton Instanze
     public static function get_instance() {
       if (null === self::$_instance) {
       self::$_instance = new self;
       }
     return self::$_instance;
     }
-    protected function __clone() {} // Prevent singleton cloning
+    protected function __clone() {} // Verhindern von singleton cloning
     protected function __construct() {
-      //add custom post type calendar
       add_action('init', array($this, 'calendar_post_type'));
-      //metabox for custom post type
+      //metabox für custom post type
       add_action('add_meta_boxes', 'calendar_add_meta_box');
       add_action('save_post','save_calendar_event_data');
     }
@@ -20,15 +19,12 @@ class CalendarPlugin{
       //generate custom post types
 
       $this->calendar_post_type();
-      //new rewrite rules
-      flush_rewrite_rules();
     }
     function deactivate(){
-      flush_rewrite_rules();
+
     }
 
     function calendar_post_type(){
-      //specify custom post type
       $public_pt_args = array(
     		'label' => 'Veranstaltungen',
     		'public' => true,
@@ -44,7 +40,5 @@ class CalendarPlugin{
         'menu_icon' =>  'dashicons-calendar-alt',
     	);
     	register_post_type( 'calendar_post_type', $public_pt_args );
-
-
     }
 }
