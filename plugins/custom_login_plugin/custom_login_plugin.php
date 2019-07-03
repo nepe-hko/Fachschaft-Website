@@ -19,11 +19,11 @@ if( ! defined( 'ABSPATH' ) )
 
 require_once(plugin_dir_path(__FILE__). '/widget_login.php');
 
+//loads textdomain
 function login_load_textdomain() 
 {
     load_plugin_textdomain( 'custom_login_plugin', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
 }
-  
 add_action( 'plugins_loaded', 'login_load_textdomain' );
 
 if( ! class_exists('Custom_Login'))
@@ -35,8 +35,8 @@ if( ! class_exists('Custom_Login'))
             add_action( 'login_form_login', array( $this, 'redirect_to_custom_login' ) );   //Fires before a specified login form action
             add_action('wp_logout',array($this,'redirect_logout' ) );   //triggered when a user logs out using the wp_logout() function
 
-            add_action('wp_enqueue_scripts', array($this,'enqueue_style' ) );
-            add_action('admin_enqueue_scripts', array($this, 'enqueue_style' ) );
+            add_action('wp_enqueue_scripts', array($this,'enqueue_style' ) ); //Frontend
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_style' ) ); //Backend
 
             add_filter( 'authenticate', array( $this, 'maybe_redirect_at_authenticate' ), 101, 3 ); //Filters whether a set of user login credentials are valid
 
@@ -140,8 +140,7 @@ if( ! class_exists('Custom_Login'))
 
         function enqueue_style()
         {
-            wp_register_style('style_login', plugins_url(). '/custom_login_plugin/css/style_login.css');
-            wp_enqueue_style('style_login');
+            wp_enqueue_style('style_login', plugins_url(). '/custom_login_plugin/css/style_login.css');
         }
     }
 }

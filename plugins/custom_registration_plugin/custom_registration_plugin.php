@@ -62,7 +62,7 @@ if( ! class_exists('Custom_Registration'))
                 $passwort = $_POST['passwort'];
                 $pass_again =$_POST['pass_again'];
                 $role = $_POST['role'];
-
+                
                 if(username_exists($username)) //checks if Usernme is already in use
                 {
                     $message = __('<strong>ERROR: </strong>Der Username "', 'custom_registration_plugin') .$username. __('" existiert bereits.', 'custom_registration_plugin' );
@@ -164,12 +164,14 @@ if( ! class_exists('Custom_Registration'))
             wp_register_script('js_meter','/wp-includes/js/zxcvbn-async.js', array('zxcvbn-async'));
             wp_enqueue_script('js_meter');
 
-            wp_enqueue_script('ajax', plugins_url(). '/custom_registration_plugin/js/pass_error.js',array('jquery'));
+            wp_register_script('ajax', plugins_url(). '/custom_registration_plugin/js/pass_error.js',array('jquery'));
+            wp_enqueue_script('ajax');
             wp_localize_script( 'ajax', 'reg_ajax_data', 
             array('ajaxurl' => admin_url( 'admin-ajax.php' ),
             ));
 
-            wp_enqueue_style('style_register', plugins_url(). '/custom_registration_plugin/css/style.css'); //enqueues CSS file  
+            wp_register_style('style_register', plugins_url(). '/custom_registration_plugin/css/style.css'); //enqueues CSS file  
+            wp_enqueue_style('style_register');
         }
     }
 }
