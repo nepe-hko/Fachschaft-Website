@@ -31,30 +31,30 @@ if( ! class_exists('Custom_Registration'))
     {
         public function __construct()
         {
-            add_action('wp_enqueue_scripts', array($this, 'my_enqueue'));
-            add_action('admin_enqueue_scripts', array($this, 'my_enqueue')); 	
+            add_action('wp_enqueue_scripts', array($this, 'my_enqueue')); //proper hook to use when enqueuing items that are meant to appear on the front end
+            add_action('admin_enqueue_scripts', array($this, 'my_enqueue')); //first action hooked into the admin scripts actions 	
 
-            add_action( 'login_form_register', array( $this, 'redirect_to_custom_register' ) );
+            add_action( 'login_form_register', array( $this, 'redirect_to_custom_register' ) ); //Fires before a specified login form action.
 
-            add_action('admin_post_test_ajax', array($this, 'test_ajax'));
-            add_action('admin_post_nopriv_test_ajax', array($this, 'test_ajax'));
+            add_action('admin_post_register_user', array($this, 'register_user'));      //logged in
+            add_action('admin_post_nopriv_register_user', array($this, 'register_user')); //logged out
 
-            add_action( 'wp_ajax_test_ajax', array($this,'test_ajax') );
-            add_action('wp_ajax_nopriv_test_ajax', array($this, 'test_ajax'));
+            add_action( 'wp_ajax_register_user', array($this,'register_user') ); //logged in
+            add_action('wp_ajax_nopriv_register_user', array($this, 'register_user')); //logged out
         
-            add_shortcode('registration',array( $this, 'registration' ) );
+            add_shortcode('registration',array( $this, 'registration' ) ); //Handler for Shortcode
         }
 
         public function redirect_to_custom_register() 
         {
-            wp_redirect( home_url( 'registrierung' ) );
+            wp_redirect( home_url( 'registrierung' ) ); //redirect to '/registrierung'
         }
 
-        public function test_ajax()
+        public function register_user()
         {
             if( $_SERVER['REQUEST_METHOD'] == 'POST'  )
             {
-
+                //sanitize input and store in variable
                 $vorname = sanitize_text_field($_POST['vorname']);
                 $nachname = sanitize_text_field($_POST['nachname']);
                 $username = sanitize_text_field($_POST['username']);
@@ -63,20 +63,21 @@ if( ! class_exists('Custom_Registration'))
                 $pass_again =$_POST['pass_again'];
                 $role = $_POST['role'];
 
-                if(username_exists($username))
+                if(username_exists($username)) //checks if Usernme is already in use
                 {
-                    $message = __('Der Username', 'custom_registration_plugin') .$username. __(' existiert bereits.', 'custom_registration_plugin' );
+                    $message = __('<strong>ERROR: </strong>Der Username "', 'custom_registration_plugin') .$username. __('" existiert bereits.', 'custom_registration_plugin' );
                 }
-                elseif(email_exists($email))
+                elseif(email_exists($email)) //Does Email already exist in database
                 {
-                    $message = __('Die Email', 'custom_registration_plugin') .$email. __(' wird bereits verwendet.', 'custom_registration_plugin' );
+                    $message = __('<strong>ERROR: </strong>Die Email "', 'custom_registration_plugin') .$email. __('" wird bereits verwendet.', 'custom_registration_plugin' );
                 }
-                elseif(trim($passwort) != trim($pass_again))
+                elseif(trim($passwort) != trim($pass_again)) //trims Passwords and checks if they are the same
                 {
-                    $message = __('Passwörter müssen übereinstimmen', 'custom_registration_plugin' );
+                    $message = __('<strong>ERROR: </strong>Passwörter müssen übereinstimmen', 'custom_registration_plugin' );
                 }
                 else
                 {
+                    //stores data in variable
                     $userdata = array
                     (
                         'first_name' => $vorname,
@@ -87,6 +88,7 @@ if( ! class_exists('Custom_Registration'))
                         'role' => $role
                     );
             
+                    //stores data in variable
                     $args = array(
                         'post_type' => 'register-cpt',
                         'post_status'   => 'publish',
@@ -99,8 +101,8 @@ if( ! class_exists('Custom_Registration'))
                         )
                     );
                 
-                    $post_id = wp_insert_post($args);
-                    $user_id = wp_insert_user($userdata);
+                    $post_id = wp_insert_post($args); //inserts User in Post
+                    $user_id = wp_insert_user($userdata); //inserts User in database
 
                     $message = __('Sie haben sich erfolgreich registriert!', 'custom_registration_plugin' );
                 }
@@ -108,18 +110,19 @@ if( ! class_exists('Custom_Registration'))
                 echo $message;
             }
 
-            wp_die();
+            wp_die(); //end function
         }
 
         public function registration()
         {
-            if(is_user_logged_in())
+            if(is_user_logged_in()) //if User is logged in return message
             {
                 $loggedin = __('<h1>Sie sind bereits registriert!</h1>', 'custom_registration_plugin' );
                 return $loggedin;
             }
 
-        return '          
+            //return HTML form
+            return '          
             <strong><div id="msg" class="msg"></div></strong><br><br>
 
             <form  id="reg_ajax_id" action="' . esc_url(admin_url('admin-post.php')) . ' " method="post" class="reg_ajax_class" > 
@@ -147,10 +150,10 @@ if( ! class_exists('Custom_Registration'))
                 <strong>' . __('Passwort bitte nochmal eingeben:', 'custom_registration_plugin' ) . '</strong>
                 <input type="password" name="pass_again" id="pass_again" required><br>
 
-                <input type="hidden" name="action" value="test_ajax" />   
-                <input type="submit"  name = "submit" value="' . __('Registrieren', 'custom-registration-plugin') .'"  /><br>
+                <input type="hidden" name="action" value="register_user" />   
+                <input type="submit" name = "submit" value="' . __('Registrieren', 'custom-registration-plugin') .'"  /><br>
 
-                <input type="hidden" name="role" value="contributor" >
+                <input type="hidden" name="role" value="subscriber" >
              </form>
 
             ';
@@ -158,18 +161,15 @@ if( ! class_exists('Custom_Registration'))
 
         function my_enqueue()
         {
-
-            wp_register_script('js_meter','https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js');
+            wp_register_script('js_meter','/wp-includes/js/zxcvbn-async.js', array('zxcvbn-async'));
             wp_enqueue_script('js_meter');
 
-            wp_register_script('ajax', plugins_url(). '/custom_registration_plugin/js/pass_error.js',array('jquery'));
-            wp_enqueue_script('ajax');
+            wp_enqueue_script('ajax', plugins_url(). '/custom_registration_plugin/js/pass_error.js',array('jquery'));
             wp_localize_script( 'ajax', 'reg_ajax_data', 
             array('ajaxurl' => admin_url( 'admin-ajax.php' ),
             ));
 
-            wp_register_style('style_register', plugins_url(). '/custom_registration_plugin/css/style.css');
-            wp_enqueue_style('style_register');
+            wp_enqueue_style('style_register', plugins_url(). '/custom_registration_plugin/css/style.css'); //enqueues CSS file  
         }
     }
 }

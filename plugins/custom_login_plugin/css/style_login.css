@@ -34,3 +34,19 @@
     width: 80%; 
     float:right;
 }
+#reg_url_id
+{
+    float: left;
+}
+#lost_pwd_url_id
+{
+    float: right;
+}
+#label_margin
+{
+    margin:-15px;
+}
+#style_error
+{
+    text-align:center;
+}

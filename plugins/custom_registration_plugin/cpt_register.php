@@ -1,12 +1,12 @@
 <?php
 
     add_action( 'init', 'create_posttype');
-    add_action( 'wp_loaded', 'insert_in_database');
+    add_action( 'wp_loaded', 'insert_in_database'); 
 
     add_filter( 'manage_register-cpt_posts_columns', 'set_columns');
-    add_action( 'manage_register-cpt_posts_custom_column', 'custom_column', 10, 2 );
+    add_action( 'manage_register-cpt_posts_custom_column', 'custom_column', 10, 2 ); 
 
-    add_action( 'add_meta_boxes', 'registration_add_meta_box');
+    add_action( 'add_meta_boxes', 'registration_add_meta_box'); //activates meta box
 
     add_action( 'save_post', 'register_save_vn_data' );
     add_action( 'save_post', 'register_save_nn_data' );
@@ -33,7 +33,7 @@ function create_posttype()
         'custom-fields'   => true,
         'menu_position'   => 25 ,
         'supports'        => false,
-        'capabilities' => array(
+        'capabilities' => array(                    //set capabilities so only Admin can access
             'edit_post'          => 'update_core',
             'read_post'          => 'update_core',
             'delete_post'        => 'update_core',
@@ -46,11 +46,10 @@ function create_posttype()
         'map_meta_cap' => true,
         'menu_icon'       =>  'dashicons-groups'
     );
-    register_post_type( 'register-cpt', $args );
-
+    register_post_type( 'register-cpt', $args ); //registers CPT
 }
 
-function set_columns( $columns )
+function set_columns( $columns ) 
 {
     $columns = array();
     $columns['vorname']     = __('Vorname', 'custom_registration_plugin' );
@@ -134,6 +133,7 @@ function register_user_callback( $post )
                     </td>
                 </tr>
             </table>
+            <p><?php _e('Das Passwort wird Ihnen in kürze an die angegebene Emailadresse gesendet.', 'custom_registration_plugin');?></p>
 <?php
 }
 
@@ -151,7 +151,7 @@ function insert_in_database()
         $role = $_POST['register_role_field'];
 
 
-        $passwort = wp_generate_password( 12, false );
+        $passwort = wp_generate_password( 12, false ); //generates the Password
 
         $user_data = array
         (
@@ -163,8 +163,8 @@ function insert_in_database()
             'role' => $role
         );
 
-        $user_id = wp_insert_user($user_data);
-        wp_new_user_notification( $user_id, $passwort );
+        $user_id = wp_insert_user($user_data);  //Inserts User in database
+        wp_new_user_notification( $user_id, $passwort ); //Sends User password
 
     }
 }

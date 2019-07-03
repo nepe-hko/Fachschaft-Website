@@ -12,7 +12,8 @@ Domain Path: /languages
 Author: Odile
 */
 
-if( ! defined( 'ABSPATH' ) ) {
+if( ! defined( 'ABSPATH' ) ) 
+{
     die;
 }
 
@@ -31,15 +32,20 @@ if( ! class_exists('Custom_Login'))
     {
         public function __construct() 
         {
-            add_action( 'login_form_login', array( $this, 'redirect_to_custom_login' ) );
-            add_action('wp_logout',array($this,'redirect_logout' ) );
+            add_action( 'login_form_login', array( $this, 'redirect_to_custom_login' ) );   //Fires before a specified login form action
+            add_action('wp_logout',array($this,'redirect_logout' ) );   //triggered when a user logs out using the wp_logout() function
 
             add_action('wp_enqueue_scripts', array($this,'enqueue_style' ) );
             add_action('admin_enqueue_scripts', array($this, 'enqueue_style' ) );
 
-            add_filter( 'authenticate', array( $this, 'maybe_redirect_at_authenticate' ), 101, 3 );
+            add_filter( 'authenticate', array( $this, 'maybe_redirect_at_authenticate' ), 101, 3 ); //Filters whether a set of user login credentials are valid
 
-            add_shortcode( 'custom-login-form', array($this,'login_form_html' ) );
+            add_shortcode( 'custom-login-form', array($this,'login_form_html' ) ); //Shortcode
+        }
+
+        public function redirect_to_custom_login()
+        {
+            wp_redirect(home_url('login'));
         }
 
         function redirect_logout() 
@@ -49,13 +55,14 @@ if( ! class_exists('Custom_Login'))
             exit;
         }
 
-        function maybe_redirect_at_authenticate( $user, $username, $password ) 
+        function maybe_redirect_at_authenticate( $user, $username, $password ) //Redirect the user after authentication if there were any errors
         {
+            //collect error codes and attach them to redirect URL
             if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) 
             {
                 if ( is_wp_error( $user ) ) 
                 {
-                    $error_codes = join( ',', $user->get_error_codes() );
+                    $error_codes = join( ',', $user->get_error_codes() ); 
      
                     $login_url = home_url( 'login' );
                     $login_url = add_query_arg( 'login', $error_codes, $login_url );
@@ -67,19 +74,16 @@ if( ! class_exists('Custom_Login'))
             return $user;
         }
 
-        public function redirect_to_custom_login()
-        {
-            wp_redirect(home_url('login'));
-        }
 
         function login_form_html() 
         {
-            if ( is_user_logged_in() ) 
+            if ( is_user_logged_in() ) //If User is logged in display message
             {
                 $html = __('<h1>Sie sind bereits eingeloggt.</h1>', 'custom_login_plugin');
                 return $html;
             }
 
+            //Error messages
             $errors = array();
             if ( isset( $_REQUEST['login'] ) ) 
             {
@@ -93,7 +97,7 @@ if( ! class_exists('Custom_Login'))
 
             foreach($errors as $error)
             {
-                $error_html = '<div style="text-align:center;"> 
+                $error_html = '<div id="style_error"> 
                  <h3><strong>ERROR</strong>: 
                  '. $error .' </h3>
                  </div>';
@@ -112,15 +116,15 @@ if( ! class_exists('Custom_Login'))
                 <p>
                     <input id="submit_login" type="submit" name="sendIt" value="' . __('Login', 'custom_login_plugin') . '" class="btn btn-default"><br>
             
-                    <label style="margin:-15px;">
-                        <p style="float: left;" ><a href="' . wp_registration_url() . '">' . __('Registrieren!', 'custom_login_plugin') . '</a></p>
-                        <span style="float: right;" ><a href="' . wp_lostpassword_url() . '">' . __('Passwort vergessen?', 'custom_login_plugin') . '</a></span><br>
+                    <label id="label_margin">
+                        <p id="reg_url_id"><a href="' . wp_registration_url() . '">' . __('Registrieren!', 'custom_login_plugin') . '</a></p>
+                        <span id="lost_pwd_url_id"><a href="' . wp_lostpassword_url() . '">' . __('Passwort vergessen?', 'custom_login_plugin') . '</a></span><br>
                     </label>
                 </p>
             </form> ';
         }
 
-        function get_error_message($err)
+        function get_error_message($err) //Finds and returns a matching error message for the given error code
         {
             switch($err)
             {
