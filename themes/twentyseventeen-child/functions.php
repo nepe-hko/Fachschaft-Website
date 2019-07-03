@@ -11,7 +11,7 @@ Show Pending Post Count in Admin area
 kopiert von: www.wprudder.com/show-pending-post-count-wordpress-admin-area/
 */
 function hk_show_pending_number($menu) {
-   $types = array("post", "improvement", "mail");
+   $types = array("post", "improvement");
    $status = "pending";
    foreach($types as $type) {
        $num_posts = wp_count_posts($type, 'readable');
@@ -110,3 +110,13 @@ function deactivate_admin_bar( $content ) {
     return current_user_can( 'edit_posts') ? true : false;
 }
 add_filter( 'show_admin_bar', 'deactivate_admin_bar');
+
+
+// Deactivate Backend for Subscribers
+function deactivate_backend() {
+    if (!current_user_can('manage_options') && !wp_doing_ajax()) {
+        wp_redirect(site_url());
+        exit;
+    }
+}
+add_action('admin_init', 'deactivate_backend');

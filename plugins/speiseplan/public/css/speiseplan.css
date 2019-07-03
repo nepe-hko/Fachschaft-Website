@@ -1,11 +1,11 @@
-.speiseplanWidget {border: 1px solid #eee;}
-.speiseplanWidget td { padding-right: 10px !important; padding-left: 10px !important}
-.speiseplanWidget .title { border-right:1px solid #eee}
-.speiseplanWidget .price { white-space: nowrap}
+.speiseplan-widget {border: 1px solid #eee;}
+.speiseplan-widget td { padding-right: 10px !important; padding-left: 10px !important}
+.speiseplan-widget .title { border-right:1px solid #eee}
+.speiseplan-widget .price { white-space: nowrap}
 
-.speiseplan tr {
-    border: none;
-}
+.speiseplan tr {border: none;}
+.speiseplan .price { white-space: nowrap;}
+.speiseplan .whitespace td {padding: 1px; background-color: #eee;}
 .speiseplan .date td {
     background-color: white;
     font-weight: bold;
@@ -13,7 +13,3 @@
     text-align: center;
     padding-top: 30px; 
 }
-
-.speiseplan .price { white-space: nowrap;}
-
-.speiseplan .whitespace td {padding: 1px; background-color: #eee;}

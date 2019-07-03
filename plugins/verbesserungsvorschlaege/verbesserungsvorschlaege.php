@@ -1,13 +1,13 @@
 <?php
 /*
-Plugin Name: verbesserungsvorschlaege
+Plugin Name: Verbesserungsvorschlaege
 Version: 1.0
 Author: Daniel Hauk
 Description: Einreichen von Verbesserungsvorschlägen
 */
 
 
-class Verbesserungsvorschlaege
+class Improvements
 {
 
     private static $instance;
@@ -31,12 +31,8 @@ class Verbesserungsvorschlaege
 
     function enqueue() {
 
-        // enqueue javascript on the frontend.
-        wp_register_script(
-            'send_form_script', 
-            plugins_url(). '/verbesserungsvorschlaege/public/js/send_form.js',
-            array('jquery')
-        );
+        // enqueue javascript and jquery to frontend.
+        wp_register_script( 'send_form_script', plugins_url('/public/js/send_form.js', __FILE__ ), array('jquery') );
         wp_enqueue_script('send_form_script');
 
         // add ajax url to script
@@ -44,16 +40,18 @@ class Verbesserungsvorschlaege
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'vbv_secure' => wp_create_nonce('vbv_secure')
         ));
-
-        wp_register_style( 'vbv_style', plugins_url(). '/verbesserungsvorschlaege/public/css/vbv_style.css' );
+        
+        // enqueue style to frontend
+        wp_register_style('vbv_style', plugins_url( 'public/css/vbv_style.css', __FILE__ ));
         wp_enqueue_style( 'vbv_style' );
     }
 
-    # callback function for submitting new improvement from frontend
+    // callback function for submitting new improvement from frontend
     function vbv_submit() {
 
+        
         if( !check_ajax_referer('vbv_secure', 'vbv_secure')) {
-            echo "Fehler beim übertragen der Daten";
+            echo __('Fehler beim übertragen der Daten', 'improvements' );
             die();
         }
  
@@ -61,11 +59,15 @@ class Verbesserungsvorschlaege
             return;
         }
 
-        # get data from frontend
+        if (!is_user_logged_in()) {
+            return;
+        }
+
+        // get data from frontend
         $title = sanitize_text_field($_POST['title']);
         $content = sanitize_textarea_field($_POST['content']);
                     
-        # create new improvement-post
+        // create new improvement-post
         $new_post = array(
             'post_title' => $title,
             'post_content' => $content,
@@ -75,16 +77,18 @@ class Verbesserungsvorschlaege
 
         );
         $post_id = wp_insert_post($new_post);
-        echo "vielen Dank. <br>Dein Vorschlag wurde eingereicht und wird nach einer Prüfung veröffentlicht";            
+        echo __( 'vielen Dank', 'improvements' ); 
+        echo '<br>';
+        echo __( 'Dein Vorschlag wurde eingereicht und wird nach einer Prüfung veröffentlicht', 'improvements');            
          
         
-       die();
+        die();
     }
 
-    # register custom post type "improvement"
+    // register custom post type "improvement"
     function register_improvement_post_type() {
         $args = array(
-    		'label'                 => 'Verbesserungen',
+    		'label'                 => __( 'Verbesserungen', 'improvements' ),
     		'public'                => true,
     		'ly_queryable'          => true,
     		'exclude_from_search'   => false,
@@ -93,27 +97,26 @@ class Verbesserungsvorschlaege
     		'has_archive'           => true,
     		'rewrite'               => true,
     		'query_var'             => true,
-            'supports'              => array( 'title', 'editor', 'thumbnail', 'comments'),
+            'supports'              => array( 'title', 'editor', 'author', 'comments'),
             'menu_icon'             =>  'dashicons-lightbulb',
     	);
     	register_post_type( 'improvement', $args );
     }
 
 
-    # add meta box
+    // add meta box
     function add_custom_meta_boxes() {
         add_meta_box(
-            'improvement_infos',                # $id
-            'Kommentar der Fachschaft',         # $title 
-            array($this,'print_info_meta_box'), # $callback
-            'improvement',                      # $page
-            'normal',                           # $context
-            'high'                              # $priority
+            'improvement_infos',
+            __( 'Kommentar der Fachschaft', 'improvements' ),
+            array($this,'print_info_meta_box'), 
+            'improvement',                      
+            'normal',                           
+            'high'                              
         ); 
     }
 
-
-    # outputs the meta boxes in backend
+    // outputs the meta boxes in backend
     function print_info_meta_box($post){
 
         wp_nonce_field('save_improvement_data', 'improvement_admin_nonce');
@@ -122,7 +125,7 @@ class Verbesserungsvorschlaege
         
     }
 
-    # saves changes from backend
+    // saves changes from backend
     function save_from_admin($post_id) {
 
         if(!isset( $_POST['improvement_admin_nonce'])){
@@ -144,7 +147,5 @@ class Verbesserungsvorschlaege
     }
 }
 
-$plugin = Verbesserungsvorschlaege::get_instance();
-
-
+$plugin = Improvements::get_instance();
 ?>

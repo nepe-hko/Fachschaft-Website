@@ -25,12 +25,17 @@ class SpeiseplanPlugin extends WP_Widget
 
     public function __construct() {
         parent::__construct(
-            'SpeiseplanPlugin', __('Speiseplan', 'SpeiseplanPlugin'),
-            array('description' => __('Zeigt den Speiseplan der TH-Nürnberg an', 'SpeiseplanPlugin'),)
+            'SpeiseplanPlugin', 
+            __( 'Speiseplan', 'speiseplan'),
+            array('description' => __( 'Zeigt den Speiseplan der TH-Nürnberg an', 'speiseplan'))
         );
+        add_shortcode('speiseplan', array($this, 'print'));
+        add_action('widgets_init', array($this, 'loadWidget'));
+        register_activation_hook( __FILE__, array($this, 'on_activation'));
+        register_deactivation_hook(__FILE__, array($this, 'on_deactivation'));
     }
 
-    // callback function for shortcut, outputs meals
+    // callback function for shortcut, outputs meals for the next $atts['days'] days
     public function print($atts = []) 
     {
         $atts = shortcode_atts( array('days' => 5), $atts, 'speiseplan');
@@ -40,13 +45,13 @@ class SpeiseplanPlugin extends WP_Widget
         $date = "";
         $lastDate = "";
         $translate = array(
-            'Mon'       => 'Montag',
-            'Tue'       => 'Dienstag',
-            'Wed'       => 'Mittwoch',
-            'Thu'       => 'Donnerstag',
-            'Fri'       => 'Freitag',
-            'Sat'       => 'Samstag',
-            'Sun'       => 'Sonntag',
+            'Mon'       => __( 'Montag', 'speiseplan'),
+            'Tue'       => __( 'Dienstag', 'speiseplan'),
+            'Wed'       => __( 'Mittwoch', 'speiseplan'),
+            'Thu'       => __( 'Donnerstag', 'speiseplan'),
+            'Fri'       => __( 'Freitag', 'speiseplan'),
+            'Sat'       => __( 'Samstag', 'speiseplan'),
+            'Sun'       => __( 'Sonntag', 'speiseplan'),
         );
 
         foreach ($meals->meals as $meal) {
@@ -94,7 +99,7 @@ class SpeiseplanPlugin extends WP_Widget
         if ($meals) { // meals are in DB
             return json_decode($meals->meals);
 
-        } else { // meals are not in DB -> fetch from API and store in DB
+        } else { // meals are not in DB -> fetch from API
         
             $url = "https://api.fachschaft.in/scrapi/meals/nbg-hohfederstrasse.json";
             try {
@@ -124,7 +129,7 @@ class SpeiseplanPlugin extends WP_Widget
         wp_enqueue_style('speiseplan', plugins_url( 'public/css/speiseplan.css', __FILE__ ));
     }
 
-    # create widget front-end
+    // create widget front-end
     public function widget( $args, $instance)
     {
         $title = apply_filters('widget_title', $instance['title']);
@@ -137,10 +142,10 @@ class SpeiseplanPlugin extends WP_Widget
         // retrieve meals and print meals from today
         $json = $this->getMeals();
         
-        $html = "<table class=\"speiseplanWidget\">";
+        $html = "<table class='speiseplan-widget'>";
         $meals = $json->meals;
         if(!$meals) {
-            $html .= "Nicht erreichbar!";
+            $html .= __( 'Nicht erreichbar!', 'speiseplan');
         } else {
             $date = date("Y-m-d");
             $count = 0;
@@ -152,7 +157,7 @@ class SpeiseplanPlugin extends WP_Widget
                 }
             }
             if($count == 0){
-                $html .= "Cafeteria heute geschlossen!";
+                $html .= __( 'Cafeteria heute geschlossen!', 'speiseplan');
             }
         }
 
@@ -162,7 +167,7 @@ class SpeiseplanPlugin extends WP_Widget
         echo $args['after_widget'];
     }
 
-    # create widget back-end
+    // create widget back-end
     public function form($instance)
     {
         if (isset($instance['title']))
@@ -170,17 +175,17 @@ class SpeiseplanPlugin extends WP_Widget
             $title = $instance['title'];
         } 
         else {
-            $title = 'Speiseplan';
+            $title = __( 'Speiseplan', 'speiseplan');
         }
         ?>
         <p>
-        <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-        <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'speiseplan' ); ?>:</label> 
+            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" 
+                name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
         </p>
         <?php
     }
 
-    # update widget
     public function update( $new_instance, $old_instance )
     {
         $instance = array();
@@ -190,13 +195,13 @@ class SpeiseplanPlugin extends WP_Widget
 
     public function on_activation()
     {
-        # create DB table
+        // create DB table
         global $wpdb;
         $tableName = $wpdb->prefix . "meal";
         $charsetCollate = $wpdb->get_charset_collate();
         $sql = "CREATE TABLE $tableName (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            meals text,
+            meals longtext,
             lastUpdate text,
             PRIMARY KEY  (id)
         ) $charsetCollate;";
@@ -206,7 +211,7 @@ class SpeiseplanPlugin extends WP_Widget
 
     public function on_deactivation()
     {
-        # drop DB table
+        // drop DB table
         global $wpdb;
         $meal = $wpdb->prefix . "meal";
         $wpdb->query("DROP TABLE IF EXISTS $meal");
@@ -215,8 +220,4 @@ class SpeiseplanPlugin extends WP_Widget
 }
 
 $speiseplanPlugin = SpeiseplanPlugin::get_instance();
-add_shortcode('speiseplan', array($speiseplanPlugin, 'print'));
-add_action('widgets_init', array($speiseplanPlugin, 'loadWidget'));
-register_activation_hook( __FILE__, array($speiseplanPlugin, 'on_activation'));
-register_deactivation_hook(__FILE__, array($speiseplanPlugin, 'on_deactivation'));
 ?>
